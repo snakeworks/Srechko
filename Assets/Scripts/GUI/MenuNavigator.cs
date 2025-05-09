@@ -2,6 +2,7 @@ using System.Linq;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
+using System;
 
 public static class MenuNavigator
 {
@@ -9,6 +10,7 @@ public static class MenuNavigator
     /// The menu on top of the stack, the one that the player is currently interacting with.
     /// </summary>
     public static Menu CurrentMenu => _menuStack.Peek();
+    public static event Action OnEmptyStack;
     public static bool IsStackEmpty => _menuStack.Count <= 0;
 
     private static readonly Stack<Menu> _menuStack = new();
@@ -47,6 +49,11 @@ public static class MenuNavigator
             lastCurrentMenu.gameObject.SetActive(false);
         });
         _menuStack.Pop();
+
+        if (IsStackEmpty)
+        {
+            OnEmptyStack?.Invoke();
+        }
     }
 
     private static async void BufferMenuOperations()

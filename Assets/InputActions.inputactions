@@ -15,9 +15,27 @@
                     "initialStateCheck": true
                 },
                 {
+                    "name": "OpenPauseMenu",
+                    "type": "Button",
+                    "id": "521f1d79-aaaf-453e-a718-1bd90a840efe",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "Interact",
                     "type": "Button",
                     "id": "5f95a76d-d29b-401b-bf45-471d02f5be07",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Cancel",
+                    "type": "Button",
+                    "id": "504628b0-68c2-4e49-94b6-bd6e238dd72c",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -137,6 +155,28 @@
                 },
                 {
                     "name": "",
+                    "id": "cc324a79-853c-4b10-be1b-3ddefc387bdf",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "OpenPauseMenu",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c96bd2f3-9e51-4f6d-a72b-a27d74d93d9f",
+                    "path": "<Gamepad>/start",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "OpenPauseMenu",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "51dcaa48-95d1-4b46-a119-5eaf86a45142",
                     "path": "<Keyboard>/space",
                     "interactions": "",
@@ -154,6 +194,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "Interact",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "322088d6-7be5-4fd0-94bb-c26b11ea06e3",
+                    "path": "*/{Cancel}",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse;Gamepad;Touch;Joystick;XR",
+                    "action": "Cancel",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
@@ -249,15 +300,6 @@
                     "type": "PassThrough",
                     "id": "9caa3d8a-6b2f-4e8e-8bad-6ede561bd9be",
                     "expectedControlType": "Quaternion",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "OpenPauseMenu",
-                    "type": "Button",
-                    "id": "b075b609-a987-4742-9466-8747b0681bb1",
-                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
@@ -679,28 +721,6 @@
                     "processors": "",
                     "groups": "XR",
                     "action": "TrackedDeviceOrientation",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "ebf5d075-d152-49cd-9b82-b694bc9a61b9",
-                    "path": "<Keyboard>/escape",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "OpenPauseMenu",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "e41e1358-c096-47b1-861c-c8c365c3ee0e",
-                    "path": "<Gamepad>/start",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "OpenPauseMenu",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

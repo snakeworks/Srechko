@@ -9,9 +9,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 677983505882988900}
+  - component: {fileID: 3493136061593630995}
   - component: {fileID: 2747019125474804692}
   m_Layer: 0
-  m_Name: pfb_PlayerInput
+  m_Name: pfb_PlayerController
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -32,6 +33,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3493136061593630995
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7952991402378893052}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 49488368ef7db491198787013a90746a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &2747019125474804692
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -45,7 +58,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
-  m_NotificationBehavior: 3
+  m_NotificationBehavior: 2
   m_UIInputModule: {fileID: 0}
   m_DeviceLostEvent:
     m_PersistentCalls:
@@ -62,7 +75,19 @@ MonoBehaviour:
     m_ActionId: 351f2ccd-1f9f-44bf-9bec-d62ac5c5f408
     m_ActionName: 'Player/Move[/Gamepad/leftStick,/Keyboard/w,/Keyboard/upArrow,/Keyboard/s,/Keyboard/downArrow,/Keyboard/a,/Keyboard/leftArrow,/Keyboard/d,/Keyboard/rightArrow]'
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 3493136061593630995}
+        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+        m_MethodName: InputInteract
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: 5f95a76d-d29b-401b-bf45-471d02f5be07
     m_ActionName: 'Player/Interact[/Keyboard/space,/Gamepad/buttonSouth]'
   - m_PersistentCalls:
@@ -105,6 +130,38 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 9caa3d8a-6b2f-4e8e-8bad-6ede561bd9be
     m_ActionName: UI/TrackedDeviceOrientation
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 3493136061593630995}
+        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+        m_MethodName: InputOpenPauseMenu
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 521f1d79-aaaf-453e-a718-1bd90a840efe
+    m_ActionName: 'Player/OpenPauseMenu[/Keyboard/escape,/Gamepad/start]'
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 3493136061593630995}
+        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+        m_MethodName: InputCancel
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 504628b0-68c2-4e49-94b6-bd6e238dd72c
+    m_ActionName: 'Player/Cancel[/Keyboard/escape,/Gamepad/buttonEast]'
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
