@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public abstract class Menu : MonoBehaviour
@@ -7,18 +8,21 @@ public abstract class Menu : MonoBehaviour
 
     private void Awake()
     {
-
+        Init();
+        gameObject.SetActive(false);
     }
+
+    protected abstract void Init();
 
     /// <summary>
     /// Opening tween animation for the menu. Called when the menu is pushed onto the stack. 
     /// Do NOT call this manually.
     /// </summary>
-    public abstract void TweenOpen();
+    public abstract void TweenOpen(Action onComplete);
     
     /// <summary>
     /// Closing tween animation for the menu. Called when the menu is popped off the stack. 
     /// Do NOT call this manually.
     /// </summary>
-    public abstract void TweenClose();
+    public abstract void TweenClose(Action onComplete);
 }

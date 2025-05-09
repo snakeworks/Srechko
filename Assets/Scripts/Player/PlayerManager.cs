@@ -4,7 +4,9 @@ using UnityEngine.InputSystem;
 
 public class PlayerManager : MonoBehaviour
 {
-    public PlayerInput MainPlayerInput => GetPlayerInput(0);
+    [SerializeField] private Menu _pauseMenu;
+
+    public PlayerInput MainPlayerInput => GetPlayerInput(0);    
     
     private InputActions _input;
     private PlayerInputManager _playerInputManager;
@@ -15,6 +17,14 @@ public class PlayerManager : MonoBehaviour
     {
         _input = new();
         _input.Enable();
+        _input.UI.OpenPauseMenu.performed += (e) =>
+        {
+            MenuNavigator.Push(_pauseMenu);
+        };
+        _input.UI.Cancel.performed += (e) =>
+        {
+            MenuNavigator.Pop();
+        };
 
         _playerInputManager = GetComponent<PlayerInputManager>();
 
@@ -33,7 +43,7 @@ public class PlayerManager : MonoBehaviour
 
     private void OnPlayerJoined(PlayerInput player)
     {
-        Debug.Log($"Joined: {player}");
+        Debug.Log($"Joined: {player}");        
         player.transform.SetParent(transform);
         player.gameObject.name = $"PlayerInput{_playerInputManager.playerCount}";
         _playerInputs.Add(player);
