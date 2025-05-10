@@ -1,9 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
-using UnityEngine.InputSystem.UI;
 
 public class PlayerManager : Singleton<PlayerManager>
 {
@@ -64,7 +62,7 @@ public class PlayerManager : Singleton<PlayerManager>
     }
 
     /// <summary>
-    /// Gives ownership of the input to all player controllers.
+    /// Gives ownership of the input system to all player controllers.
     /// </summary>
     public void GiveOwnershipToAll()
     {

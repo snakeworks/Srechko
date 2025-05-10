@@ -156,6 +156,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0516cfa3dcec7a3959056fc8553d2445, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  OpenImmediate: 0
+  CanPop: 1
+  PauseGameOnOpen: 1
+  _testMenu: {fileID: 0}
 --- !u!225 &6897323751328283216
 CanvasGroup:
   m_ObjectHideFlags: 0

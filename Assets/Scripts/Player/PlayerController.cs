@@ -14,7 +14,7 @@ public class PlayerController : MonoBehaviour
     public event Action OpenPauseMenuPerformed;
     public event Action CancelPerformed;
 
-    // Doing this convoluted ass work around because of some stupid fuck ass Unity reason
+    // Doing this convoluted ass work around because of some stupid ass Unity reason.
     // For future reference: Always make calls to PlayerInput and not _playerInput.
     private PlayerInput PlayerInput
     {

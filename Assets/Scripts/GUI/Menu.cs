@@ -7,6 +7,7 @@ public abstract class Menu : MonoBehaviour
 {
     public bool OpenImmediate = false;
     public bool CanPop = true;
+    public bool PauseGameOnOpen = false;
     public bool IsCurrent => MenuNavigator.CurrentMenu == this;
     public bool IsOnStack => MenuNavigator.IsMenuOnStack(this);
     public GameObject LastSelectedObject { get; set; }

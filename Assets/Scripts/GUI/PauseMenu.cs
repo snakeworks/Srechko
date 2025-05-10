@@ -3,8 +3,6 @@ using DG.Tweening;
 
 public class PauseMenu : Menu
 {
-    [SerializeField] private Menu _testMenu;
-    
     protected override void Init()
     {
         _canvasGroup.alpha = 0.0f;
@@ -18,10 +16,5 @@ public class PauseMenu : Menu
     public override void TweenClose(Sequence sequence)
     {
         sequence.Append(_canvasGroup.DOFade(0.0f, 0.2f));
-    }
-
-    public void OpenTestMenu()
-    {
-        MenuNavigator.Push(_testMenu);
     }
 }

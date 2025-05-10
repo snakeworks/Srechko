@@ -38,6 +38,11 @@ public static class MenuNavigator
 
         menu.gameObject.SetActive(true);
 
+        if (menu.PauseGameOnOpen)
+        {
+            Time.timeScale = 0.0f;
+        }
+
         Sequence sequence = DOTween.Sequence();
         menu.TweenOpen(sequence);
         menu.EnableInteraction();
@@ -89,6 +94,7 @@ public static class MenuNavigator
         if (IsStackEmpty)
         {
             EventSystem.current.SetSelectedGameObject(null);
+            Time.timeScale = 1.0f;
             OnEmptyStack?.Invoke();
         }
         else
