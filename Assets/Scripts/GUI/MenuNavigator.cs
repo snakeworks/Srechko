@@ -21,9 +21,11 @@ public static class MenuNavigator
     /// <summary>
     /// Open a new current menu and push menu onto the stack.
     /// </summary>
-    public static void Push(Menu menu)
+    public static void Push(Menu menu, PlayerController fromController)
     {
-        if (menu == null || menu.IsOnStack || _isBufferingMenuOperations || SceneLoader.IsLoading)
+        if (menu == null || menu.IsOnStack 
+            || _isBufferingMenuOperations || SceneLoader.IsLoading
+            || (PlayerManager.Instance.CurrentOwner != null && PlayerManager.Instance.CurrentOwner != fromController))
         {
             return;
         }
@@ -46,17 +48,37 @@ public static class MenuNavigator
     }
 
     /// <summary>
+    /// Pops the current menu on top of the stack and replaces it with the new <c>menu</c>.
+    /// </summary>
+    public static void PushReplacement(Menu menu)
+    {
+        Pop(PlayerManager.Instance.CurrentOwner, asReplacement: true);
+        Push(menu, PlayerManager.Instance.CurrentOwner);
+    }
+
+    /// <summary>
+    /// Pushes a menu onto the stack regardless of who the current owner is.
+    /// </summary>
+    public static void PushForce(Menu menu)
+    {
+        Push(menu, PlayerManager.Instance.CurrentOwner);
+    }
+
+    /// <summary>
     /// Close the current menu and pop it off the stack.
     /// </summary>
-    public static void Pop()
+    public static void Pop(PlayerController fromController, bool asReplacement = false)
     {
-        if (IsStackEmpty || _isBufferingMenuOperations)
+        if (IsStackEmpty || _isBufferingMenuOperations 
+            || (PlayerManager.Instance.CurrentOwner != null && PlayerManager.Instance.CurrentOwner != fromController))
         {
             return;
         }
         
-        BufferMenuOperations();
-
+        if (!asReplacement)
+        {
+            BufferMenuOperations();
+        }
 
         Menu lastCurrentMenu = CurrentMenu;
         Sequence sequence = DOTween.Sequence();
@@ -69,6 +91,11 @@ public static class MenuNavigator
         lastCurrentMenu.TweenClose(sequence);        
         lastCurrentMenu.DisableInteraction();
         _menuStack.Pop();
+
+        if (asReplacement)
+        {
+            return;
+        }
 
         if (IsStackEmpty)
         {

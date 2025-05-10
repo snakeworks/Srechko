@@ -1,12 +1,18 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.UI;
 
 public class PlayerManager : Singleton<PlayerManager>
 {
     [SerializeField] private Menu _pauseMenu;
 
-    public PlayerController MainPlayerController => GetPlayerController(0);    
+    public PlayerController MainPlayerController => GetPlayerController(0);
+    public PlayerController CurrentOwner { get; private set; }
+    public event Action<PlayerController> OnNewOwner;
+    public event Action<PlayerController> OnNewMainPlayerController;
     
     private PlayerInputManager _playerInputManager;
     private readonly List<PlayerController> _controllers = new();
@@ -40,6 +46,35 @@ public class PlayerManager : Singleton<PlayerManager>
         return -1;
     }
 
+    public void GiveOwnershipTo(PlayerController controller)
+    {
+        if (controller == null)
+        {
+            return;
+        }
+        foreach (var con in _controllers)
+        {
+            con.RevokeOwnership();
+        }
+        CurrentOwner = controller;
+        controller.GiveOwnership();
+        OnNewOwner?.Invoke(CurrentOwner);
+    }
+
+    public void GiveOwnershipToAll()
+    {
+        if (CurrentOwner != null)
+        {
+            CurrentOwner.RevokeOwnership();
+        }
+        CurrentOwner = null;
+        foreach (var controller in _controllers)
+        {
+            controller.GiveOwnership();
+        }
+        OnNewOwner?.Invoke(null);
+    }
+
     private void OnPlayerJoined(PlayerInput player)
     {
         Debug.Log($"Joined: {player}");
@@ -49,6 +84,16 @@ public class PlayerManager : Singleton<PlayerManager>
         var controller = player.GetComponent<PlayerController>();
         controller.OpenPauseMenuPerformed += () => OpenPauseMenu(controller);
         _controllers.Add(controller);
+
+        if (CurrentOwner != null)
+        {
+            controller.RevokeOwnership();
+        }
+
+        if (_controllers.Count == 1)
+        {
+            OnNewMainPlayerController?.Invoke(controller);
+        }
     }
 
     private void OnPlayerLeft(PlayerInput player)
@@ -56,6 +101,14 @@ public class PlayerManager : Singleton<PlayerManager>
         Debug.Log($"Left: {player}");
         var controller = player.GetComponent<PlayerController>();
         _controllers.Remove(controller);
+        if (_controllers.Count > 0)
+        {
+            if (controller == CurrentOwner)
+            {
+                GiveOwnershipTo(MainPlayerController);
+            }
+            OnNewMainPlayerController?.Invoke(MainPlayerController);
+        }
     }
 
     private void OpenPauseMenu(PlayerController controller)
@@ -65,54 +118,16 @@ public class PlayerManager : Singleton<PlayerManager>
             return;
         }
 
-        List<bool> previousControllerEnableStates = new();
-        foreach (var con in _controllers)
-        {
-            previousControllerEnableStates.Add(con.IsInputEnabled);
-        }
-        EnableOnlyController(GetIndexOfPlayerController(controller));
-        controller.CancelPerformed += OnCancel;
-        MenuNavigator.OnEmptyStack += OnEmptyStack;
+        GiveOwnershipTo(controller);
 
-        void OnCancel()
-        {
-            MenuNavigator.Pop();
-        }
+        MenuNavigator.OnEmptyStack += OnEmptyStack;
         
         void OnEmptyStack()
         {
-            controller.CancelPerformed -= OnCancel;
             MenuNavigator.OnEmptyStack -= OnEmptyStack;
-            for (int i = 0; i < previousControllerEnableStates.Count; i++)
-            {
-                if (previousControllerEnableStates[i])
-                {
-                    _controllers[i].EnableInput();
-                }
-                else
-                {
-                    _controllers[i].DisableInput();
-                }
-            }
+            GiveOwnershipToAll();
         }
 
-        MenuNavigator.Push(_pauseMenu);
-    }
-
-    private void EnableOnlyController(int index)
-    {
-        if (GetPlayerController(index))
-        {
-            DisableAllControllers();
-            GetPlayerController(index).EnableInput();
-        }
-    }
-
-    private void DisableAllControllers()
-    {
-        foreach (var controller in _controllers)
-        {
-            controller.DisableInput();
-        }
+        MenuNavigator.Push(_pauseMenu, controller);
     }
 }

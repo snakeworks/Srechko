@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 using DG.Tweening;
 
@@ -23,6 +22,6 @@ public class PauseMenu : Menu
 
     public void OpenTestMenu()
     {
-        MenuNavigator.Push(_testMenu);
+        MenuNavigator.Push(_testMenu, PlayerManager.Instance.CurrentOwner);
     }
 }

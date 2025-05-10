@@ -1,6 +1,8 @@
 using System;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.UI;
 
 /// <summary>
 /// Handles player input for a specific device.
@@ -26,20 +28,26 @@ public class PlayerController : MonoBehaviour
         if (context.phase == InputActionPhase.Performed)
         {
             action?.Invoke();
-            //Debug.Log($"Action pressed from: {context.control.device}");
         }
     }
 
-    public void EnableInput()
+    public void GiveOwnership()
     {
         _playerInput.ActivateInput();
-        InputSystem.EnableDevice(Device); 
+        InputSystem.EnableDevice(Device);
+        CancelPerformed += PopMenu;
     }
 
-    public void DisableInput()
+    public void RevokeOwnership()
     {
         _playerInput.DeactivateInput();
         InputSystem.DisableDevice(Device); 
+        CancelPerformed -= PopMenu;
+    }
+
+    private void PopMenu()
+    {
+        MenuNavigator.Pop(this);
     }
 
     public void InputInteract(InputAction.CallbackContext context) => TryPerform(context, InteractPerformed);
