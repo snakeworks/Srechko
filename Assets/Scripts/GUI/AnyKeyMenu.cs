@@ -7,7 +7,14 @@ public class AnyKeyMenu : Menu
 
     protected override void Init()
     {
-        PlayerManager.Instance.OnNewMainPlayerController += OnPlayerJoined;
+        if (PlayerManager.Instance.MainPlayerController != null)
+        {
+            OpenImmediate = false;
+        }
+        else
+        {
+            PlayerManager.Instance.OnNewMainPlayerController += OnPlayerJoined;
+        }
     }
 
     private void OnPlayerJoined(PlayerController controller)

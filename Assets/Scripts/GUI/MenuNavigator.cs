@@ -18,12 +18,17 @@ public static class MenuNavigator
     private static readonly Stack<Menu> _menuStack = new();
     private static bool _isBufferingMenuOperations = false;
 
+    public static Stack<Menu> GetStack()
+    {
+        return _menuStack;
+    }
+
     /// <summary>
     /// Opens a new menu and pushes it onto the stack.
     /// </summary>
     public static void Push(Menu menu)
     {
-        if (menu == null || menu.IsOnStack || _isBufferingMenuOperations || SceneLoader.IsLoading)
+        if (menu == null || menu.IsOnStack || _isBufferingMenuOperations)
         {
             return;
         }
@@ -40,14 +45,14 @@ public static class MenuNavigator
 
         if (menu.PauseGameOnOpen)
         {
-            Time.timeScale = 0.0f;
+            Pauser.PauseGame();
         }
 
         Sequence sequence = DOTween.Sequence();
         menu.TweenOpen(sequence);
         menu.EnableInteraction();
-        EventSystem.current.SetSelectedGameObject(menu.LastSelectedObject);
         _menuStack.Push(menu);
+        BufferSelectButton();
     }
 
     /// <summary>
@@ -94,13 +99,13 @@ public static class MenuNavigator
         if (IsStackEmpty)
         {
             EventSystem.current.SetSelectedGameObject(null);
-            Time.timeScale = 1.0f;
+            Pauser.UnpauseGame();
             OnEmptyStack?.Invoke();
         }
         else
         {
             CurrentMenu.EnableInteraction();
-            EventSystem.current.SetSelectedGameObject(CurrentMenu.LastSelectedObject);
+            BufferSelectButton();
         }
     }
 
@@ -126,6 +131,8 @@ public static class MenuNavigator
             menu.gameObject.SetActive(false);
         }
 
+        Pauser.UnpauseGame();
+
         _menuStack.Clear();
         OnEmptyStack?.Invoke();
     }
@@ -135,6 +142,12 @@ public static class MenuNavigator
         _isBufferingMenuOperations = true;
         await Task.Delay((int)(Time.deltaTime * 1500));
         _isBufferingMenuOperations = false;
+    }
+
+    private static async void BufferSelectButton()
+    {
+        await Task.Delay((int)(Time.deltaTime * 1500));
+        EventSystem.current.SetSelectedGameObject(CurrentMenu.LastSelectedObject);
     }
 
     /// <summary>

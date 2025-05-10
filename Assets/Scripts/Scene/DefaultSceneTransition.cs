@@ -1,23 +1,20 @@
 using DG.Tweening;
-using UnityEngine;
 
 public class DefaultSceneTransition : SceneTransition
 {
-    private CanvasGroup _canvasGroup;
-
     protected override void Init()
     {
-        _canvasGroup = GetComponent<CanvasGroup>();
-        _canvasGroup.alpha = 0.0f;
+        transform.DOLocalMoveX(-1920.0f, 0.0f);
     }
     
     public override void TweenIn(Sequence sequence)
     {
-        sequence.Append(_canvasGroup.DOFade(1.0f, 0.5f));
+        sequence.Append(transform.DOLocalMoveX(0.0f, 0.25f));
     }
 
     public override void TweenOut(Sequence sequence)
     {
-        sequence.Append(_canvasGroup.DOFade(0.0f, 0.5f));
+        sequence.Append(transform.DOLocalMoveX(1920.0f, 0.25f));
+        sequence.Append(transform.DOLocalMoveX(-1920.0f, 0.0f));
     }
 }

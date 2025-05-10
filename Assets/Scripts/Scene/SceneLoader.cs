@@ -1,7 +1,7 @@
+using System.Linq;
 using System.Threading.Tasks;
 using DG.Tweening;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 
 public static class SceneLoader
@@ -10,19 +10,15 @@ public static class SceneLoader
 
     private static bool SceneExists(string name)
     {
-        for (int i = 0; i < SceneManager.sceneCount; i++)
-        {
-            if (SceneManager.GetSceneAt(i).name.Trim() == name.Trim())
-            {
-                return true;
-            }
-        }
-        return false;
+        return Enumerable.Range(0, SceneManager.sceneCount)
+            .Select(SceneManager.GetSceneAt)
+            .Any(scene => scene.name == name) || 
+            Application.CanStreamedLevelBeLoaded(name);
     }
 
-    public static void Load(Scene scene, SceneTransition transition)
+    public static void Load(Scene scene, SceneTransition transition = null)
     {
-        if (!IsLoading)
+        if (IsLoading)
         {
             return;
         }
@@ -37,6 +33,11 @@ public static class SceneLoader
 
         IsLoading = true;
 
+        if (transition == null)
+        {
+            transition = SceneTransition.Get();
+        }
+
         PlayerManager.Instance.DisableAllInput();
 
         transition.gameObject.SetActive(true);
@@ -47,7 +48,6 @@ public static class SceneLoader
         async void OnTweenInComplete()
         {
             MenuNavigator.Clear();
-            
             LoadingScreen.Instance.Show();
 
             // Scene load starts
@@ -55,7 +55,7 @@ public static class SceneLoader
             
             // Small delay because scene transitions don't play their tweens correctly
             // right after the scene has loaded
-            await Task.Delay(250);
+            await Task.Delay(500);
             
             // Scene load completes
             LoadingScreen.Instance.Hide();
