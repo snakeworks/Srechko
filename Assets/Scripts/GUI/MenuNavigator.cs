@@ -19,13 +19,11 @@ public static class MenuNavigator
     private static bool _isBufferingMenuOperations = false;
 
     /// <summary>
-    /// Open a new current menu and push menu onto the stack.
+    /// Opens a new menu and pushes it onto the stack.
     /// </summary>
-    public static void Push(Menu menu, PlayerController fromController)
+    public static void Push(Menu menu)
     {
-        if (menu == null || menu.IsOnStack 
-            || _isBufferingMenuOperations || SceneLoader.IsLoading
-            || (PlayerManager.Instance.CurrentOwner != null && PlayerManager.Instance.CurrentOwner != fromController))
+        if (menu == null || menu.IsOnStack || _isBufferingMenuOperations || SceneLoader.IsLoading)
         {
             return;
         }
@@ -52,25 +50,16 @@ public static class MenuNavigator
     /// </summary>
     public static void PushReplacement(Menu menu)
     {
-        Pop(PlayerManager.Instance.CurrentOwner, asReplacement: true);
-        Push(menu, PlayerManager.Instance.CurrentOwner);
+        Pop(asReplacement: true);
+        Push(menu);
     }
 
     /// <summary>
-    /// Pushes a menu onto the stack regardless of who the current owner is.
+    /// Closes the current menu and pops it off the stack.
     /// </summary>
-    public static void PushForce(Menu menu)
+    public static void Pop(bool asReplacement = false)
     {
-        Push(menu, PlayerManager.Instance.CurrentOwner);
-    }
-
-    /// <summary>
-    /// Close the current menu and pop it off the stack.
-    /// </summary>
-    public static void Pop(PlayerController fromController, bool asReplacement = false)
-    {
-        if (IsStackEmpty || _isBufferingMenuOperations 
-            || (PlayerManager.Instance.CurrentOwner != null && PlayerManager.Instance.CurrentOwner != fromController))
+        if (IsStackEmpty || _isBufferingMenuOperations)
         {
             return;
         }

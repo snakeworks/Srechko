@@ -52,27 +52,28 @@ public class PlayerManager : Singleton<PlayerManager>
         {
             return;
         }
-        foreach (var con in _controllers)
-        {
-            con.RevokeOwnership();
-        }
+        DisableAllInput();
         CurrentOwner = controller;
-        controller.GiveOwnership();
+        controller.EnableInput();
         OnNewOwner?.Invoke(CurrentOwner);
     }
 
     public void GiveOwnershipToAll()
     {
-        if (CurrentOwner != null)
-        {
-            CurrentOwner.RevokeOwnership();
-        }
         CurrentOwner = null;
         foreach (var controller in _controllers)
         {
-            controller.GiveOwnership();
+            controller.EnableInput();
         }
         OnNewOwner?.Invoke(null);
+    }
+
+    public void DisableAllInput()
+    {
+        foreach (var con in _controllers)
+        {
+            con.DisableInput();
+        }
     }
 
     private void OnPlayerJoined(PlayerInput player)
@@ -87,7 +88,7 @@ public class PlayerManager : Singleton<PlayerManager>
 
         if (CurrentOwner != null)
         {
-            controller.RevokeOwnership();
+            controller.DisableInput();
         }
 
         if (_controllers.Count == 1)
@@ -128,6 +129,6 @@ public class PlayerManager : Singleton<PlayerManager>
             GiveOwnershipToAll();
         }
 
-        MenuNavigator.Push(_pauseMenu, controller);
+        MenuNavigator.Push(_pauseMenu);
     }
 }

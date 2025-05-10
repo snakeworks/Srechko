@@ -22,6 +22,6 @@ public class PauseMenu : Menu
 
     public void OpenTestMenu()
     {
-        MenuNavigator.Push(_testMenu, PlayerManager.Instance.CurrentOwner);
+        MenuNavigator.Push(_testMenu);
     }
 }

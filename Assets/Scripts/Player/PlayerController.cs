@@ -1,8 +1,6 @@
 using System;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
-using UnityEngine.InputSystem.UI;
 
 /// <summary>
 /// Handles player input for a specific device.
@@ -10,18 +8,26 @@ using UnityEngine.InputSystem.UI;
 public class PlayerController : MonoBehaviour
 {
     public int Index => transform.GetSiblingIndex();
-    public bool IsInputEnabled => _playerInput.inputIsActive;
-    public InputDevice Device => _playerInput.devices[0]; // TODO: Could cause problem in the future???
+    public bool IsInputEnabled => PlayerInput.inputIsActive;
+    public InputDevice Device => PlayerInput.devices[0]; // TODO: Could cause problem in the future???
     public event Action InteractPerformed;
     public event Action OpenPauseMenuPerformed;
     public event Action CancelPerformed;
 
-    private PlayerInput _playerInput;
-
-    private void Awake()
+    // Doing this convoluted ass work around because of some stupid fuck ass Unity reason
+    // For future reference: Always make calls to PlayerInput and not _playerInput.
+    private PlayerInput PlayerInput
     {
-        _playerInput = GetComponent<PlayerInput>();
+        get
+        {
+            if (_playerInput == null)
+            {
+                _playerInput = GetComponent<PlayerInput>();
+            }
+            return _playerInput;
+        }
     }
+    private PlayerInput _playerInput;
 
     private void TryPerform(InputAction.CallbackContext context, Action action)
     {
@@ -31,23 +37,23 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public void GiveOwnership()
+    public void EnableInput()
     {
-        _playerInput.ActivateInput();
+        PlayerInput.ActivateInput();
         InputSystem.EnableDevice(Device);
         CancelPerformed += PopMenu;
     }
 
-    public void RevokeOwnership()
+    public void DisableInput()
     {
-        _playerInput.DeactivateInput();
-        InputSystem.DisableDevice(Device); 
+        PlayerInput.DeactivateInput();
+        InputSystem.DisableDevice(Device);
         CancelPerformed -= PopMenu;
     }
 
     private void PopMenu()
     {
-        MenuNavigator.Pop(this);
+        MenuNavigator.Pop();
     }
 
     public void InputInteract(InputAction.CallbackContext context) => TryPerform(context, InteractPerformed);
