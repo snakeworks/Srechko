@@ -46,6 +46,11 @@ public class PlayerManager : Singleton<PlayerManager>
         return -1;
     }
 
+    /// <summary>
+    /// Gives ownership of the input system to this <c>controller</c>
+    /// and revokes ownership for all other player controllers.
+    /// </summary>
+    /// <param name="controller">The controller to give the ownership to.</param>
     public void GiveOwnershipTo(PlayerController controller)
     {
         if (controller == null)
@@ -58,6 +63,9 @@ public class PlayerManager : Singleton<PlayerManager>
         OnNewOwner?.Invoke(CurrentOwner);
     }
 
+    /// <summary>
+    /// Gives ownership of the input to all player controllers.
+    /// </summary>
     public void GiveOwnershipToAll()
     {
         CurrentOwner = null;
@@ -68,12 +76,40 @@ public class PlayerManager : Singleton<PlayerManager>
         OnNewOwner?.Invoke(null);
     }
 
+    /// <summary>
+    /// Enables the ability to send input events to the game.
+    /// </summary>
+    public void EnableInput()
+    {
+        if (CurrentOwner != null)
+        {
+            GiveOwnershipTo(CurrentOwner);
+        }
+        else
+        {
+            GiveOwnershipToAll();
+        }
+    }
+
+    /// <summary>
+    /// Disables the ability to send input events to the game.
+    /// </summary>
     public void DisableAllInput()
     {
         foreach (var con in _controllers)
         {
             con.DisableInput();
         }
+    }
+
+    public void EnableJoining()
+    {
+        _playerInputManager.EnableJoining();
+    }
+
+    public void DisableJoining()
+    {
+        _playerInputManager.DisableJoining();
     }
 
     private void OnPlayerJoined(PlayerInput player)

@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 7831809592964515664}
   - component: {fileID: 3405127692810773157}
   m_Layer: 0
-  m_Name: pfb_PauseMenuButton
+  m_Name: pfb_MainButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

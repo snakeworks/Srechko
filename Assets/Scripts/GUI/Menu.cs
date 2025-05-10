@@ -5,6 +5,8 @@ using UnityEngine.UI;
 [RequireComponent(typeof(CanvasGroup))]
 public abstract class Menu : MonoBehaviour
 {
+    public bool OpenImmediate = false;
+    public bool CanPop = true;
     public bool IsCurrent => MenuNavigator.CurrentMenu == this;
     public bool IsOnStack => MenuNavigator.IsMenuOnStack(this);
     public GameObject LastSelectedObject { get; set; }
@@ -14,12 +16,21 @@ public abstract class Menu : MonoBehaviour
     private void Awake()
     {
         _canvasGroup = GetComponent<CanvasGroup>();
-        LastSelectedObject = GetComponentInChildren<Button>().gameObject;
+        
+        Button firstButton = GetComponentInChildren<Button>();
+        LastSelectedObject = firstButton == null ? null : firstButton.gameObject;
         DisableInteraction();
         
         Init();
         
-        gameObject.SetActive(false);
+        if (OpenImmediate)
+        {
+            MenuNavigator.Push(this);
+        }
+        else
+        {
+            gameObject.SetActive(false);
+        }
     }
 
     protected abstract void Init();

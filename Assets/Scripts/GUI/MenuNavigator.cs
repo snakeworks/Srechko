@@ -59,7 +59,7 @@ public static class MenuNavigator
     /// </summary>
     public static void Pop(bool asReplacement = false)
     {
-        if (IsStackEmpty || _isBufferingMenuOperations)
+        if (IsStackEmpty || _isBufferingMenuOperations || !CurrentMenu.CanPop)
         {
             return;
         }
@@ -96,6 +96,32 @@ public static class MenuNavigator
             CurrentMenu.EnableInteraction();
             EventSystem.current.SetSelectedGameObject(CurrentMenu.LastSelectedObject);
         }
+    }
+
+    /// <summary>
+    /// Forcefully closes all menus on the stack and empties it.
+    /// </summary>
+    public static void Clear()
+    {
+        if (IsStackEmpty)
+        {
+            return;
+        }
+
+        Sequence sequence = DOTween.Sequence();
+
+        foreach (var menu in _menuStack)
+        {
+            menu.TweenClose(sequence);
+        }
+        sequence.Complete();
+        foreach (var menu in _menuStack)
+        {
+            menu.gameObject.SetActive(false);
+        }
+
+        _menuStack.Clear();
+        OnEmptyStack?.Invoke();
     }
 
     private static async void BufferMenuOperations()

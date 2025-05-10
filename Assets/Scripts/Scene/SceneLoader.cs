@@ -1,6 +1,7 @@
 using System.Threading.Tasks;
 using DG.Tweening;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 
 public static class SceneLoader
@@ -36,6 +37,8 @@ public static class SceneLoader
 
         IsLoading = true;
 
+        PlayerManager.Instance.DisableAllInput();
+
         transition.gameObject.SetActive(true);
         Sequence inSequence = DOTween.Sequence();
         inSequence.OnComplete(OnTweenInComplete);
@@ -43,6 +46,8 @@ public static class SceneLoader
 
         async void OnTweenInComplete()
         {
+            MenuNavigator.Clear();
+            
             LoadingScreen.Instance.Show();
 
             // Scene load starts
@@ -64,6 +69,7 @@ public static class SceneLoader
                 // Scene load is fully complete.
                 transition.gameObject.SetActive(false);
                 IsLoading = false;
+                PlayerManager.Instance.EnableInput();
             }
         }
     }
