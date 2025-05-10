@@ -2,9 +2,14 @@ using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+/// <summary>
+/// Handles player input for a specific device.
+/// </summary>
 public class PlayerController : MonoBehaviour
 {
+    public int Index => transform.GetSiblingIndex();
     public bool IsInputEnabled => _playerInput.inputIsActive;
+    public InputDevice Device => _playerInput.devices[0]; // TODO: Could cause problem in the future???
     public event Action InteractPerformed;
     public event Action OpenPauseMenuPerformed;
     public event Action CancelPerformed;
@@ -28,13 +33,13 @@ public class PlayerController : MonoBehaviour
     public void EnableInput()
     {
         _playerInput.ActivateInput();
-        InputSystem.EnableDevice(_playerInput.devices[0]); // TODO: Could cause problem in the future???
+        InputSystem.EnableDevice(Device); 
     }
 
     public void DisableInput()
     {
         _playerInput.DeactivateInput();
-        InputSystem.DisableDevice(_playerInput.devices[0]); // TODO: Could cause problem in the future???
+        InputSystem.DisableDevice(Device); 
     }
 
     public void InputInteract(InputAction.CallbackContext context) => TryPerform(context, InteractPerformed);

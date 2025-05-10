@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerManager : MonoBehaviour
+public class PlayerManager : Singleton<PlayerManager>
 {
     [SerializeField] private Menu _pauseMenu;
 
@@ -11,7 +11,7 @@ public class PlayerManager : MonoBehaviour
     private PlayerInputManager _playerInputManager;
     private readonly List<PlayerController> _controllers = new();
 
-    private void Awake()
+    protected override void Init()
     {
         _playerInputManager = GetComponent<PlayerInputManager>();
 
