@@ -28,11 +28,13 @@ public class PlayerController : MonoBehaviour
     public void EnableInput()
     {
         _playerInput.ActivateInput();
+        InputSystem.EnableDevice(_playerInput.devices[0]); // TODO: Could cause problem in the future???
     }
 
     public void DisableInput()
     {
         _playerInput.DeactivateInput();
+        InputSystem.DisableDevice(_playerInput.devices[0]); // TODO: Could cause problem in the future???
     }
 
     public void InputInteract(InputAction.CallbackContext context) => TryPerform(context, InteractPerformed);

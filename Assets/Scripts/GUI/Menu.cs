@@ -1,14 +1,24 @@
 using System;
 using UnityEngine;
+using UnityEngine.UI;
 
+[RequireComponent(typeof(CanvasGroup))]
 public abstract class Menu : MonoBehaviour
 {
     public bool IsCurrent => MenuNavigator.CurrentMenu == this;
     public bool IsOnStack => MenuNavigator.IsMenuOnStack(this);
+    public GameObject LastSelectedObject { get; set; }
+    
+    protected CanvasGroup _canvasGroup;
 
     private void Awake()
     {
+        _canvasGroup = GetComponent<CanvasGroup>();
+        LastSelectedObject = GetComponentInChildren<Button>().gameObject;
+        DisableInteraction();
+        
         Init();
+        
         gameObject.SetActive(false);
     }
 
@@ -25,4 +35,14 @@ public abstract class Menu : MonoBehaviour
     /// Do NOT call this manually.
     /// </summary>
     public abstract void TweenClose(Action onComplete);
+
+    public void EnableInteraction()
+    {
+        _canvasGroup.interactable = true;
+    }
+
+    public void DisableInteraction()
+    {
+        _canvasGroup.interactable = false;
+    }
 }

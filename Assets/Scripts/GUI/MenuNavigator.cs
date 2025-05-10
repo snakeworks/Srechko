@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
 using System;
+using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public static class MenuNavigator
 {
@@ -27,8 +29,17 @@ public static class MenuNavigator
         }
 
         BufferMenuOperations();
+
+        if (!IsStackEmpty)
+        {
+            CurrentMenu.DisableInteraction();
+            CurrentMenu.LastSelectedObject = EventSystem.current.currentSelectedGameObject;
+        }
+
         menu.gameObject.SetActive(true);
         menu.TweenOpen(() => {});
+        menu.EnableInteraction();
+        EventSystem.current.SetSelectedGameObject(menu.LastSelectedObject);
         _menuStack.Push(menu);
     }
 
@@ -41,25 +52,34 @@ public static class MenuNavigator
         {
             return;
         }
+        
+        BufferMenuOperations();
 
         Menu lastCurrentMenu = CurrentMenu;
-        BufferMenuOperations();
+        lastCurrentMenu.LastSelectedObject = EventSystem.current.currentSelectedGameObject;
         lastCurrentMenu.TweenClose(() =>
         {
             lastCurrentMenu.gameObject.SetActive(false);
         });
+        lastCurrentMenu.DisableInteraction();
         _menuStack.Pop();
 
         if (IsStackEmpty)
         {
+            EventSystem.current.SetSelectedGameObject(null);
             OnEmptyStack?.Invoke();
+        }
+        else
+        {
+            CurrentMenu.EnableInteraction();
+            EventSystem.current.SetSelectedGameObject(CurrentMenu.LastSelectedObject);
         }
     }
 
     private static async void BufferMenuOperations()
     {
         _isBufferingMenuOperations = true;
-        await Task.Delay((int)(Time.deltaTime * 1000));
+        await Task.Delay((int)(Time.deltaTime * 1500));
         _isBufferingMenuOperations = false;
     }
 
