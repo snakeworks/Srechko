@@ -1,9 +1,9 @@
+using System;
 using System.Linq;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using DG.Tweening;
 using UnityEngine;
-using System;
-using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
 public static class MenuNavigator
@@ -23,7 +23,7 @@ public static class MenuNavigator
     /// </summary>
     public static void Push(Menu menu)
     {
-        if (menu == null || menu.IsOnStack || _isBufferingMenuOperations)
+        if (menu == null || menu.IsOnStack || _isBufferingMenuOperations || SceneLoader.IsLoading)
         {
             return;
         }
@@ -37,7 +37,9 @@ public static class MenuNavigator
         }
 
         menu.gameObject.SetActive(true);
-        menu.TweenOpen(() => {});
+
+        Sequence sequence = DOTween.Sequence();
+        menu.TweenOpen(sequence);
         menu.EnableInteraction();
         EventSystem.current.SetSelectedGameObject(menu.LastSelectedObject);
         _menuStack.Push(menu);
@@ -55,12 +57,16 @@ public static class MenuNavigator
         
         BufferMenuOperations();
 
+
         Menu lastCurrentMenu = CurrentMenu;
-        lastCurrentMenu.LastSelectedObject = EventSystem.current.currentSelectedGameObject;
-        lastCurrentMenu.TweenClose(() =>
+        Sequence sequence = DOTween.Sequence();
+        sequence.OnComplete(() =>
         {
             lastCurrentMenu.gameObject.SetActive(false);
         });
+
+        lastCurrentMenu.LastSelectedObject = EventSystem.current.currentSelectedGameObject;
+        lastCurrentMenu.TweenClose(sequence);        
         lastCurrentMenu.DisableInteraction();
         _menuStack.Pop();
 

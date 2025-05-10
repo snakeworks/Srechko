@@ -1,4 +1,4 @@
-using System;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -28,13 +28,15 @@ public abstract class Menu : MonoBehaviour
     /// Opening tween animation for the menu. Called when the menu is pushed onto the stack. 
     /// Do NOT call this manually.
     /// </summary>
-    public abstract void TweenOpen(Action onComplete);
+    /// <param name="sequence">The sequence that the tweens must be appended or inserted into.</param>
+    public abstract void TweenOpen(Sequence sequence);
     
     /// <summary>
     /// Closing tween animation for the menu. Called when the menu is popped off the stack. 
     /// Do NOT call this manually.
     /// </summary>
-    public abstract void TweenClose(Action onComplete);
+    /// <param name="sequence">The sequence that the tweens must be appended or inserted into.</param>
+    public abstract void TweenClose(Sequence sequence);
 
     public void EnableInteraction()
     {

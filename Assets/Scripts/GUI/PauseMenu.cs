@@ -11,14 +11,14 @@ public class PauseMenu : Menu
         _canvasGroup.alpha = 0.0f;
     }
 
-    public override void TweenOpen(Action onComplete)
+    public override void TweenOpen(Sequence sequence)
     {
-        _canvasGroup.DOFade(1.0f, 0.2f).OnComplete(() => onComplete());
+        sequence.Append(_canvasGroup.DOFade(1.0f, 0.2f));
     }
     
-    public override void TweenClose(Action onComplete)
+    public override void TweenClose(Sequence sequence)
     {
-        _canvasGroup.DOFade(0.0f, 0.2f).OnComplete(() => onComplete());
+        sequence.Append(_canvasGroup.DOFade(0.0f, 0.2f));
     }
 
     public void OpenTestMenu()
