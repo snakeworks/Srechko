@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -37,15 +38,23 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public void EnableInput()
+    public void EnableInput(Dictionary<PlayerController, InputDevice> disabledInputDevices)
     {
+        if (disabledInputDevices.ContainsKey(this))
+        {
+            disabledInputDevices.Remove(this);
+        }
         PlayerInput.ActivateInput();
         InputSystem.EnableDevice(Device);
         CancelPerformed += PopMenu;
     }
 
-    public void DisableInput()
+    public void DisableInput(Dictionary<PlayerController, InputDevice> disabledInputDevices)
     {
+        if (!disabledInputDevices.ContainsKey(this))
+        {
+            disabledInputDevices.Add(this, Device);
+        }
         PlayerInput.DeactivateInput();
         InputSystem.DisableDevice(Device);
         CancelPerformed -= PopMenu;

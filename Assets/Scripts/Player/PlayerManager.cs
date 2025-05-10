@@ -11,9 +11,12 @@ public class PlayerManager : Singleton<PlayerManager>
     public PlayerController CurrentOwner { get; private set; }
     public event Action<PlayerController> OnNewOwner;
     public event Action<PlayerController> OnNewMainPlayerController;
+    public event Action<PlayerController> OnPlayerJoin;
+    public event Action<PlayerController> OnPlayerLeave;
     
     private PlayerInputManager _playerInputManager;
     private readonly List<PlayerController> _controllers = new();
+    private readonly Dictionary<PlayerController, InputDevice> _disabledInputDevices = new();
 
     protected override void Init()
     {
@@ -57,7 +60,7 @@ public class PlayerManager : Singleton<PlayerManager>
         }
         DisableAllInput();
         CurrentOwner = controller;
-        controller.EnableInput();
+        controller.EnableInput(_disabledInputDevices);
         OnNewOwner?.Invoke(CurrentOwner);
     }
 
@@ -69,7 +72,7 @@ public class PlayerManager : Singleton<PlayerManager>
         CurrentOwner = null;
         foreach (var controller in _controllers)
         {
-            controller.EnableInput();
+            controller.EnableInput(_disabledInputDevices);
         }
         OnNewOwner?.Invoke(null);
     }
@@ -96,7 +99,7 @@ public class PlayerManager : Singleton<PlayerManager>
     {
         foreach (var con in _controllers)
         {
-            con.DisableInput();
+            con.DisableInput(_disabledInputDevices);
         }
     }
 
@@ -122,13 +125,16 @@ public class PlayerManager : Singleton<PlayerManager>
 
         if (CurrentOwner != null)
         {
-            controller.DisableInput();
+            controller.DisableInput(_disabledInputDevices);
         }
 
         if (_controllers.Count == 1)
         {
             OnNewMainPlayerController?.Invoke(controller);
         }
+
+        UpdateControllerNames();
+        OnPlayerJoin?.Invoke(controller);
     }
 
     private void OnPlayerLeft(PlayerInput player)
@@ -136,6 +142,13 @@ public class PlayerManager : Singleton<PlayerManager>
         Debug.Log($"Left: {player}");
         var controller = player.GetComponent<PlayerController>();
         _controllers.Remove(controller);
+
+        if (_disabledInputDevices.TryGetValue(controller, out var device))
+        {
+            InputSystem.EnableDevice(device);
+            _disabledInputDevices.Remove(controller);
+        }
+
         if (_controllers.Count > 0)
         {
             if (controller == CurrentOwner)
@@ -144,6 +157,8 @@ public class PlayerManager : Singleton<PlayerManager>
             }
             OnNewMainPlayerController?.Invoke(MainPlayerController);
         }
+        UpdateControllerNames();
+        OnPlayerLeave?.Invoke(controller);
     }
 
     private void OpenPauseMenu(PlayerController controller)
@@ -164,5 +179,22 @@ public class PlayerManager : Singleton<PlayerManager>
         }
 
         MenuNavigator.Push(_pauseMenu);
+    }
+
+    private void UpdateControllerNames()
+    {
+        for (int i = 0; i < _controllers.Count; i++)
+        {
+            _controllers[i].name = $"PlayerController{i+1}";
+        }
+    }
+
+    protected override void OnDestroy()
+    {
+        base.OnDestroy();
+        foreach (var entry in _disabledInputDevices)
+        {
+            InputSystem.EnableDevice(entry.Value);
+        }
     }
 }
