@@ -44,6 +44,7 @@ public class LobbyMenu : Menu
             if (result == ModalMenu.Result.Yes)
             {
                 ModalMenu.ForcePop();
+                return;
             }
             else if (result == ModalMenu.Result.No)
             {
@@ -74,7 +75,7 @@ public class LobbyMenu : Menu
         {
             PlayerManager.Instance.CurrentOwner.CancelPerformed -= OnCancelPerformed;
             PlayerManager.Instance.DisableJoining();
-            SceneLoader.Load(Scene.MainMenu, SceneTransition.Get(), false);
+            SceneLoader.Load(Scene.Title, SceneTransition.Get(), false);
         }
         else
         {

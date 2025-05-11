@@ -1,6 +1,8 @@
 public enum Scene
 {
-    MainMenu,
+    Null,
+    Title,
     Lobby,
-    Board
+    Board,
+    MgButtonMash
 }
