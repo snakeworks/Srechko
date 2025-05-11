@@ -10,6 +10,7 @@ public abstract class Menu : MonoBehaviour
     public bool PauseGameOnOpen = false;
     public bool IsCurrent => !MenuNavigator.IsStackEmpty && MenuNavigator.CurrentMenu == this;
     public bool IsOnStack => MenuNavigator.IsMenuOnStack(this);
+    public bool IsTweening { get; set; } = false;
     public GameObject LastSelectedObject { get; set; }
     
     protected CanvasGroup _canvasGroup;

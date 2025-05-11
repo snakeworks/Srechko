@@ -15,6 +15,7 @@ public class PlayerManager : Singleton<PlayerManager>
 
     public bool IsInputEnabled { get; private set; } = true;
     public PlayerController MainPlayerController => GetPlayerController(0);
+    public bool HasMinimumPlayerCount => _controllers.Count > 1;
     public PlayerController CurrentOwner { get; private set; }
     public event Action<PlayerController> OnNewOwner;
     public event Action<PlayerController> OnNewMainPlayerController;

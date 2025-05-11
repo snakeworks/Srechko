@@ -14,9 +14,9 @@ public static class MenuNavigator
     public static Menu CurrentMenu => _menuStack.Peek();
     public static event Action OnEmptyStack;
     public static bool IsStackEmpty => _menuStack.Count <= 0;
+    public static bool IsBufferingMenuOperations { get; private set; } = false;
 
     private static readonly Stack<Menu> _menuStack = new();
-    private static bool _isBufferingMenuOperations = false;
 
     public static Stack<Menu> GetStack()
     {
@@ -28,7 +28,7 @@ public static class MenuNavigator
     /// </summary>
     public static void Push(Menu menu)
     {
-        if (menu == null || menu.IsOnStack || _isBufferingMenuOperations)
+        if (menu == null || menu.IsOnStack || IsBufferingMenuOperations)
         {
             return;
         }
@@ -49,6 +49,11 @@ public static class MenuNavigator
         }
 
         Sequence sequence = DOTween.Sequence();
+        sequence.OnComplete(() => 
+        {
+            menu.IsTweening = false;
+        });
+        menu.IsTweening = true;
         menu.TweenOpen(sequence);
         menu.EnableInteraction();
         _menuStack.Push(menu);
@@ -69,7 +74,7 @@ public static class MenuNavigator
     /// </summary>
     public static void Pop(bool asReplacement = false)
     {
-        if (IsStackEmpty || _isBufferingMenuOperations || !CurrentMenu.CanPop)
+        if (IsStackEmpty || IsBufferingMenuOperations || !CurrentMenu.CanPop)
         {
             return;
         }
@@ -83,10 +88,15 @@ public static class MenuNavigator
         Sequence sequence = DOTween.Sequence();
         sequence.OnComplete(() =>
         {
-            lastCurrentMenu.gameObject.SetActive(false);
+            if (!lastCurrentMenu.IsOnStack)
+            {
+                lastCurrentMenu.gameObject.SetActive(false);
+            }
+            lastCurrentMenu.IsTweening = false;
         });
 
         lastCurrentMenu.LastSelectedObject = EventSystem.current.currentSelectedGameObject;
+        lastCurrentMenu.IsTweening = true;
         lastCurrentMenu.TweenClose(sequence);        
         lastCurrentMenu.DisableInteraction();
         _menuStack.Pop();
@@ -139,14 +149,14 @@ public static class MenuNavigator
 
     private static async void BufferMenuOperations()
     {
-        _isBufferingMenuOperations = true;
-        await Task.Delay((int)(Time.deltaTime * 1500));
-        _isBufferingMenuOperations = false;
+        IsBufferingMenuOperations = true;
+        await Task.Delay((int)(Time.deltaTime * 2500));
+        IsBufferingMenuOperations = false;
     }
 
     private static async void BufferSelectButton()
     {
-        await Task.Delay((int)(Time.deltaTime * 1500));
+        await Task.Delay((int)(Time.deltaTime * 2500));
         EventSystem.current.SetSelectedGameObject(CurrentMenu.LastSelectedObject);
     }
 

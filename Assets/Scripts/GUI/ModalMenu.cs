@@ -26,14 +26,20 @@ public class ModalMenu : Menu
         _canvasGroup.alpha = 0.0f;
     }
 
-    private static void Push(string message)
+    private static bool Push(string message)
     {
+        if (MenuNavigator.IsBufferingMenuOperations || _instance.IsTweening)
+        {
+            return false;
+        }
+
         if (!IsModalCurrent)
         {
             MenuNavigator.Push(_instance);
         }
         ResetControls();
         _instance._messageText.SetText(message);
+        return true;
     }
 
     public static void ForcePop()
@@ -48,16 +54,29 @@ public class ModalMenu : Menu
 
     public static async Task<Result> PushOk(string message)
     {
-        Push(message);
+        if (!Push(message))
+        {
+            return Result.Error;
+        }
+
+        static void OnCancel(InputAction.CallbackContext context) => _instance._okButton.onClick.Invoke();
+
         _instance._okButton.gameObject.SetActive(true);
         _instance.LastSelectedObject = _instance._okButton.gameObject;
+        UIInputModule.cancel.action.performed += OnCancel;
+
         await _instance._okButton.onClick;
+        
+        UIInputModule.cancel.action.performed -= OnCancel;
         return Result.Ok;
     }
 
     public static async Task<Result> PushYesNo(string message)
     {
-        Push(message);
+        if (!Push(message))
+        {
+            return Result.Error;
+        }
 
         _instance._yesButton.gameObject.SetActive(true);
         _instance._noButton.gameObject.SetActive(true);
@@ -115,6 +134,7 @@ public class ModalMenu : Menu
     {
         Ok,
         Yes,
-        No
+        No,
+        Error
     }
 }

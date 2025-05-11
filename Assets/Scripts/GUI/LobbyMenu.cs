@@ -6,27 +6,62 @@ public class LobbyMenu : Menu
 
     protected override void Init()
     {
-        OnPlayerLeave(PlayerManager.Instance.MainPlayerController);
+        UpdatePlayerControls(PlayerManager.Instance.MainPlayerController);
         PlayerManager.Instance.EnableJoining();
-        PlayerManager.Instance.OnPlayerLeave += OnPlayerLeave;
+        PlayerManager.Instance.OnPlayerLeave += UpdatePlayerControls;
     }
     
-    private void OnPlayerLeave(PlayerController controller)
+    private void UpdatePlayerControls(PlayerController controller)
     {
         if (_currentMainController == controller)
         {
+            _currentMainController.InteractPerformed -= OnInteractPerformed;
             _currentMainController.CancelPerformed -= OnCancelPerformed;
         }
         if (PlayerManager.Instance.MainPlayerController != null)
         {
             _currentMainController = PlayerManager.Instance.MainPlayerController;
+            _currentMainController.InteractPerformed += OnInteractPerformed;
             _currentMainController.CancelPerformed += OnCancelPerformed;
         }
     }
 
+    private async void OnInteractPerformed()
+    {
+        if (ModalMenu.IsModalCurrent || MenuNavigator.IsBufferingMenuOperations)
+        {
+            return;
+        }
+
+        PlayerManager.Instance.DisableJoining();
+
+        if (PlayerManager.Instance.HasMinimumPlayerCount)
+        {
+            var result = await ModalMenu.PushYesNo("Would you like to begin the game?");
+            if (result == ModalMenu.Result.Yes)
+            {
+                ModalMenu.ForcePop();
+            }
+            else if (result == ModalMenu.Result.No)
+            {
+                ModalMenu.ForcePop();
+            }
+        }
+        else
+        {
+            var result = await ModalMenu.PushOk("There is not enough players to start the game.");
+            if (result == ModalMenu.Result.Ok)
+            {
+                ModalMenu.ForcePop();
+            }
+        }
+
+        PlayerManager.Instance.EnableJoining();
+    }
+
     private async void OnCancelPerformed()
     {
-        if (ModalMenu.IsModalCurrent)
+        if (ModalMenu.IsModalCurrent || MenuNavigator.IsBufferingMenuOperations)
         {
             return;
         }
@@ -50,8 +85,9 @@ public class LobbyMenu : Menu
         {
             return;
         }
+        _currentMainController.InteractPerformed -= OnInteractPerformed;
         _currentMainController.CancelPerformed -= OnCancelPerformed;
-        PlayerManager.Instance.OnPlayerLeave -= OnPlayerLeave;
+        PlayerManager.Instance.OnPlayerLeave -= UpdatePlayerControls;
     }
 
     public override void TweenClose(Sequence sequence)
