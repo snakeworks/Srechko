@@ -16,7 +16,7 @@ public static class SceneLoader
             Application.CanStreamedLevelBeLoaded(name);
     }
 
-    public static void Load(Scene scene, SceneTransition transition = null)
+    public static void Load(Scene scene, SceneTransition transition = null, bool showLoadingScreen = true)
     {
         if (IsLoading)
         {
@@ -38,7 +38,7 @@ public static class SceneLoader
             transition = SceneTransition.Get();
         }
 
-        PlayerManager.Instance.DisableAllInput();
+        PlayerManager.Instance.DisableInput();
 
         transition.gameObject.SetActive(true);
         Sequence inSequence = DOTween.Sequence();
@@ -48,14 +48,18 @@ public static class SceneLoader
         async void OnTweenInComplete()
         {
             MenuNavigator.Clear();
-            LoadingScreen.Instance.Show();
+
+            if (showLoadingScreen)
+            {
+                LoadingScreen.Instance.Show();
+            }
 
             // Scene load starts
             await SceneManager.LoadSceneAsync(sceneName);
             
             // Small delay because scene transitions don't play their tweens correctly
             // right after the scene has loaded
-            await Task.Delay(500);
+            await Task.Delay(350);
             
             // Scene load completes
             LoadingScreen.Instance.Hide();

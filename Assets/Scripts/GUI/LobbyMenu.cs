@@ -27,7 +27,7 @@ public class LobbyMenu : Menu
     private void OnCancelPerformed()
     {
         PlayerManager.Instance.CurrentOwner.CancelPerformed -= OnCancelPerformed;
-        SceneLoader.Load(Scene.MainMenu);
+        SceneLoader.Load(Scene.MainMenu, SceneTransition.Get(), false);
     }
 
     private void OnDestroy()

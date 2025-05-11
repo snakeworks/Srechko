@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -10,7 +9,18 @@ public class PlayerController : MonoBehaviour
 {
     public int Index => transform.GetSiblingIndex();
     public bool IsInputEnabled => PlayerInput.inputIsActive;
-    public InputDevice Device => PlayerInput.devices[0]; // TODO: Could cause problem in the future???
+    public InputActionAsset ActionsAsset => PlayerInput.actions;
+    public InputDevice Device
+    {
+        get
+        {
+            if (_device == null)
+            {
+                _device = PlayerInput.devices[0];
+            }
+            return _device;
+        }
+    }
     public event Action InteractPerformed;
     public event Action OpenPauseMenuPerformed;
     public event Action CancelPerformed;
@@ -29,6 +39,7 @@ public class PlayerController : MonoBehaviour
         }
     }
     private PlayerInput _playerInput;
+    private InputDevice _device;
 
     private void TryPerform(InputAction.CallbackContext context, Action action)
     {
@@ -38,23 +49,15 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public void EnableInput(Dictionary<PlayerController, InputDevice> disabledInputDevices)
+    public void EnableInput()
     {
-        if (disabledInputDevices.ContainsKey(this))
-        {
-            disabledInputDevices.Remove(this);
-        }
         PlayerInput.ActivateInput();
         InputSystem.EnableDevice(Device);
         CancelPerformed += PopMenu;
     }
 
-    public void DisableInput(Dictionary<PlayerController, InputDevice> disabledInputDevices)
+    public void DisableInput()
     {
-        if (!disabledInputDevices.ContainsKey(this))
-        {
-            disabledInputDevices.Add(this, Device);
-        }
         PlayerInput.DeactivateInput();
         InputSystem.DisableDevice(Device);
         CancelPerformed -= PopMenu;
@@ -63,6 +66,12 @@ public class PlayerController : MonoBehaviour
     private void PopMenu()
     {
         MenuNavigator.Pop();
+    }
+
+    private void OnDestroy()
+    {
+        // Returning control back to the device after this player has left the game
+        InputSystem.EnableDevice(Device);
     }
 
     public void InputInteract(InputAction.CallbackContext context) => TryPerform(context, InteractPerformed);

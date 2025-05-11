@@ -24,7 +24,7 @@ public static class MenuNavigator
     }
 
     /// <summary>
-    /// Opens a new menu and pushes it onto the stack.
+    /// Opens the new <c>menu</c> and pushes it onto the stack.
     /// </summary>
     public static void Push(Menu menu)
     {

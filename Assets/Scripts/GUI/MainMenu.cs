@@ -22,7 +22,7 @@ public class MainMenu : Menu
 
     public void PlayPressed()
     {
-        SceneLoader.Load(Scene.Lobby);
+        SceneLoader.Load(Scene.Lobby, SceneTransition.Get(), false);
     }
 
     public void QuitPressed()
