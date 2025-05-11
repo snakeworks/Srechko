@@ -11,6 +11,7 @@ using UnityEngine.InputSystem.UI;
 public class PlayerManager : Singleton<PlayerManager>
 {
     [SerializeField] private Menu _pauseMenu;
+    [SerializeField] private PlayerProfile[] _playerProfiles;
 
     public bool IsInputEnabled { get; private set; } = true;
     public PlayerController MainPlayerController => GetPlayerController(0);
@@ -49,6 +50,15 @@ public class PlayerManager : Singleton<PlayerManager>
             return null;
         }
         return _controllers[index];
+    }
+
+    public PlayerProfile GetPlayerProfile(int index)
+    {
+        if (!_playerProfiles.InRange(index))
+        {
+            return null;
+        }
+        return _playerProfiles[index];
     }
 
     /// <summary>

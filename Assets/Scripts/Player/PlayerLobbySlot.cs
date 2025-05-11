@@ -1,11 +1,15 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerLobbySlot : MonoBehaviour
 {
     [SerializeField] private GameObject _emptyPlayerOverlay;
     [SerializeField] private GameObject _joinedPlayerOverlay;
+    [SerializeField] private Image _playerIcon;
+    [SerializeField] private Image _playerNumberBackground;
     [SerializeField] private TextMeshProUGUI _playerNumberText;
+    [SerializeField] private TextMeshProUGUI _deviceText;
 
     public int SlotIndex => transform.GetSiblingIndex();
     
@@ -46,8 +50,16 @@ public class PlayerLobbySlot : MonoBehaviour
         }
         else
         {
+            var profile = PlayerManager.Instance.GetPlayerProfile(SlotIndex);
+            _playerIcon.color = profile.Color;
+            _playerNumberBackground.color = profile.Color;
+
+            string deviceText = $"Device Id: {PlayerManager.Instance.GetPlayerController(SlotIndex).Device.deviceId}\n";
+            deviceText += $"{PlayerManager.Instance.GetPlayerController(SlotIndex).Device.description}\n";
+            _deviceText.SetText(deviceText);
+
             _joinedPlayerOverlay.SetActive(true);
-            _emptyPlayerOverlay.SetActive(false);   
+            _emptyPlayerOverlay.SetActive(false);
         }
     }
 }

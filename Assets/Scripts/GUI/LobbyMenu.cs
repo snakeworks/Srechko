@@ -35,6 +35,7 @@ public class LobbyMenu : Menu
         if (result == ModalMenu.Result.Yes)
         {
             PlayerManager.Instance.CurrentOwner.CancelPerformed -= OnCancelPerformed;
+            PlayerManager.Instance.DisableJoining();
             SceneLoader.Load(Scene.MainMenu, SceneTransition.Get(), false);
         }
         else
@@ -55,7 +56,6 @@ public class LobbyMenu : Menu
 
     public override void TweenClose(Sequence sequence)
     {
-        PlayerManager.Instance.DisableJoining();
     }
 
     public override void TweenOpen(Sequence sequence)
