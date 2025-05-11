@@ -8,12 +8,15 @@ public class LobbyMenu : Menu
     {
         UpdatePlayerControls(PlayerManager.Instance.MainPlayerController);
         PlayerManager.Instance.EnableJoining();
+
+        // Because we're listening for OnPlayerLeave, the Lobby scene can never
+        // be run on it's own and must always be preceded by the MainMenu scene.
         PlayerManager.Instance.OnPlayerLeave += UpdatePlayerControls;
     }
     
     private void UpdatePlayerControls(PlayerController controller)
     {
-        if (_currentMainController == controller)
+        if (_currentMainController == controller && _currentMainController != null)
         {
             _currentMainController.InteractPerformed -= OnInteractPerformed;
             _currentMainController.CancelPerformed -= OnCancelPerformed;
