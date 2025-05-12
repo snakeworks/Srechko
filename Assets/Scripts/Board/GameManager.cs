@@ -4,14 +4,19 @@ using UnityEngine;
 
 public class GameManager : Singleton<GameManager>
 {
-    public State CurrentState { get; private set; } = State.Idle;    
-    public BoardPlayer CurrentPlayer => _boardPlayerOrder[_currentPlayerTurnIndex];
+    public GameState CurrentState { get; private set; }
 
-    private int _currentPlayerTurnIndex = 0;
-    private readonly List<BoardPlayer> _boardPlayerOrder = new();
+    private readonly List<BoardPlayerData> _boardPlayerData = new();
 
     protected override void Init()
-    {
+    {   
+        for (int i = 0; i < PlayerManager.Instance.ControllerCount; i++)
+        {
+            var child = new GameObject($"PlayerData{i+1}");
+            child.transform.SetParent(transform);
+            child.transform.position = Vector3.zero;
+            _boardPlayerData.Add(child.AddComponent<BoardPlayerData>());
+        }
         SceneLoader.OnSceneLoadFinish += EvaluateGameState;
     }
 
@@ -19,6 +24,32 @@ public class GameManager : Singleton<GameManager>
     {
         base.OnDestroy();
         SceneLoader.OnSceneLoadFinish -= EvaluateGameState;
+    }
+
+    private void Start()
+    {
+        BoardManager.Instance.StartFromScratch();
+        ChangeState(GameState.StartingState);
+    }
+
+    public void ChangeState(GameState newState)
+    {
+        if (newState == null)
+        {
+            return;
+        }
+        CurrentState?.OnExit();
+        CurrentState = newState;
+        CurrentState.OnEnter();
+    }
+
+    public BoardPlayerData GetBoardPlayerData(int index)
+    {
+        if (!_boardPlayerData.InRange(index))
+        {
+            return null;
+        }
+        return _boardPlayerData[index];
     }
 
     private void EvaluateGameState()
@@ -33,25 +64,7 @@ public class GameManager : Singleton<GameManager>
         }
         else
         {
-            Debug.LogError($"Unhandled scene during gameplay: '{SceneLoader.ActiveScene}'.");
+            Destroy(this);
         }
-
-        StartCoroutine(Delay());
-        IEnumerator Delay()
-        {
-            while (SceneLoader.IsLoading)
-            {
-                yield return null;
-            }
-        }
-    }
-
-
-    public enum State
-    {
-        Idle,
-        PickingPlayOrder,
-        PlayerPlaying,
-        DoingMinigame
     }
 }

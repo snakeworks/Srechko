@@ -16,11 +16,13 @@ public class PlayerManager : Singleton<PlayerManager>
     public bool IsInputEnabled { get; private set; } = true;
     public PlayerController MainPlayerController => GetPlayerController(0);
     public bool HasMinimumPlayerCount => _controllers.Count > 1;
+    public int ControllerCount => _controllers.Count;
     public PlayerController CurrentOwner { get; private set; }
     public event Action<PlayerController> OnNewOwner;
     public event Action<PlayerController> OnNewMainPlayerController;
     public event Action<PlayerController> OnPlayerJoin;
     public event Action<PlayerController> OnPlayerLeave;
+    public event Action<PlayerController> OnAnyPlayerInteractPerformed;
     
     private PlayerInputManager _playerInputManager;
     private readonly List<PlayerController> _controllers = new();
@@ -176,7 +178,10 @@ public class PlayerManager : Singleton<PlayerManager>
         player.gameObject.name = $"PlayerController{_playerInputManager.playerCount}";
 
         var controller = player.GetComponent<PlayerController>();
-        controller.OpenPauseMenuPerformed += () => OpenPauseMenu(controller);
+        
+        // controller.OpenPauseMenuPerformed += () => OpenPauseMenu(controller);
+        controller.InteractPerformed += () => OnAnyPlayerInteractPerformed?.Invoke(controller);
+
         _controllers.Add(controller);
 
         if (CurrentOwner != null)

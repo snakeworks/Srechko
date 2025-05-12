@@ -43,7 +43,7 @@ public class LobbyMenu : Menu
             var result = await ModalMenu.PushYesNo("Would you like to begin the game?");
             if (result == ModalMenu.Result.Yes)
             {
-                ModalMenu.ForcePop();
+                SceneLoader.Load(Scene.Board);
                 return;
             }
             else if (result == ModalMenu.Result.No)
