@@ -7,19 +7,22 @@ public class BoardManager : StaticInstance<BoardManager>
     [SerializeField] private Transform[] _startingPositions;
    
     public int CurrentPlayerTurnIndex { get; private set; } = -1;
+    public int BoardPlayerControllerCount => _boardPlayerControllers.Count;
     public BoardPlayerController CurrentPlayer => GetBoardPlayerControllerAt(_boardPlayerIndexOrder[CurrentPlayerTurnIndex]);
     public const int MinDiceNumber = 1;
     public const int MaxDiceNumber = 10;
 
-    private List<int> _boardPlayerIndexOrder = new();
+    private readonly List<BoardPlayerController> _boardPlayerControllers = new();
+    private List<int> _boardPlayerIndexOrder;
 
     private void InitBoard()
     {
         // Creating all of the board player controllers from a prefab
         for (int i = 0; i < PlayerManager.Instance.ControllerCount; i++)
         {
-            var boardPlayerObject = Instantiate(_boardPlayerControllerPrefab);
-            boardPlayerObject.transform.SetParent(transform);
+            var boardPlayerObject = Instantiate(_boardPlayerControllerPrefab, transform);
+            boardPlayerObject.name = $"BoardPlayerController{i+1}";
+            _boardPlayerControllers.Add(boardPlayerObject.GetComponent<BoardPlayerController>());
         }
     }
 
@@ -55,7 +58,11 @@ public class BoardManager : StaticInstance<BoardManager>
 
     public BoardPlayerController GetBoardPlayerControllerAt(int index)
     {
-        return transform.GetChild(index).GetComponent<BoardPlayerController>();
+        if (!_boardPlayerControllers.InRange(index))
+        {
+            return null;
+        }
+        return _boardPlayerControllers[index];
     }
 
     public BoardSnapshot GetBoardSnapshot()
