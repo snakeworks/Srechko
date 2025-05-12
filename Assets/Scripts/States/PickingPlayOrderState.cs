@@ -36,7 +36,7 @@ public class PickingPlayerOrderState : GameState
         int number = Random.Range(BoardManager.MinDiceNumber, BoardManager.MaxDiceNumber);
         _playerRandomNumbers.Add(controller.Index, number);
         
-        BoardManager.Instance.GetBoardPlayerControllerAt(controller.Index).FinishRollingDice(number, false);
+        BoardManager.Instance.GetBoardPlayerControllerAt(controller.Index).FinishRollingDice(number);
 
         // Finished picking random numbers for all players
         if (_playerRandomNumbers.Count >= PlayerManager.Instance.ControllerCount)
@@ -56,7 +56,7 @@ public class PickingPlayerOrderState : GameState
 
         BoardManager.Instance.SetTurnOrder(finalOrder);
 
-        await Task.Delay(1000);
+        await Task.Delay(800);
 
         for (int i = 0; i < BoardManager.Instance.BoardPlayerControllerCount; i++)
         {
@@ -66,7 +66,9 @@ public class PickingPlayerOrderState : GameState
 
         PlayerManager.Instance.DisableInput();
         PlayerManager.Instance.OnAnyPlayerInteractPerformed -= OnAnyPlayerInteractPerformed;
-        await Task.Delay(500);
+        
+        await Task.Delay(100);
+        
         ChangeState(NextTurnState);
     }
 

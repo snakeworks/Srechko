@@ -45,16 +45,16 @@ public class BoardPlayerController : MonoBehaviour
         }
     }
 
-    public void FinishRollingDice(int numberRolled, bool hideDice = true)
+    public void FinishRollingDice(int numberRolled)
     {
         LastRolledDiceNumber = numberRolled;
         StopCoroutine(_generateRandomNumberCoroutine);
-        _diceNumberText.SetText(numberRolled.ToString());
+        SetDiceNumberText(numberRolled);
+    }
 
-        if (hideDice)
-        {
-            HideDice();
-        }
+    public void SetDiceNumberText(int number)
+    {
+        _diceNumberText.SetText(number.ToString());
     }
 
     public void HideDice()

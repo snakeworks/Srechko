@@ -199,6 +199,28 @@
                 },
                 {
                     "name": "",
+                    "id": "ab7a8381-b78f-4570-9cb6-fb84c1f3f542",
+                    "path": "<Keyboard>/enter",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Interact",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c010daeb-e517-4f74-b6a9-3f9d7cae1a60",
+                    "path": "<Keyboard>/numpadEnter",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Interact",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "322088d6-7be5-4fd0-94bb-c26b11ea06e3",
                     "path": "*/{Cancel}",
                     "interactions": "",
