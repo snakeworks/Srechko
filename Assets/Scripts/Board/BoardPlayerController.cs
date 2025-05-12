@@ -65,7 +65,10 @@ public class BoardPlayerController : MonoBehaviour
     public void MoveToSpace(BoardSpace space, System.Action onComplete)
     {
         StandingOnBoardSpaceId = space.Id;
-        transform.DOMoveX(space.transform.position.x, 0.25f);
-        transform.DOMoveZ(space.transform.position.z, 0.25f).OnComplete(() => onComplete());
+        _visuals.transform.DOLocalMoveY(0.4f, 0.1f).SetEase(Ease.OutQuad).OnComplete(() => {
+            _visuals.transform.DOLocalMoveY(0.0f, 0.4f).SetEase(Ease.OutBounce).OnComplete(() => onComplete());
+        });
+        transform.DOMoveX(space.transform.position.x, 0.3f);
+        transform.DOMoveZ(space.transform.position.z, 0.3f);
     }
 }
