@@ -51,6 +51,7 @@ public class PickingPlayerOrderState : GameState
 
         // Kinda stupid way to sort the order of the players lol
         // Couldn't think of anything better yet
+        // Shouldn't cause too much trouble because there can only be 4 players max
         while (_playerRandomNumbers.Count > 0)
         {
             int highestIndex = 0;

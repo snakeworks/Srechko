@@ -60,4 +60,35 @@ public abstract class Menu : MonoBehaviour
     {
         _canvasGroup.interactable = false;
     }
+
+    /// <summary>
+    /// Pushes this menu onto the stack. This is the same as calling: <c>MenuNavigator.Push(this)</c>.
+    /// </summary>
+    public void Push()
+    {
+        MenuNavigator.Push(this);
+    }
+
+    /// <summary>
+    /// Pops this menu off the stack if it is on top of the stack.
+    /// </summary>
+    public void Pop()
+    {
+        if (!MenuNavigator.IsStackEmpty && MenuNavigator.CurrentMenu == this)
+        {
+            MenuNavigator.Pop();
+        }
+    }
+
+    /// <summary>
+    /// Pops this menu off the stack if it is on top of the stack.
+    /// This method ignores the <c>CanPop</c> property.
+    /// </summary>
+    public void ForcePop()
+    {
+        bool previousCanPopValue = CanPop;
+        CanPop = true;
+        Pop();
+        CanPop = previousCanPopValue;
+    }
 }
