@@ -17,7 +17,7 @@ public class RollingDiceState : GameState
             int rolledNumber = Random.Range(BoardManager.MinDiceNumber, BoardManager.MaxDiceNumber);
             CurrentBoardPlayerController.FinishRollingDice(rolledNumber);
             await Task.Delay(1000);
-            ChangeState(NextTurnState);
+            ChangeState(MovingBoardPlayerState);
         }
     }
 

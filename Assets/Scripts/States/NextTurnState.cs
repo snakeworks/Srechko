@@ -4,6 +4,7 @@ public class NextTurnState : GameState
 {
     public override async void OnEnter()
     {
+        PlayerManager.Instance.DisableInput();
         if (BoardManager.Instance.CurrentPlayerTurnIndex + 1 > PlayerManager.Instance.ControllerCount)
         {
             // ???

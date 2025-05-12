@@ -5,6 +5,7 @@ public abstract class GameState
     public static NextTurnState NextTurnState = new();
     public static ChoosingBoardActionState ChoosingBoardActionState = new();
     public static RollingDiceState RollingDiceState = new();
+    public static MovingBoardPlayerState MovingBoardPlayerState = new();
 
     protected PlayerController CurrentController => PlayerManager.Instance.GetPlayerController(BoardManager.Instance.CurrentPlayer.Index);
     protected BoardPlayerData CurrentPlayerData => GameManager.Instance.GetBoardPlayerData(BoardManager.Instance.CurrentPlayer.Index);

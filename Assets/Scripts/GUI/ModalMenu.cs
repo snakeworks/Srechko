@@ -42,7 +42,7 @@ public class ModalMenu : Menu
         return true;
     }
 
-    public static void ForcePop()
+    public static new void ForcePop()
     {
         if (IsModalCurrent)
         {

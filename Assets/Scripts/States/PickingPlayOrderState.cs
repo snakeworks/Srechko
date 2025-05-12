@@ -47,29 +47,14 @@ public class PickingPlayerOrderState : GameState
 
     private async void FinishPickingProcess()
     {
-        Stack<int> finalOrder = new();
+        List<int> finalOrder = new();
 
-        // Kinda stupid way to sort the order of the players lol
-        // Couldn't think of anything better yet
-        // Shouldn't cause too much trouble because there can only be 4 players max
-        while (_playerRandomNumbers.Count > 0)
-        {
-            int highestIndex = 0;
-            int highestNumber = 0;
-            foreach (var entry in _playerRandomNumbers)
-            {
-                if (entry.Value > highestNumber)
-                {
-                    highestIndex = entry.Key;
-                    highestNumber = entry.Value;
-                    break;
-                }
-            }
-            _playerRandomNumbers.Remove(highestIndex);
-            finalOrder.Push(highestIndex);
-        }
+        finalOrder = _playerRandomNumbers
+            .OrderByDescending(pair => pair.Value)
+            .Select(pair => pair.Key)
+            .ToList();
 
-        BoardManager.Instance.SetTurnOrder(finalOrder.ToList());
+        BoardManager.Instance.SetTurnOrder(finalOrder);
 
         await Task.Delay(1000);
 
