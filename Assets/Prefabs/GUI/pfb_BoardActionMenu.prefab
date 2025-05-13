@@ -383,6 +383,34 @@ PrefabInstance:
       propertyPath: m_Navigation.m_WrapAround
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 7831809592964515664, guid: 058ed0310b1613f3f8c1ebeef7eeab4e, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7831809592964515664, guid: 058ed0310b1613f3f8c1ebeef7eeab4e, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7831809592964515664, guid: 058ed0310b1613f3f8c1ebeef7eeab4e, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 5977981956907708827}
+    - target: {fileID: 7831809592964515664, guid: 058ed0310b1613f3f8c1ebeef7eeab4e, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7831809592964515664, guid: 058ed0310b1613f3f8c1ebeef7eeab4e, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ViewBoardPressed
+      objectReference: {fileID: 0}
+    - target: {fileID: 7831809592964515664, guid: 058ed0310b1613f3f8c1ebeef7eeab4e, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: BoardActionMenu, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 7831809592964515664, guid: 058ed0310b1613f3f8c1ebeef7eeab4e, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 8221236954798725835, guid: 058ed0310b1613f3f8c1ebeef7eeab4e, type: 3}
       propertyPath: m_Name
       value: BoardButton

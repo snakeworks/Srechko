@@ -10,11 +10,9 @@ public class PickingPlayerOrderState : GameState
     public override async void OnEnter()
     {
         PlayerManager.Instance.DisableInput();
-        BoardCamera.Instance.TransitionTo(BoardCameraTransforms.PickingOrderView, CameraTransition.Move);
-        while (BoardCamera.Instance.IsTransitioning)
-        {
-            await Task.Yield();
-        }
+        
+        await BoardCamera.Instance.TransitionTo(BoardCameraTransforms.PickingOrderView, CameraTransition.Move);
+
         PlayerManager.Instance.GiveOwnershipToAll();
         PlayerManager.Instance.EnableInput();
 

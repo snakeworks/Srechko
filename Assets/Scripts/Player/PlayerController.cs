@@ -24,6 +24,7 @@ public class PlayerController : MonoBehaviour
     public event Action InteractPerformed;
     public event Action OpenPauseMenuPerformed;
     public event Action CancelPerformed;
+    public event Action<Vector2> MovePerformed;
 
     // Doing this convoluted ass work around because of some stupid ass Unity reason.
     // For future reference: Always make calls to PlayerInput and not _playerInput.
@@ -74,6 +75,7 @@ public class PlayerController : MonoBehaviour
         InputSystem.EnableDevice(Device);
     }
 
+    public void InputMove(InputAction.CallbackContext context) => MovePerformed?.Invoke(context.ReadValue<Vector2>());
     public void InputInteract(InputAction.CallbackContext context) => TryPerform(context, InteractPerformed);
     public void InputOpenPauseMenu(InputAction.CallbackContext context) => TryPerform(context, OpenPauseMenuPerformed);
     public void InputCancel(InputAction.CallbackContext context) => TryPerform(context, CancelPerformed);
