@@ -308,6 +308,7 @@ MonoBehaviour:
   OpenImmediate: 0
   CanPop: 1
   PauseGameOnOpen: 0
+  RememberLastSelected: 1
   _itemSlots:
   - {fileID: 8177731026561149755}
   - {fileID: 5574362592756191481}

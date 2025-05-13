@@ -38,7 +38,10 @@ public static class MenuNavigator
         if (!IsStackEmpty)
         {
             CurrentMenu.DisableInteraction();
-            CurrentMenu.LastSelectedObject = EventSystem.current.currentSelectedGameObject;
+            if (EventSystem.current.currentSelectedGameObject != null && CurrentMenu.RememberLastSelected)
+            {
+                CurrentMenu.LastSelectedObject = EventSystem.current.currentSelectedGameObject;
+            }
         }
 
         menu.gameObject.SetActive(true);
@@ -95,7 +98,7 @@ public static class MenuNavigator
             lastCurrentMenu.IsTweening = false;
         });
 
-        if (EventSystem.current.currentSelectedGameObject != null)
+        if (EventSystem.current.currentSelectedGameObject != null && lastCurrentMenu.RememberLastSelected)
         {
             lastCurrentMenu.LastSelectedObject = EventSystem.current.currentSelectedGameObject;
         }

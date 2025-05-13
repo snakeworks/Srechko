@@ -139,6 +139,7 @@ MonoBehaviour:
   OpenImmediate: 0
   CanPop: 0
   PauseGameOnOpen: 0
+  RememberLastSelected: 1
   _itemMenu: {fileID: 0}
 --- !u!1001 &4882127940426169312
 PrefabInstance:

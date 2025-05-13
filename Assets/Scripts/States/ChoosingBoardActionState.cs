@@ -5,7 +5,9 @@ public class ChoosingBoardActionState : GameState
     public override async void OnEnter()
     {
         BoardCamera.Instance.TransitionToPlayer(CurrentBoardPlayerController.Index);
-        
+        BoardManager.Instance.BoardActionMenu.ResetLastSelectedObject();
+        BoardManager.Instance.BoardActionMenu.ItemMenu.ResetLastSelectedObject();
+
         while (BoardCamera.Instance.IsTransitioning)
         {
             await Task.Yield();

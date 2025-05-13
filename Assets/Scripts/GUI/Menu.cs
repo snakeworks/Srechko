@@ -8,19 +8,21 @@ public abstract class Menu : MonoBehaviour
     public bool OpenImmediate = false;
     public bool CanPop = true;
     public bool PauseGameOnOpen = false;
+    public bool RememberLastSelected = true;
     public bool IsCurrent => !MenuNavigator.IsStackEmpty && MenuNavigator.CurrentMenu == this;
     public bool IsOnStack => MenuNavigator.IsMenuOnStack(this);
     public bool IsTweening { get; set; } = false;
     public GameObject LastSelectedObject { get; set; }
     
     protected CanvasGroup _canvasGroup;
+    private Button _firstSelectedButton;
 
     private void Awake()
     {
         _canvasGroup = GetComponent<CanvasGroup>();
         
-        Button firstButton = GetComponentInChildren<Button>();
-        LastSelectedObject = firstButton == null ? null : firstButton.gameObject;
+        _firstSelectedButton = GetComponentInChildren<Button>();
+        LastSelectedObject = _firstSelectedButton == null ? null : _firstSelectedButton.gameObject;
         DisableInteraction();
         
         Init();
@@ -90,5 +92,13 @@ public abstract class Menu : MonoBehaviour
         {
             MenuNavigator.ForcePop();
         }
+    }
+
+    /// <summary>
+    /// Resets the last selected object to be the first button on the menu.
+    /// </summary>
+    public void ResetLastSelectedObject()
+    {
+        LastSelectedObject = _firstSelectedButton.gameObject;
     }
 }
