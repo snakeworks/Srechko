@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -13,6 +14,9 @@ public class BoardManager : StaticInstance<BoardManager>
     public BoardPlayerController CurrentPlayer => GetBoardPlayerControllerAt(_boardPlayerIndexOrder[CurrentPlayerTurnIndex]);
     public BoardActionMenu BoardActionMenu => _boardActionMenu; 
     public BoardSpace StartingSpace => _startingSpace;
+    public List<int> BoardPlayerIndexOrder => _boardPlayerIndexOrder;
+    public event Action OnNextTurn;
+    public event Action OnTurnOrderSet;
     public const int MinDiceNumber = 1;
     public const int MaxDiceNumber = 10;
 
@@ -80,6 +84,7 @@ public class BoardManager : StaticInstance<BoardManager>
     public void SetTurnOrder(List<int> order)
     {
         _boardPlayerIndexOrder = order;
+        OnTurnOrderSet?.Invoke();
     }
 
     public void NextTurn()
@@ -89,5 +94,6 @@ public class BoardManager : StaticInstance<BoardManager>
         {
             CurrentPlayerTurnIndex = 0;
         }
+        OnNextTurn?.Invoke();
     }
 }
