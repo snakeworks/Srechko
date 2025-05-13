@@ -1,3 +1,4 @@
+using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -7,9 +8,10 @@ public class BoardPlayerTurnCard : MonoBehaviour
     [SerializeField] private Image _icon;
     [SerializeField] private TextMeshProUGUI _playerNumberText;
     [SerializeField] private TextMeshProUGUI _coinsText;
-    [SerializeField] private Image _currentTurnIcon;
+    [SerializeField] private RectTransform _visualsRect;
 
     private BoardPlayerData _playerData;
+    private bool _hadLastTurn = false;
 
     public void Setup(BoardPlayerData playerData)
     {
@@ -19,7 +21,6 @@ public class BoardPlayerTurnCard : MonoBehaviour
         _playerNumberText.SetText($"PLAYER {_playerData.Index+1}");
         _playerData.OnCoinCountChanged += OnCoinsUpdate;
         BoardManager.Instance.OnNextTurn += OnNextTurn;
-        _currentTurnIcon.gameObject.SetActive(false);
     }
 
     private void OnDestroy()
@@ -40,11 +41,16 @@ public class BoardPlayerTurnCard : MonoBehaviour
     {
         if (GameManager.Instance.GetBoardPlayerData(BoardManager.Instance.CurrentPlayer.Index) == _playerData)
         {
-            _currentTurnIcon.gameObject.SetActive(true);
+            _hadLastTurn = true;
+            _visualsRect.DOAnchorPos3DY(25.0f, 0.15f);
         }
         else
         {
-            _currentTurnIcon.gameObject.SetActive(false);
+            if (_hadLastTurn)
+            {
+                _visualsRect.DOAnchorPos3DY(0.0f, 0.15f);
+            }
+            _hadLastTurn = false;
         }
     }
 }

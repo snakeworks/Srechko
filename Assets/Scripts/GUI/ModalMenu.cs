@@ -13,6 +13,7 @@ public class ModalMenu : Menu
     [SerializeField] private Button _okButton;
     [SerializeField] private Button _yesButton;
     [SerializeField] private Button _noButton;
+    [SerializeField] private RectTransform _mainWindowRect;
 
     public static bool IsModalCurrent => _instance.IsCurrent;
 
@@ -22,7 +23,7 @@ public class ModalMenu : Menu
     protected override void Init()
     {
         _instance = this;
-        transform.DOLocalMoveY(-60.0f, 0.0f);
+        _mainWindowRect.anchoredPosition = new(_mainWindowRect.anchoredPosition.x, -60.0f);
         _canvasGroup.alpha = 0.0f;
     }
 
@@ -120,13 +121,13 @@ public class ModalMenu : Menu
 
     public override void TweenOpen(Sequence sequence)
     {
-        sequence.Append(transform.DOLocalMoveY(0.0f, 0.15f));
+        sequence.Append(_mainWindowRect.DOAnchorPosY(0.0f, 0.15f));
         sequence.Insert(0.0f, _canvasGroup.DOFade(1.0f, 0.15f));
     }
 
     public override void TweenClose(Sequence sequence)
     {
-        sequence.Append(transform.DOLocalMoveY(-60.0f, 0.15f));
+        sequence.Append(_mainWindowRect.DOAnchorPosY(-60.0f, 0.15f));
         sequence.Insert(0.0f, _canvasGroup.DOFade(0.0f, 0.15f));
     }
 
