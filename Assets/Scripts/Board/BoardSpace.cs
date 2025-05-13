@@ -1,7 +1,8 @@
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 
-public class BoardSpace : MonoBehaviour
+public abstract class BoardSpace : MonoBehaviour
 {
     [SerializeField] private BoardSpace _nextSpaceUp;
     [SerializeField] private BoardSpace _nextSpaceDown;
@@ -34,6 +35,8 @@ public class BoardSpace : MonoBehaviour
 
         return spaces;
     }
+
+    public abstract Task OnPlayerLanded();
 
     public enum Direction
     {

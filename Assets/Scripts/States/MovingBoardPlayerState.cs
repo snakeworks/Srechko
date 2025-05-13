@@ -22,18 +22,18 @@ public class MovingBoardPlayerState : GameState
         async void Next()
         {
             movesLeft--;
+            var currentSpace = BoardSpace.Get(CurrentBoardPlayerController.StandingOnBoardSpaceId);
 
             if (movesLeft < 0)
             {
                 CurrentBoardPlayerController.HideDice();
-                await Task.Delay(100);
+                await Task.Delay(500);
+                await currentSpace.OnPlayerLanded();
                 ChangeState(NextTurnState);
                 return;
             }
 
             CurrentBoardPlayerController.SetDiceNumberText(movesLeft);
-
-            var currentSpace = BoardSpace.Get(CurrentBoardPlayerController.StandingOnBoardSpaceId);
             CurrentBoardPlayerController.MoveToSpace(currentSpace.GetNextSpaces().First().Key, Next);
         }
     }

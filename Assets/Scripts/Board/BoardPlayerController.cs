@@ -7,9 +7,10 @@ public class BoardPlayerController : MonoBehaviour
 {
     [SerializeField] private SpriteRenderer _visuals;
     [SerializeField] private Transform _cameraView;
-    [SerializeField] private Canvas _diceCanvas;
     [SerializeField] private CanvasGroup _diceCanvasGroup;
     [SerializeField] private TextMeshProUGUI _diceNumberText;
+    [SerializeField] private CanvasGroup _coinsCanvasGroup;
+    [SerializeField] private TextMeshProUGUI _coinsText;
 
     public int StandingOnBoardSpaceId { get; private set; } = -1;
     public Transform CameraView => _cameraView;
@@ -24,16 +25,19 @@ public class BoardPlayerController : MonoBehaviour
     {
         var profile = PlayerManager.Instance.GetPlayerProfile(Index);
         _visuals.material.SetColor("SpriteColor", profile.Color);
-        _diceCanvas.gameObject.SetActive(false);
+        
+        _diceCanvasGroup.gameObject.SetActive(false);
         _diceCanvasGroup.alpha = 0.0f;
-
+        _coinsCanvasGroup.gameObject.SetActive(false);
+        _coinsCanvasGroup.alpha = 0.0f;
     }
 
     public void ShowDiceRolling()
     {
-        _diceCanvas.gameObject.SetActive(true);
+        _diceCanvasGroup.gameObject.SetActive(true);
+        _diceCanvasGroup.alpha = 0.0f;
+
         _diceCanvasGroup.DOFade(1.0f, 0.15f);
-        
         _diceNumberText.SetText(
             (Random.Range(BoardManager.MinDiceNumber, BoardManager.MaxDiceNumber) + _moveCountModifier).ToString()
         );
@@ -65,7 +69,7 @@ public class BoardPlayerController : MonoBehaviour
 
     public void HideDice()
     {
-        _diceCanvasGroup.DOFade(0.0f, 0.15f).SetDelay(1.0f).OnComplete(() => _diceCanvas.gameObject.SetActive(false));
+        _diceCanvasGroup.DOFade(0.0f, 0.15f).OnComplete(() => _diceCanvasGroup.gameObject.SetActive(false));
     }
 
     public void MoveToSpace(BoardSpace space, System.Action onComplete)
@@ -81,5 +85,22 @@ public class BoardPlayerController : MonoBehaviour
     public void SetMoveCountModifier(int modifier)
     {
         _moveCountModifier = modifier;
+    }
+
+    public void PlayCoinsGet(int amount)
+    {
+        _coinsText.SetText($"+{amount} $");
+        _coinsCanvasGroup.gameObject.SetActive(true);
+
+        _coinsCanvasGroup.alpha = 0.0f;
+        var rectTransform = _coinsCanvasGroup.GetComponent<RectTransform>();
+        rectTransform.anchoredPosition = new(
+            rectTransform.anchoredPosition.x,
+            -230.0f
+        );
+
+        _coinsCanvasGroup.DOFade(1.0f, 0.1f);
+        rectTransform.DOAnchorPosY(0.0f, 0.1f);
+        _coinsCanvasGroup.DOFade(0.0f, 0.1f).SetDelay(1.0f).OnComplete(() => _coinsCanvasGroup.gameObject.SetActive(false));
     }
 }
