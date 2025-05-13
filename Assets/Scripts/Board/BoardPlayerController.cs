@@ -89,7 +89,7 @@ public class BoardPlayerController : MonoBehaviour
 
     public void PlayCoinsGet(int amount)
     {
-        _coinsText.SetText($"+{amount} $");
+        _coinsText.SetText($"+{amount} <sprite index=0>");
         _coinsCanvasGroup.gameObject.SetActive(true);
 
         _coinsCanvasGroup.alpha = 0.0f;
