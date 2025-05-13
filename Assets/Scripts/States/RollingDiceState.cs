@@ -9,6 +9,7 @@ public class RollingDiceState : GameState
         
         await Task.Delay(100);
 
+        PlayerManager.Instance.EnableInput();
         CurrentController.InteractPerformed += OnDiceRollDecided;
         
         async void OnDiceRollDecided()

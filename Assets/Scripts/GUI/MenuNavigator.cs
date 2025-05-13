@@ -65,21 +65,21 @@ public static class MenuNavigator
     /// </summary>
     public static void PushReplacement(Menu menu)
     {
-        Pop(asReplacement: true);
+        Pop(PopMode.Replacement);
         Push(menu);
     }
 
     /// <summary>
     /// Closes the current menu and pops it off the stack.
     /// </summary>
-    public static void Pop(bool asReplacement = false)
+    public static void Pop(PopMode mode = PopMode.Default)
     {
         if (IsStackEmpty || IsBufferingMenuOperations || !CurrentMenu.CanPop)
         {
             return;
         }
         
-        if (!asReplacement)
+        if (mode == PopMode.Default)
         {
             BufferMenuOperations();
         }
@@ -95,13 +95,16 @@ public static class MenuNavigator
             lastCurrentMenu.IsTweening = false;
         });
 
-        lastCurrentMenu.LastSelectedObject = EventSystem.current.currentSelectedGameObject;
+        if (EventSystem.current.currentSelectedGameObject != null)
+        {
+            lastCurrentMenu.LastSelectedObject = EventSystem.current.currentSelectedGameObject;
+        }
         lastCurrentMenu.IsTweening = true;
         lastCurrentMenu.TweenClose(sequence);        
         lastCurrentMenu.DisableInteraction();
         _menuStack.Pop();
 
-        if (asReplacement)
+        if (mode == PopMode.Replacement)
         {
             return;
         }
@@ -112,10 +115,41 @@ public static class MenuNavigator
             Pauser.UnpauseGame();
             OnEmptyStack?.Invoke();
         }
-        else
+        else if (mode == PopMode.Default)
         {
             CurrentMenu.EnableInteraction();
             BufferSelectButton();
+        }
+        else if (mode == PopMode.ForceAll)
+        {
+            EventSystem.current.SetSelectedGameObject(CurrentMenu.LastSelectedObject);
+        }
+    }
+
+    /// <summary>
+    /// Pops the menu on top of the stack. Ignores <c>CanPop</c> property.
+    /// </summary>
+    public static void ForcePop(PopMode mode = PopMode.Default)
+    {
+        if (IsStackEmpty)
+        {
+            return;
+        }
+        bool previousCanPopValue = CurrentMenu.CanPop;
+        Menu lastCurrentMenu = CurrentMenu;
+        lastCurrentMenu.CanPop = true;
+        Pop(mode);
+        lastCurrentMenu.CanPop = previousCanPopValue;
+    }
+
+    /// <summary>
+    /// Pops every menu off the stack. Ignores <c>CanPop</c> property.
+    /// </summary>
+    public static void ForcePopUntilEmpty()
+    {
+        while (!IsStackEmpty)
+        {
+            ForcePop(PopMode.ForceAll);
         }
     }
 
@@ -169,5 +203,12 @@ public static class MenuNavigator
     public static bool IsMenuOnStack(Menu menu)
     {
         return _menuStack.Any((m) => m == menu);
+    }
+
+    public enum PopMode
+    {
+        Default,
+        Replacement,
+        ForceAll
     }
 }

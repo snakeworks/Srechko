@@ -16,6 +16,7 @@ public class BoardPlayerController : MonoBehaviour
     public int Index => transform.GetSiblingIndex();
     public int LastRolledDiceNumber { get; private set; }
 
+    private int _moveCountModifier = 0;
     private WaitForSeconds _numberGenerationDelay = new(0.02f);
     private Coroutine _generateRandomNumberCoroutine;
 
@@ -33,23 +34,28 @@ public class BoardPlayerController : MonoBehaviour
         _diceCanvas.gameObject.SetActive(true);
         _diceCanvasGroup.DOFade(1.0f, 0.15f);
         
-        _diceNumberText.SetText(Random.Range(BoardManager.MinDiceNumber, BoardManager.MaxDiceNumber).ToString());
+        _diceNumberText.SetText(
+            (Random.Range(BoardManager.MinDiceNumber, BoardManager.MaxDiceNumber) + _moveCountModifier).ToString()
+        );
         _generateRandomNumberCoroutine = StartCoroutine(GenerateRandomNumber());
         IEnumerator GenerateRandomNumber()
         {
             while (true)
             {
                 yield return _numberGenerationDelay;
-                _diceNumberText.SetText(Random.Range(BoardManager.MinDiceNumber, BoardManager.MaxDiceNumber).ToString());
+                _diceNumberText.SetText(
+                    (Random.Range(BoardManager.MinDiceNumber, BoardManager.MaxDiceNumber) + _moveCountModifier).ToString()
+                );
             }
         }
     }
 
     public void FinishRollingDice(int numberRolled)
     {
-        LastRolledDiceNumber = numberRolled;
+        LastRolledDiceNumber = numberRolled + _moveCountModifier;
+        _moveCountModifier = 0;
         StopCoroutine(_generateRandomNumberCoroutine);
-        SetDiceNumberText(numberRolled);
+        SetDiceNumberText(LastRolledDiceNumber);
     }
 
     public void SetDiceNumberText(int number)
@@ -70,5 +76,10 @@ public class BoardPlayerController : MonoBehaviour
         });
         transform.DOMoveX(space.transform.position.x, 0.3f);
         transform.DOMoveZ(space.transform.position.z, 0.3f);
+    }
+
+    public void SetMoveCountModifier(int modifier)
+    {
+        _moveCountModifier = modifier;
     }
 }

@@ -86,9 +86,9 @@ public abstract class Menu : MonoBehaviour
     /// </summary>
     public void ForcePop()
     {
-        bool previousCanPopValue = CanPop;
-        CanPop = true;
-        Pop();
-        CanPop = previousCanPopValue;
+        if (!MenuNavigator.IsStackEmpty && MenuNavigator.CurrentMenu == this)
+        {
+            MenuNavigator.ForcePop();
+        }
     }
 }

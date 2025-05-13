@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class GameManager : Singleton<GameManager>
 {
+    [SerializeField] private Item _testItem;
+    
     public GameState CurrentState { get; private set; }
 
     private readonly List<BoardPlayerData> _boardPlayerData = new();
@@ -17,6 +19,7 @@ public class GameManager : Singleton<GameManager>
             child.transform.position = Vector3.zero;
             _boardPlayerData.Add(child.AddComponent<BoardPlayerData>());
         }
+        GetBoardPlayerData(0).AddItem(_testItem, 3);
         SceneLoader.OnSceneLoadFinish += EvaluateGameState;
     }
 

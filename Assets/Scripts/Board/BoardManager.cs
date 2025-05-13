@@ -5,13 +5,13 @@ public class BoardManager : StaticInstance<BoardManager>
 {
     [SerializeField] private BoardPlayerController _boardPlayerControllerPrefab;
     [SerializeField] private Transform[] _startingPositions;
-    [SerializeField] private BoardPlayerActionMenu _boardPlayerActionMenu;
+    [SerializeField] private BoardActionMenu _boardActionMenu;
     [SerializeField] private BoardSpace _startingSpace;
-   
+
     public int CurrentPlayerTurnIndex { get; private set; } = -1;
     public int BoardPlayerControllerCount => _boardPlayerControllers.Count;
     public BoardPlayerController CurrentPlayer => GetBoardPlayerControllerAt(_boardPlayerIndexOrder[CurrentPlayerTurnIndex]);
-    public BoardPlayerActionMenu BoardPlayerActionMenu => _boardPlayerActionMenu; 
+    public BoardActionMenu BoardActionMenu => _boardActionMenu; 
     public BoardSpace StartingSpace => _startingSpace;
     public const int MinDiceNumber = 1;
     public const int MaxDiceNumber = 10;

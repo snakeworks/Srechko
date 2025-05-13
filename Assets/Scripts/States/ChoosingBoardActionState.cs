@@ -18,16 +18,32 @@ public class ChoosingBoardActionState : GameState
         PlayerManager.Instance.EnableInput();
         PlayerManager.Instance.GiveOwnershipTo(CurrentController);
 
-        BoardManager.Instance.BoardPlayerActionMenu.OnDiceRollPressed += OnDiceRollPressed;
-        BoardManager.Instance.BoardPlayerActionMenu.PushWithBoardPlayerData(CurrentPlayerData);
+        BoardManager.Instance.BoardActionMenu.OnDiceRollPressed += OnDiceRollPressed;
+        BoardManager.Instance.BoardActionMenu.ItemMenu.OnItemPressed += OnItemPressed;
+        BoardManager.Instance.BoardActionMenu.Push();
+    }
+
+    private void ResetListeners()
+    {
+        PlayerManager.Instance.DisableInput();
+        BoardManager.Instance.BoardActionMenu.OnDiceRollPressed -= OnDiceRollPressed;
+        BoardManager.Instance.BoardActionMenu.ItemMenu.OnItemPressed -= OnItemPressed;
     }
 
     private async void OnDiceRollPressed()
     {
-        BoardManager.Instance.BoardPlayerActionMenu.OnDiceRollPressed -= OnDiceRollPressed;
-        BoardManager.Instance.BoardPlayerActionMenu.ForcePop();
+        ResetListeners();
+        BoardManager.Instance.BoardActionMenu.ForcePop();
         await Task.Delay(100);
         ChangeState(RollingDiceState);
+    }
+
+    private async void OnItemPressed()
+    {
+        ResetListeners();
+        MenuNavigator.ForcePopUntilEmpty();
+        await Task.Delay(100);
+        ChangeState(UseItemState);
     }
 
     public override void OnExit()
