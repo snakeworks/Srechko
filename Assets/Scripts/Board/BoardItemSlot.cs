@@ -7,6 +7,7 @@ public class BoardItemSlot : MonoBehaviour
 {
     [SerializeField] private Image _itemIcon;
     [SerializeField] private TextMeshProUGUI _itemAmountText;
+    [SerializeField] private Sprite _emptyItemIcon;
 
     public event Action OnSlotPressed; 
     public Item Item { get; private set; }
@@ -27,7 +28,7 @@ public class BoardItemSlot : MonoBehaviour
 
         if (Item == null)
         {
-            _itemIcon.sprite = null;
+            _itemIcon.sprite = _emptyItemIcon;
             _itemAmountText.SetText("0");
         }
         else

@@ -30,7 +30,7 @@ public class BoardItemMenu : Menu
             {
                 if (slot.Item == null)
                 {
-                    _itemNameText.SetText("NONE");
+                    _itemNameText.SetText("EMPTY");
                     _itemDescriptionText.SetText("No item selected.");
                 }
                 else

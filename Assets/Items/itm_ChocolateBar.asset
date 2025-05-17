@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 86632458bc0c3b30eaeebaa658a7f104, type: 3}
-  m_Name: itm_Sugar
+  m_Name: itm_ChocolateBar
   m_EditorClassIdentifier: 
-  Name: Sugar
+  Name: Chocolate Bar
   Description: Gives the player +20 moves next turn.
   Price: 100
-  Icon: {fileID: 21300000, guid: 75be719d026cadb1cb6043c9379c8dd1, type: 3}
+  Icon: {fileID: 21300000, guid: 226228726373cb5b3af677383b4232cf, type: 3}
   MoveCountModifier: 20
