@@ -18,7 +18,7 @@ public class BoardPlayerController : MonoBehaviour
     public int StandingOnBoardSpaceId { get; private set; } = -1;
     public Transform CameraView => _cameraView;
     public int Index => transform.GetSiblingIndex();
-    public int LastRolledDiceNumber { get; private set; }
+    public int LastRolledDiceNumber { get; private set; } = -1;
 
     private int _moveCountModifier = 0;
     private int _diceCount = _diceCountMin;

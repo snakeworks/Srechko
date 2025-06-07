@@ -29,12 +29,12 @@ public class BoardItemSlot : MonoBehaviour
         if (Item == null)
         {
             _itemIcon.sprite = _emptyItemIcon;
-            _itemAmountText.SetText("0");
+            _itemAmountText.SetText("x0");
         }
         else
         {
             _itemIcon.sprite = item.Icon;
-            _itemAmountText.SetText(amount.ToString());
+            _itemAmountText.SetText($"x{amount}");
         }
     }
 

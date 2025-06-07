@@ -28,21 +28,22 @@ public class BoardPlayerData : MonoBehaviour
         OnCoinCountChanged?.Invoke();
     }
 
-    public void AddItem(Item item, int amount)
+    public bool AddItem(Item item, int amount)
     {
         if (Items.ContainsKey(item))
         {
-            Items[item]++;
+            Items[item] += amount;
         }
         else
         {
             if (Items.Count >= MaxUniqueItemCount)
             {
-                return;
+                return false;
             }
             Items.Add(item, amount);
         }
         OnItemUpdate?.Invoke(item, Items[item]);
+        return true;
     }
 
     public void SelectItem(Item item)

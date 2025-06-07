@@ -15,7 +15,7 @@ public abstract class Menu : MonoBehaviour
     public GameObject LastSelectedObject { get; set; }
     
     protected CanvasGroup _canvasGroup;
-    private Button _firstSelectedButton;
+    protected Button _firstSelectedButton;
 
     private void Awake()
     {

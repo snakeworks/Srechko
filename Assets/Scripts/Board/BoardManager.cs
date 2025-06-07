@@ -7,12 +7,14 @@ public class BoardManager : StaticInstance<BoardManager>
     [SerializeField] private BoardPlayerController _boardPlayerControllerPrefab;
     [SerializeField] private Transform[] _startingPositions;
     [SerializeField] private BoardActionMenu _boardActionMenu;
+    [SerializeField] private ShopMenu _shopMenu;
     [SerializeField] private BoardSpace _startingSpace;
 
     public int CurrentPlayerTurnIndex { get; private set; } = -1;
     public int BoardPlayerControllerCount => _boardPlayerControllers.Count;
     public BoardPlayerController CurrentPlayer => GetBoardPlayerControllerAt(_boardPlayerIndexOrder[CurrentPlayerTurnIndex]);
-    public BoardActionMenu BoardActionMenu => _boardActionMenu; 
+    public BoardActionMenu BoardActionMenu => _boardActionMenu;
+    public ShopMenu ShopMenu => _shopMenu; 
     public BoardSpace StartingSpace => _startingSpace;
     public List<int> BoardPlayerIndexOrder => _boardPlayerIndexOrder;
     public event Action OnNextTurn;

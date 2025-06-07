@@ -1,0 +1,66 @@
+using System.Collections.Generic;
+using DG.Tweening;
+using TMPro;
+using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.EventSystems;
+
+public class ShopMenu : Menu
+{
+    [SerializeField] private ShopItemSlot _shopItemSlotPrefab;
+    [SerializeField] private Transform _shopItemSlotsCreationParent;
+    [SerializeField] private TextMeshProUGUI _itemDescriptionText;
+    [SerializeField] private Item[] _sellingItems;
+
+    private readonly List<ShopItemSlot> _itemSlots = new();
+
+    protected override void Init()
+    {
+        foreach (var item in _sellingItems)
+        {
+            var slot = Instantiate(_shopItemSlotPrefab).GetComponent<ShopItemSlot>();
+            slot.transform.SetParent(_shopItemSlotsCreationParent);
+            _itemSlots.Add(slot);
+            slot.Setup(item);
+        }
+        _firstSelectedButton = _itemSlots[0].GetComponent<Button>();
+        LastSelectedObject = _firstSelectedButton.gameObject;
+    }
+
+    private void Update()
+    {
+        foreach (var slot in _itemSlots)
+        {
+            if (EventSystem.current.currentSelectedGameObject == slot.gameObject)
+            {
+                if (slot.Item == null)
+                {
+                    _itemDescriptionText.SetText("No item selected.");
+                }
+                else
+                {
+                    _itemDescriptionText.SetText(slot.Item.Description);
+                }
+            }
+        }
+    }
+
+    public override void TweenOpen(Sequence sequence)
+    {
+        var playerController = PlayerManager.Instance.GetPlayerController(BoardManager.Instance.CurrentPlayer.Index);
+        playerController.CancelPerformed += TryCloseMenu;
+    }
+
+    public override void TweenClose(Sequence sequence)
+    {
+        var playerController = PlayerManager.Instance.GetPlayerController(BoardManager.Instance.CurrentPlayer.Index);
+        playerController.CancelPerformed -= TryCloseMenu;
+    }
+
+    private async void TryCloseMenu()
+    {
+        var result = await ModalMenu.PushYesNo("Leave the shop?");
+        if (result == ModalMenu.Result.Yes) MenuNavigator.ForcePopUntilEmpty();
+        else ModalMenu.ForcePop();
+    }
+}

@@ -1,11 +1,8 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class GameManager : Singleton<GameManager>
 {
-    [SerializeField] private Item _testItem;
-    
     public GameState CurrentState { get; private set; }
 
     private readonly List<BoardPlayerData> _boardPlayerData = new();
@@ -19,7 +16,8 @@ public class GameManager : Singleton<GameManager>
             child.transform.position = Vector3.zero;
             _boardPlayerData.Add(child.AddComponent<BoardPlayerData>());
         }
-        GetBoardPlayerData(0).AddItem(_testItem, 3);
+        GetBoardPlayerData(0).AddCoins(6000);
+        GetBoardPlayerData(1).AddCoins(6000);
         SceneLoader.OnSceneLoadFinish += EvaluateGameState;
     }
 

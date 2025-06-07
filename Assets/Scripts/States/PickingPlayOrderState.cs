@@ -27,7 +27,10 @@ public class PickingPlayerOrderState : GameState
 
     private async void OnAnyPlayerInteractPerformed(PlayerController controller)
     {
-        if (_playerRandomNumbers.ContainsKey(controller.Index))
+        // TODO: This will likely not work with multiple die, however that shouldn't be a
+        // problem because all players have one dice at the beginning of the game.
+        var playerController = BoardManager.Instance.GetBoardPlayerControllerAt(controller.Index);
+        if (_playerRandomNumbers.ContainsKey(controller.Index) || playerController.LastRolledDiceNumber > 0)
         {
             return;
         }
@@ -36,7 +39,7 @@ public class PickingPlayerOrderState : GameState
 
         if (result == false) return;
 
-        _playerRandomNumbers.Add(controller.Index, BoardManager.Instance.GetBoardPlayerControllerAt(controller.Index).LastRolledDiceNumber);
+        _playerRandomNumbers.Add(controller.Index, playerController.LastRolledDiceNumber);
 
         // Finished picking random numbers for all players
         if (_playerRandomNumbers.Count >= PlayerManager.Instance.ControllerCount)
