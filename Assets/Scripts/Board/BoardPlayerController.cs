@@ -143,9 +143,13 @@ public class BoardPlayerController : MonoBehaviour
         _diceCount = Mathf.Clamp(count, _diceCountMin, _diceCountMax);
     }
 
-    public void PlayCoinsGet(int amount)
+    public void PlayCoinsAnimation(int amount, bool addedCoins = true)
     {
-        _coinsText.SetText($"+{amount} <sprite index=0>");
+        if (addedCoins)
+            _coinsText.SetText($"+{amount} <sprite index=0>");
+        else
+            _coinsText.SetText($"<color=red>-{amount} <sprite index=0>");
+
         _coinsCanvasGroup.gameObject.SetActive(true);
 
         _coinsCanvasGroup.alpha = 0.0f;

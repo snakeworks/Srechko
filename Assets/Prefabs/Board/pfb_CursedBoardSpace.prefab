@@ -10,9 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 7964853194665996261}
   - component: {fileID: 6482614141033370922}
-  - component: {fileID: 3218117173525664371}
+  - component: {fileID: 9166491140092171825}
   m_Layer: 0
-  m_Name: pfb_BoardSpace
+  m_Name: pfb_CursedBoardSpace
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -78,7 +78,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
-  m_Color: {r: 0, g: 0.7454498, b: 1, a: 1}
+  m_Color: {r: 1, g: 0, b: 0.08050728, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -88,7 +88,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &3218117173525664371
+--- !u!114 &9166491140092171825
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -97,7 +97,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 7483387506456620478}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 218e825e0e506ccbc96b87e18edc58d6, type: 3}
+  m_Script: {fileID: 11500000, guid: a7899e2f195d8fad79d83005da108e55, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _nextSpaceUp: {fileID: 0}
