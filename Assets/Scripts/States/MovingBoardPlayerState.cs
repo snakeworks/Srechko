@@ -11,7 +11,7 @@ public class MovingBoardPlayerState : GameState
         if (CurrentBoardPlayerController.StandingOnBoardSpaceId == -1)
         {
             movesLeft--;
-            CurrentBoardPlayerController.SetDiceNumberText(movesLeft);
+            CurrentBoardPlayerController.SetFinalDiceNumberText(movesLeft);
             CurrentBoardPlayerController.MoveToSpace(BoardManager.Instance.StartingSpace, Next);
         }
         else
@@ -26,14 +26,14 @@ public class MovingBoardPlayerState : GameState
 
             if (movesLeft < 0)
             {
-                CurrentBoardPlayerController.HideDice();
+                CurrentBoardPlayerController.HideFinalDiceNumber();
                 await Task.Delay(500);
                 await currentSpace.OnPlayerLanded();
                 ChangeState(NextTurnState);
                 return;
             }
 
-            CurrentBoardPlayerController.SetDiceNumberText(movesLeft);
+            CurrentBoardPlayerController.SetFinalDiceNumberText(movesLeft);
             CurrentBoardPlayerController.MoveToSpace(currentSpace.GetNextSpaces().First().Key, Next);
         }
     }

@@ -5,7 +5,7 @@ public class RollingDiceState : GameState
 {
     public override async void OnEnter()
     {
-        CurrentBoardPlayerController.ShowDiceRolling();
+        CurrentBoardPlayerController.StartDiceRoll();
         
         await Task.Delay(100);
 
@@ -14,9 +14,10 @@ public class RollingDiceState : GameState
         
         async void OnDiceRollDecided()
         {
+            bool finished = await CurrentBoardPlayerController.FinishDiceRoll();
+            if (!finished) return;
+
             CurrentController.InteractPerformed -= OnDiceRollDecided;
-            int rolledNumber = Random.Range(BoardManager.MinDiceNumber, BoardManager.MaxDiceNumber);
-            CurrentBoardPlayerController.FinishRollingDice(rolledNumber);
             await Task.Delay(1000);
             ChangeState(MovingBoardPlayerState);
         }

@@ -19,22 +19,24 @@ public class PickingPlayerOrderState : GameState
         for (int i = 0; i < BoardManager.Instance.BoardPlayerControllerCount; i++)
         {
             var boardPlayer = BoardManager.Instance.GetBoardPlayerControllerAt(i);
-            boardPlayer.ShowDiceRolling();
+            boardPlayer.StartDiceRoll();
         }
 
         PlayerManager.Instance.OnAnyPlayerInteractPerformed += OnAnyPlayerInteractPerformed;
     }
 
-    private void OnAnyPlayerInteractPerformed(PlayerController controller)
+    private async void OnAnyPlayerInteractPerformed(PlayerController controller)
     {
         if (_playerRandomNumbers.ContainsKey(controller.Index))
         {
             return;
         }
-        int number = Random.Range(BoardManager.MinDiceNumber, BoardManager.MaxDiceNumber);
-        _playerRandomNumbers.Add(controller.Index, number);
         
-        BoardManager.Instance.GetBoardPlayerControllerAt(controller.Index).FinishRollingDice(number);
+        bool result = await BoardManager.Instance.GetBoardPlayerControllerAt(controller.Index).FinishDiceRoll();
+
+        if (result == false) return;
+
+        _playerRandomNumbers.Add(controller.Index, BoardManager.Instance.GetBoardPlayerControllerAt(controller.Index).LastRolledDiceNumber);
 
         // Finished picking random numbers for all players
         if (_playerRandomNumbers.Count >= PlayerManager.Instance.ControllerCount)
@@ -59,7 +61,7 @@ public class PickingPlayerOrderState : GameState
         for (int i = 0; i < BoardManager.Instance.BoardPlayerControllerCount; i++)
         {
             var boardPlayer = BoardManager.Instance.GetBoardPlayerControllerAt(i);
-            boardPlayer.HideDice();
+            boardPlayer.HideFinalDiceNumber();
         }
 
         PlayerManager.Instance.DisableInput();
