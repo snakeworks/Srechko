@@ -16,8 +16,6 @@ public class GameManager : Singleton<GameManager>
             child.transform.position = Vector3.zero;
             _boardPlayerData.Add(child.AddComponent<BoardPlayerData>());
         }
-        GetBoardPlayerData(0).AddCoins(6000);
-        GetBoardPlayerData(1).AddCoins(6000);
         SceneLoader.OnSceneLoadFinish += EvaluateGameState;
     }
 

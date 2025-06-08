@@ -94,7 +94,8 @@ public class BoardManager : StaticInstance<BoardManager>
         CurrentPlayerTurnIndex++;
         if (CurrentPlayerTurnIndex >= PlayerManager.Instance.ControllerCount)
         {
-            CurrentPlayerTurnIndex = 0;
+            // Setting to -1 for the beginning of a minigame
+            CurrentPlayerTurnIndex = -1;
         }
         OnNextTurn?.Invoke();
     }

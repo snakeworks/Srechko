@@ -39,7 +39,8 @@ public class BoardPlayerTurnCard : MonoBehaviour
 
     private void OnNextTurn()
     {
-        if (GameManager.Instance.GetBoardPlayerData(BoardManager.Instance.CurrentPlayer.Index) == _playerData)
+        if (BoardManager.Instance.CurrentPlayerTurnIndex != -1
+            && BoardManager.Instance.CurrentPlayer.Index == _playerData.Index)
         {
             _hadLastTurn = true;
             _visualsRect.DOAnchorPos3DY(25.0f, 0.15f);
