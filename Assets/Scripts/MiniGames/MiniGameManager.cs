@@ -24,6 +24,7 @@ public class MiniGameManager : StaticInstance<MiniGameManager>
         _current = _games[Random.Range(0, _games.Length)];
         _screenObject.SetActive(true);
         _current.gameObject.SetActive(true);
+        _current.OnCalled();
 
         await _screenObject.transform.DOScale(1.0f, 0.6f)
             .SetEase(Ease.OutCirc)
