@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -45,6 +46,11 @@ public class ButtonMashMiniGame : MiniGame
         void OnInteractPressed(PlayerController controller)
         {
             _pressCountList[controller.Index]++;
+            _playersParent.GetChild(controller.Index).GetChild(0).DOKill();
+            _playersParent
+                .GetChild(controller.Index)
+                .GetChild(0).localScale = new(0.85f, 0.85f, 0.85f);
+            _playersParent.GetChild(controller.Index).GetChild(0).DOScale(1.0f, 0.2f);
         }
 
         int passedTime = _timerMilliseconds;
