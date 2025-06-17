@@ -24,14 +24,13 @@ public abstract class BoardSpace : MonoBehaviour
         return _parent.GetChild(id).GetComponent<BoardSpace>();
     }
 
-    public Dictionary<BoardSpace, Direction> GetNextSpaces()
+    public Dictionary<Direction, BoardSpace> GetNextSpaces()
     {
-        Dictionary<BoardSpace, Direction> spaces = new();
-
-        if (_nextSpaceUp != null) spaces.Add(_nextSpaceUp, Direction.Up);
-        if (_nextSpaceDown != null) spaces.Add(_nextSpaceDown, Direction.Down);
-        if (_nextSpaceLeft != null) spaces.Add(_nextSpaceLeft, Direction.Left);
-        if (_nextSpaceRight != null) spaces.Add(_nextSpaceRight, Direction.Right);
+        Dictionary<Direction, BoardSpace> spaces = new();
+        if (_nextSpaceUp != null) spaces.Add(Direction.Up, _nextSpaceUp);
+        if (_nextSpaceDown != null) spaces.Add(Direction.Down, _nextSpaceDown);
+        if (_nextSpaceLeft != null) spaces.Add(Direction.Left, _nextSpaceLeft);
+        if (_nextSpaceRight != null) spaces.Add(Direction.Right, _nextSpaceRight);
 
         return spaces;
     }

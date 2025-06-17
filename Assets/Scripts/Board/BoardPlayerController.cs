@@ -122,15 +122,15 @@ public class BoardPlayerController : MonoBehaviour
         _finalDiceNumberText.DOFade(0.0f, 0.15f);
     }
 
-    public void MoveToSpace(BoardSpace space, System.Action onComplete)
+    public async Task MoveToSpace(BoardSpace space)
     {
         StandingOnBoardSpaceId = space.Id;
-        _visuals.transform.DOLocalMoveY(0.4f, 0.1f).SetEase(Ease.OutQuad).OnComplete(() =>
-        {
-            _visuals.transform.DOLocalMoveY(0.0f, 0.4f).SetEase(Ease.OutBounce).OnComplete(() => onComplete());
-        });
-        transform.DOMoveX(space.transform.position.x, 0.3f);
-        transform.DOMoveZ(space.transform.position.z, 0.3f);
+        Sequence sequence = DOTween.Sequence();
+        sequence.Insert(0.0f, transform.DOMoveX(space.transform.position.x, 0.3f));
+        sequence.Insert(0.0f, transform.DOMoveZ(space.transform.position.z, 0.3f));
+        sequence.Insert(0.0f, _visuals.transform.DOLocalMoveY(0.4f, 0.1f).SetEase(Ease.OutQuad));
+        sequence.Insert(0.1f, _visuals.transform.DOLocalMoveY(0.0f, 0.4f).SetEase(Ease.OutBounce));
+        await sequence.Play().AsyncWaitForCompletion();
     }
 
     public void SetMoveCountModifier(int modifier)

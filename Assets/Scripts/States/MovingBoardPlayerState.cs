@@ -1,9 +1,10 @@
 using System.Linq;
 using System.Threading.Tasks;
+using UnityEngine;
 
 public class MovingBoardPlayerState : GameState
 {
-    public override void OnEnter()
+    public override async void OnEnter()
     {
         int movesLeft = CurrentBoardPlayerController.LastRolledDiceNumber;
         PlayerManager.Instance.DisableInput();
@@ -12,12 +13,10 @@ public class MovingBoardPlayerState : GameState
         {
             movesLeft--;
             CurrentBoardPlayerController.SetFinalDiceNumberText(movesLeft);
-            CurrentBoardPlayerController.MoveToSpace(BoardManager.Instance.StartingSpace, Next);
+            await CurrentBoardPlayerController.MoveToSpace(BoardManager.Instance.StartingSpace);
         }
-        else
-        {
-            Next();
-        }
+    
+        Next();
 
         async void Next()
         {
@@ -33,8 +32,65 @@ public class MovingBoardPlayerState : GameState
                 return;
             }
 
-            CurrentBoardPlayerController.SetFinalDiceNumberText(movesLeft);
-            CurrentBoardPlayerController.MoveToSpace(currentSpace.GetNextSpaces().First().Key, Next);
+            var nextSpaces = currentSpace.GetNextSpaces();
+            if (nextSpaces.Count > 1)
+            {
+                BoardCameraTransforms.BoardView.transform.position = new(
+                    CurrentBoardPlayerController.transform.position.x,
+                    BoardCameraTransforms.BoardView.transform.position.y,
+                    CurrentBoardPlayerController.transform.position.z - 2.0f
+                );
+                await BoardCamera.Instance.TransitionTo(BoardCameraTransforms.BoardView, CameraTransition.Move);
+
+                PlayerManager.Instance.GiveOwnershipTo(CurrentController);
+                PlayerManager.Instance.EnableInput();
+                CurrentController.MovePerformed += OnMove;
+
+                async void OnMove(Vector2 dir)
+                {
+                    BoardSpace.Direction direction = nextSpaces.First().Key;
+
+                    // Set a threshold to avoid accidental small movements
+                    const float threshold = 0.5f;
+                    if (Mathf.Abs(dir.x) > Mathf.Abs(dir.y))
+                    {
+                        if (dir.x > threshold)
+                            direction = BoardSpace.Direction.Right;
+                        else if (dir.x < -threshold)
+                            direction = BoardSpace.Direction.Left;
+                        else
+                            return; // Ignore small input
+                    }
+                    else
+                    {
+                        if (dir.y > threshold)
+                            direction = BoardSpace.Direction.Up;
+                        else if (dir.y < -threshold)
+                            direction = BoardSpace.Direction.Down;
+                        else
+                            return; // Ignore small input
+                    }
+
+                    if (nextSpaces.TryGetValue(direction, out var space))
+                    {
+                        CurrentController.MovePerformed -= OnMove;
+                        PlayerManager.Instance.DisableInput();
+
+                        await BoardCamera.Instance.TransitionToPlayer(CurrentController.Index);
+
+                        CurrentBoardPlayerController.SetFinalDiceNumberText(movesLeft);
+                        await CurrentBoardPlayerController.MoveToSpace(space);
+
+                        Next();
+                    }
+                }
+            }
+            else
+            {
+                CurrentBoardPlayerController.SetFinalDiceNumberText(movesLeft);
+                await CurrentBoardPlayerController.MoveToSpace(currentSpace.GetNextSpaces().First().Value);
+                Next();
+            }
         }
     }
 
