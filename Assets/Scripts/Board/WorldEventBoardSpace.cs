@@ -1,10 +1,10 @@
 using System.Threading.Tasks;
 using UnityEngine;
 
-public class EventBoardSpace : BoardSpace
+public class WorldEventBoardSpace : BoardSpace
 {
     public override async Task OnPlayerLanded()
     {
-        await Task.Delay(10);
+        await WorldEventManager.Instance.ApplyRandom();
     }
 }
