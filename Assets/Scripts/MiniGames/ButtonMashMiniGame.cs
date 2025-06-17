@@ -10,7 +10,7 @@ public class ButtonMashMiniGame : MiniGame
     [SerializeField] private TextMeshProUGUI _timerText;
     [SerializeField] private TextMeshProUGUI _mashButtonText;
 
-    private const int _timerMilliseconds = 15000;
+    private const int _timerMilliseconds = 10000;
 
     public override void OnCalled()
     {
