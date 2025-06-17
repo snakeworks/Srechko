@@ -652,7 +652,7 @@ GameObject:
   - component: {fileID: 130644811283847719}
   - component: {fileID: 7442626819823732487}
   m_Layer: 0
-  m_Name: pbf_BoardPlayerTurnCard
+  m_Name: pfb_BoardPlayerTurnCard
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
