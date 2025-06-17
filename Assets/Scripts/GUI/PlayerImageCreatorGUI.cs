@@ -5,7 +5,7 @@ public class PlayerImageCreatorGUI : MonoBehaviour
 {
     [SerializeField] private GameObject _playerPrefab;
 
-    private void Start()
+    private void Awake()
     {
         for (int i = 0; i < PlayerManager.Instance.ControllerCount; i++)
         {
@@ -13,6 +13,7 @@ public class PlayerImageCreatorGUI : MonoBehaviour
             obj.GetComponentInChildren<Image>().color = PlayerManager.Instance.GetPlayerProfile(i).Color;
             obj.transform.SetParent(transform);
             obj.transform.localScale = Vector3.one;
+            obj.name = $"PlayerImage{i}";
         }
     }
 }

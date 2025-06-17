@@ -1,10 +1,8 @@
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class ButtonMashMiniGame : MiniGame
 {
@@ -64,8 +62,12 @@ public class ButtonMashMiniGame : MiniGame
         PlayerManager.Instance.DisableInput();
         PlayerManager.Instance.OnAnyPlayerInteractPerformed -= OnInteractPressed;
 
-        await Task.Delay(200);
-
-        End();
+        End(new Dictionary<int, int>
+        {
+            {0, _pressCountList.InRange(0) ? _pressCountList[0] : 0},
+            {1, _pressCountList.InRange(1) ? _pressCountList[1] : 0},
+            {2, _pressCountList.InRange(2) ? _pressCountList[2] : 0},
+            {3, _pressCountList.InRange(3) ? _pressCountList[3] : 0},
+        });
     }
 }
