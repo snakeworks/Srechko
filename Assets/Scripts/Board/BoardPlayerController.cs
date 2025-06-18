@@ -86,6 +86,8 @@ public class BoardPlayerController : MonoBehaviour
                         (Random.Range(BoardManager.MinDiceNumber, BoardManager.MaxDiceNumber) + _moveCountModifier).ToString()
                     );
                 }
+                if (!AudioManager.Instance.IsPlaying(SoundName.DiceRoll))
+                    AudioManager.Instance.Play(SoundName.DiceRoll);
             }
         }
     }
@@ -97,6 +99,8 @@ public class BoardPlayerController : MonoBehaviour
         LastRolledDiceNumber += diceNumber;
         _diceTexts[_currentRollingDiceIndex].SetText(diceNumber.ToString());
         _currentRollingDiceIndex++;
+
+        AudioManager.Instance.Play(SoundName.DiceRollFinished);
 
         if (_currentRollingDiceIndex < _diceCount) return false;
 
@@ -190,9 +194,15 @@ public class BoardPlayerController : MonoBehaviour
     public void PlayCoinsAnimation(int amount, bool addedCoins = true)
     {
         if (addedCoins)
+        {
             _coinsText.SetText($"+{amount} <sprite index=0>");
+            AudioManager.Instance.Play(SoundName.CoinsGain);
+        }
         else
+        {
             _coinsText.SetText($"<color=red>-{amount} <sprite index=0>");
+            AudioManager.Instance.Play(SoundName.CoinsLose);
+        }
 
 
         _coinsCanvasGroup.gameObject.SetActive(true);

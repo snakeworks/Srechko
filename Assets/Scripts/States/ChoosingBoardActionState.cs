@@ -93,7 +93,8 @@ public class ChoosingBoardActionState : GameState
         {
             CurrentController.MovePerformed -= OnMove;
             (EventSystem.current.currentInputModule as InputSystemUIInputModule).cancel.action.performed -= OnCancel;
-            
+            AudioManager.Instance.Play(SoundName.UINegative);
+
             BoardManager.Instance.StopCoroutine(updateCoroutine);
 
             PlayerManager.Instance.DisableInput();

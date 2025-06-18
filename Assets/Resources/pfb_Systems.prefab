@@ -45,12 +45,54 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _soundDefinitions:
+  - Name: UISelect
+    Clip: {fileID: 8300000, guid: 7c31f8ea9c10665c291265f048b9547e, type: 3}
+    Volume: 1
+    Pitch: 1
+    RandomVolume: 0
+    RandomPitch: 0
+  - Name: UIPositive
+    Clip: {fileID: 8300000, guid: 87587e59ee3411da1bc270c21874277f, type: 3}
+    Volume: 1
+    Pitch: 1
+    RandomVolume: 0
+    RandomPitch: 0
+  - Name: UINegative
+    Clip: {fileID: 8300000, guid: 08db281303a9f14c09d6ffa70704da1b, type: 3}
+    Volume: 1
+    Pitch: 1
+    RandomVolume: 0
+    RandomPitch: 0
   - Name: PlayerLand
     Clip: {fileID: 8300000, guid: 15e04868cc76d8045b749183c768493d, type: 3}
     Volume: 1
     Pitch: 1
     RandomVolume: 0
     RandomPitch: 0.1
+  - Name: DiceRoll
+    Clip: {fileID: 8300000, guid: 8573756db398141d7b7570f7a5ede6a6, type: 3}
+    Volume: 0.5
+    Pitch: 1
+    RandomVolume: 0
+    RandomPitch: 0
+  - Name: DiceRollFinished
+    Clip: {fileID: 8300000, guid: 8b9cce50f609938d0b8d0cd9c1950418, type: 3}
+    Volume: 0.5
+    Pitch: 1
+    RandomVolume: 0
+    RandomPitch: 0
+  - Name: CoinsGain
+    Clip: {fileID: 8300000, guid: 8ee731be9c63976be90c612308fb7eec, type: 3}
+    Volume: 1
+    Pitch: 1
+    RandomVolume: 0
+    RandomPitch: 0
+  - Name: CoinsLose
+    Clip: {fileID: 8300000, guid: afffa6cae1149e366b656f78b935e624, type: 3}
+    Volume: 1
+    Pitch: 1
+    RandomVolume: 0
+    RandomPitch: 0
 --- !u!1 &4291767145384084407
 GameObject:
   m_ObjectHideFlags: 0

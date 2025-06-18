@@ -26,6 +26,11 @@ public class SoundDefinition
         _source.PlayDelayed(delay);
     }
 
+    public bool IsPlaying()
+    {
+        return _source.isPlaying;
+    }
+
     public void Stop()
     {
         _source.Stop();

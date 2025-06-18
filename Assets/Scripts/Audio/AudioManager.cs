@@ -27,4 +27,18 @@ public class AudioManager : Singleton<AudioManager>
             definition.Play(delay);
         }
     }
+
+    public bool IsPlaying(string soundName)
+    {
+        if (_definitionsDict.TryGetValue(soundName, out var def)) return def.IsPlaying();
+        return false;
+    }
+
+    public void Stop(string soundName)
+    {
+        if (_definitionsDict.TryGetValue(soundName, out var def))
+        {
+            def.Stop();
+        }
+    }
 }

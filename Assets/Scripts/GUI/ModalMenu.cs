@@ -103,6 +103,7 @@ public class ModalMenu : Menu
             }
 
             UIInputModule.cancel.action.performed -= OnCancel;
+            if (noClicked) AudioManager.Instance.Play(SoundName.UINegative);
             return yesClicked ? Result.Yes : Result.No;
         }
         finally
