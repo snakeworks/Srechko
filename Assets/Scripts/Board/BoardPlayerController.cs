@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class BoardPlayerController : MonoBehaviour
 {
@@ -14,6 +15,7 @@ public class BoardPlayerController : MonoBehaviour
     [SerializeField] private TextMeshProUGUI[] _diceTexts = new TextMeshProUGUI[_diceCountMax];
     [SerializeField] private TextMeshProUGUI _finalDiceNumberText;
     [SerializeField] private TextMeshProUGUI _coinsText;
+    [SerializeField] private DirectionalPromptDefinition[] _directionalPrompts;
 
     public int StandingOnBoardSpaceId { get; private set; } = -1;
     public Transform CameraView => _cameraView;
@@ -25,6 +27,8 @@ public class BoardPlayerController : MonoBehaviour
     private int _currentRollingDiceIndex = 0;
     private readonly WaitForSeconds _numberGenerationDelay = new(0.02f);
     private Coroutine _generateRandomNumberCoroutine;
+    private readonly Dictionary<BoardSpace.Direction, DirectionalPromptDefinition> _directionalPromptsDict = new();
+    private float _defaultDirectionalPromptScale;
     private const int _diceCountMin = 1;
     private const int _diceCountMax = 3;
 
@@ -37,6 +41,13 @@ public class BoardPlayerController : MonoBehaviour
         _diceCanvasGroup.alpha = 0.0f;
         _coinsCanvasGroup.gameObject.SetActive(false);
         _coinsCanvasGroup.alpha = 0.0f;
+
+        foreach (var def in _directionalPrompts)
+        {
+            _defaultDirectionalPromptScale = def.Sprite.transform.localScale.x;
+            _directionalPromptsDict.Add(def.Direction, def);
+            def.Sprite.DOFade(0.0f, 0.0f);
+        }
 
         HideFinalDiceNumber();
     }
@@ -136,6 +147,36 @@ public class BoardPlayerController : MonoBehaviour
         await sequence.Play().AsyncWaitForCompletion();
     }
 
+    public void ShowDirectionalPrompts(BoardSpace.Direction[] directions)
+    {
+        foreach (var dir in directions)
+        {
+            // Resetting 
+            _directionalPromptsDict[dir].Sprite.DOFade(0.0f, 0.0f);
+            _directionalPromptsDict[dir].Sprite.transform.DOScale(_defaultDirectionalPromptScale, 0.0f);
+
+            _directionalPromptsDict[dir].Sprite.DOFade(1.0f, 0.1f);
+        }
+    }
+
+    public async Task HideDirectionalPrompts(BoardSpace.Direction chosenDirection)
+    {
+        Sequence sequence = DOTween.Sequence();
+        foreach (var prompt in _directionalPrompts)
+        {
+            if (prompt.Direction == chosenDirection)
+            {
+                sequence.Insert(0.0f, prompt.Sprite.transform.DOScale(1.1f, 0.3f));
+                sequence.Insert(0.0f, prompt.Sprite.DOFade(0.0f, 0.1f).SetDelay(0.15f));
+            }
+            else
+            {
+                sequence.Insert(0.0f, prompt.Sprite.DOFade(0.0f, 0.1f));
+            }
+        }
+        await sequence.Play().AsyncWaitForCompletion();
+    }
+
     public void SetMoveCountModifier(int modifier)
     {
         _moveCountModifier = modifier;
@@ -153,6 +194,7 @@ public class BoardPlayerController : MonoBehaviour
         else
             _coinsText.SetText($"<color=red>-{amount} <sprite index=0>");
 
+
         _coinsCanvasGroup.gameObject.SetActive(true);
 
         _coinsCanvasGroup.alpha = 0.0f;
@@ -165,5 +207,12 @@ public class BoardPlayerController : MonoBehaviour
         _coinsCanvasGroup.DOFade(1.0f, 0.1f);
         rectTransform.DOAnchorPosY(0.0f, 0.1f);
         _coinsCanvasGroup.DOFade(0.0f, 0.1f).SetDelay(1.0f).OnComplete(() => _coinsCanvasGroup.gameObject.SetActive(false));
+    }
+
+    [System.Serializable]
+    public class DirectionalPromptDefinition
+    {
+        [SerializeField] public BoardSpace.Direction Direction;
+        [SerializeField] public SpriteRenderer Sprite;
     }
 }

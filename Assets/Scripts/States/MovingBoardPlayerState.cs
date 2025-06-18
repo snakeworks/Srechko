@@ -42,6 +42,8 @@ public class MovingBoardPlayerState : GameState
                 );
                 await BoardCamera.Instance.TransitionTo(BoardCameraTransforms.BoardView, CameraTransition.Move);
 
+                CurrentBoardPlayerController.ShowDirectionalPrompts(nextSpaces.Keys.ToArray());
+
                 PlayerManager.Instance.GiveOwnershipTo(CurrentController);
                 PlayerManager.Instance.EnableInput();
                 CurrentController.MovePerformed += OnMove;
@@ -76,6 +78,8 @@ public class MovingBoardPlayerState : GameState
                         CurrentController.MovePerformed -= OnMove;
                         PlayerManager.Instance.DisableInput();
 
+                        await CurrentBoardPlayerController.HideDirectionalPrompts(direction);
+                        await Task.Delay(200);
                         await BoardCamera.Instance.TransitionToPlayer(CurrentController.Index);
 
                         CurrentBoardPlayerController.SetFinalDiceNumberText(movesLeft);
