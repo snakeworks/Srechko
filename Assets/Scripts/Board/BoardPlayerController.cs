@@ -130,6 +130,9 @@ public class BoardPlayerController : MonoBehaviour
         sequence.Insert(0.0f, transform.DOMoveZ(space.transform.position.z, 0.3f));
         sequence.Insert(0.0f, _visuals.transform.DOLocalMoveY(0.4f, 0.1f).SetEase(Ease.OutQuad));
         sequence.Insert(0.1f, _visuals.transform.DOLocalMoveY(0.0f, 0.4f).SetEase(Ease.OutBounce));
+
+        AudioManager.Instance.Play(SoundName.PlayerLand, delay: 0.2f);
+
         await sequence.Play().AsyncWaitForCompletion();
     }
 
