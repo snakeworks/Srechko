@@ -97,6 +97,10 @@ public class BoardPlayerController : MonoBehaviour
         int diceNumber = numberRolled + _moveCountModifier;
         LastRolledDiceNumber += diceNumber;
         _diceTexts[_currentRollingDiceIndex].SetText(diceNumber.ToString());
+
+        _diceTexts[_currentRollingDiceIndex].transform.parent.DOScale(1.3f, 0.0f);
+        _diceTexts[_currentRollingDiceIndex].transform.parent.DOScale(1.0f, 0.1f);
+
         _currentRollingDiceIndex++;
 
         AudioManager.Instance.Play(SoundName.DiceRollFinished);
