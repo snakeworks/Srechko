@@ -11,10 +11,9 @@ public class BoardPlayerController : MonoBehaviour
     [SerializeField] private SpriteRenderer _visuals;
     [SerializeField] private Transform _cameraView;
     [SerializeField] private CanvasGroup _diceCanvasGroup;
-    [SerializeField] private CanvasGroup _coinsCanvasGroup;
+    [SerializeField] private TextMeshProUGUI _popupText;
     [SerializeField] private TextMeshProUGUI[] _diceTexts = new TextMeshProUGUI[_diceCountMax];
     [SerializeField] private TextMeshProUGUI _finalDiceNumberText;
-    [SerializeField] private TextMeshProUGUI _coinsText;
     [SerializeField] private DirectionalPromptDefinition[] _directionalPrompts;
 
     public int StandingOnBoardSpaceId { get; private set; } = -1;
@@ -39,8 +38,8 @@ public class BoardPlayerController : MonoBehaviour
 
         _diceCanvasGroup.gameObject.SetActive(false);
         _diceCanvasGroup.alpha = 0.0f;
-        _coinsCanvasGroup.gameObject.SetActive(false);
-        _coinsCanvasGroup.alpha = 0.0f;
+        _popupText.alpha = 0.0f;
+        _popupText.gameObject.SetActive(false);
 
         foreach (var def in _directionalPrompts)
         {
@@ -200,32 +199,35 @@ public class BoardPlayerController : MonoBehaviour
         _diceCount = Mathf.Clamp(count, _diceCountMin, _diceCountMax);
     }
 
-    public void PlayCoinsAnimation(int amount, bool addedCoins = true)
+    public void PlayPopupAnimation(string text)
     {
-        if (addedCoins)
-        {
-            _coinsText.SetText($"+{amount} <sprite index=0>");
-            AudioManager.Instance.Play(SoundName.CoinsGain);
-        }
-        else
-        {
-            _coinsText.SetText($"<color=red>-{amount} <sprite index=0>");
-            AudioManager.Instance.Play(SoundName.CoinsLose);
-        }
+        _popupText.SetText(text);
+        _popupText.gameObject.SetActive(true);
 
-
-        _coinsCanvasGroup.gameObject.SetActive(true);
-
-        _coinsCanvasGroup.alpha = 0.0f;
-        var rectTransform = _coinsCanvasGroup.GetComponent<RectTransform>();
+        _popupText.alpha = 0.0f;
+        var rectTransform = _popupText.GetComponent<RectTransform>();
         rectTransform.anchoredPosition = new(
             rectTransform.anchoredPosition.x,
             -230.0f
         );
 
-        _coinsCanvasGroup.DOFade(1.0f, 0.1f);
+        _popupText.DOFade(1.0f, 0.1f);
         rectTransform.DOAnchorPosY(0.0f, 0.1f);
-        _coinsCanvasGroup.DOFade(0.0f, 0.1f).SetDelay(1.0f).OnComplete(() => _coinsCanvasGroup.gameObject.SetActive(false));
+        _popupText.DOFade(0.0f, 0.1f).SetDelay(1.0f).OnComplete(() => _popupText.gameObject.SetActive(false));
+    }
+
+    public void PlayCoinsAnimation(int amount, bool addedCoins = true)
+    {
+        if (addedCoins)
+        {
+            PlayPopupAnimation($"<color=yellow>+{amount} <sprite index=0>");
+            AudioManager.Instance.Play(SoundName.CoinsGain);
+        }
+        else
+        {
+            PlayPopupAnimation($"<color=red>-{amount} <sprite index=0>");
+            AudioManager.Instance.Play(SoundName.CoinsLose);
+        }
     }
 
     [System.Serializable]

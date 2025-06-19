@@ -5,7 +5,7 @@ public class NormalBoardSpace : BoardSpace
 {
     private const int _coinsEarned = 5;
 
-    public override async Task OnPlayerLanded()
+    protected override async Task PerformPlayerLanded()
     {
         var playerData = GameManager.Instance.GetBoardPlayerData(BoardManager.Instance.CurrentPlayer.Index);
         var boardPlayer = BoardManager.Instance.CurrentPlayer;
@@ -15,4 +15,6 @@ public class NormalBoardSpace : BoardSpace
 
         await Task.Delay(1000);
     }
+
+    protected override Task PerformPlayerPassed() => Task.CompletedTask;
 }

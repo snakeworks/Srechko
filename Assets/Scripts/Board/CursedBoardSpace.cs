@@ -4,7 +4,7 @@ public class CursedBoardSpace : BoardSpace
 {
     private const int _coinsLost = 5;
 
-    public async override Task OnPlayerLanded()
+    protected override async Task PerformPlayerLanded()
     {
         var playerData = GameManager.Instance.GetBoardPlayerData(BoardManager.Instance.CurrentPlayer.Index);
         var boardPlayer = BoardManager.Instance.CurrentPlayer;
@@ -14,4 +14,6 @@ public class CursedBoardSpace : BoardSpace
 
         await Task.Delay(1000);
     }
+
+    protected override Task PerformPlayerPassed() => Task.CompletedTask;
 }

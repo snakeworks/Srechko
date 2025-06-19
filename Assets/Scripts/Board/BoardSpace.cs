@@ -10,8 +10,9 @@ public abstract class BoardSpace : MonoBehaviour
     [SerializeField] private BoardSpace _nextSpaceRight;
 
     public int Id { get; private set; }
-    public bool IsMudCovered { get; private set; } = false;
 
+    private bool _isMudCovered = false;
+    private int _mudMoveCountModifier = 0;
     private readonly List<BoardPlayerController> _standingBoardPlayers = new();
     private static readonly List<BoardSpace> _spaces = new();
     private static bool _sorted = false;
@@ -78,7 +79,7 @@ public abstract class BoardSpace : MonoBehaviour
         }
         for (int i = 0; i < _standingBoardPlayers.Count; i++)
         {
-            float angle = i * Mathf.PI * 2 / _standingBoardPlayers.Count + Mathf.PI / 4; // Add a diagonal offset
+            float angle = i * Mathf.PI * 2 / _standingBoardPlayers.Count + Mathf.PI / 4;
             float radius = 0.2f;
             float offsetX = Mathf.Cos(angle) * radius;
             float offsetZ = Mathf.Sin(angle) * radius;
@@ -86,13 +87,34 @@ public abstract class BoardSpace : MonoBehaviour
         }
     }
 
-    public void SetMudCovered(bool covered)
+    public void SetMudCovered(bool covered, int moveCountModifier)
     {
-        IsMudCovered = covered;
+        _isMudCovered = covered;
+        _mudMoveCountModifier = moveCountModifier;
         BoardManager.Instance.CreateMudObjectOnSpace(this);
     }
-    
-    public abstract Task OnPlayerLanded();
+
+    public async Task OnPlayerPassed()
+    {
+        await PerformPlayerPassed();
+    }
+
+    protected abstract Task PerformPlayerPassed();
+
+    public async Task OnPlayerLanded()
+    {
+        if (_isMudCovered)
+        {
+            BoardManager.Instance.CurrentPlayer
+                .PlayPopupAnimation($"<color=red>-{_mudMoveCountModifier}");
+            BoardManager.Instance.CurrentPlayer
+                .SetMoveCountModifier(_mudMoveCountModifier > 0 ? -_mudMoveCountModifier : _mudMoveCountModifier);
+            await Task.Delay(2000);
+        }
+        await PerformPlayerLanded();
+    }
+
+    protected abstract Task PerformPlayerLanded();
 
     public enum Direction
     {

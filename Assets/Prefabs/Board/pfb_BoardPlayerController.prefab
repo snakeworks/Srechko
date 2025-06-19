@@ -141,13 +141,12 @@ MonoBehaviour:
   _visuals: {fileID: 1736383878172313743}
   _cameraView: {fileID: 6822634283796431703}
   _diceCanvasGroup: {fileID: 9000664716676271604}
-  _coinsCanvasGroup: {fileID: 303542777578680388}
+  _popupText: {fileID: 8470801410557401622}
   _diceTexts:
   - {fileID: 5340942580815484182}
   - {fileID: 6214859019213251784}
   - {fileID: 7331150198530020266}
   _finalDiceNumberText: {fileID: 8864507687561653535}
-  _coinsText: {fileID: 8470801410557401622}
   _directionalPrompts:
   - Direction: 0
     Sprite: {fileID: 5170989779805507884}
@@ -168,9 +167,8 @@ GameObject:
   - component: {fileID: 8171007122350822228}
   - component: {fileID: 872781587036413777}
   - component: {fileID: 8470801410557401622}
-  - component: {fileID: 303542777578680388}
   m_Layer: 0
-  m_Name: CoinsText
+  m_Name: PopupText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -223,7 +221,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: <color=red>+100 <sprite index=0>
+  m_text: +100 <sprite index=0>
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 5f11212a92762223589d6098258482f4, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 5f11212a92762223589d6098258482f4, type: 2}
@@ -232,8 +230,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4278241791
-  m_fontColor: {r: 1, g: 0.7882353, b: 0, a: 1}
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -294,18 +292,6 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
---- !u!225 &303542777578680388
-CanvasGroup:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1104356546125142827}
-  m_Enabled: 1
-  m_Alpha: 1
-  m_Interactable: 1
-  m_BlocksRaycasts: 1
-  m_IgnoreParentGroups: 0
 --- !u!1 &4443956152880478442
 GameObject:
   m_ObjectHideFlags: 0

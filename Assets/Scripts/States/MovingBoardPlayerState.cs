@@ -27,12 +27,14 @@ public class MovingBoardPlayerState : GameState
             {
                 CurrentBoardPlayerController.HideFinalDiceNumber();
                 await Task.Delay(500);
+                await currentSpace.OnPlayerPassed();
                 await currentSpace.OnPlayerLanded();
                 ChangeState(NextTurnState);
                 return;
             }
 
             var nextSpaces = currentSpace.GetNextSpaces();
+            await currentSpace.OnPlayerPassed();
             if (nextSpaces.Count > 1)
             {
                 BoardCameraTransforms.BoardView.transform.position = new(
