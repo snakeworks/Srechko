@@ -8,4 +8,6 @@ public static class SoundName
     public const string DiceRollFinished = "DiceRollFinished";
     public const string CoinsGain = "CoinsGain";
     public const string CoinsLose = "CoinsLose";
+    public const string EnergyGain = "EnergyGain";
+    public const string EnergyLose = "EnergyLose";
 }

@@ -108,7 +108,7 @@ public abstract class BoardSpace : MonoBehaviour
             BoardManager.Instance.CurrentPlayer
                 .SetMoveCountModifier(_mudMoveCountModifier > 0 ? -_mudMoveCountModifier : _mudMoveCountModifier);
             await BoardManager.Instance.CurrentPlayer
-                .PlayPopupAnimation($"<color=red>-{_mudMoveCountModifier}");
+                .PlayMoveCountAnimation(_mudMoveCountModifier, false);
             await Task.Delay(100);
         }
         await PerformPlayerLanded();

@@ -226,9 +226,9 @@ public class BoardPlayerController : MonoBehaviour
         await sequence.Play().AsyncWaitForCompletion();
     }
 
-    public async Task PlayCoinsAnimation(int amount, bool addedCoins = true)
+    public async Task PlayCoinsAnimation(int amount, bool positive = true)
     {
-        if (addedCoins)
+        if (positive)
         {
             AudioManager.Instance.Play(SoundName.CoinsGain);
             await PlayPopupAnimation($"<color=yellow>+{amount} <sprite index=0>");
@@ -237,6 +237,20 @@ public class BoardPlayerController : MonoBehaviour
         {
             AudioManager.Instance.Play(SoundName.CoinsLose);
             await PlayPopupAnimation($"<color=red>-{amount} <sprite index=0>");
+        }
+    }
+
+    public async Task PlayMoveCountAnimation(int amount, bool positive = true)
+    {
+        if (positive)
+        {
+            AudioManager.Instance.Play(SoundName.EnergyGain);
+            await PlayPopupAnimation($"+{amount} <sprite index=1>");
+        }
+        else
+        {
+            AudioManager.Instance.Play(SoundName.EnergyLose);
+            await PlayPopupAnimation($"<color=red>-{amount} <sprite index=1>");
         }
     }
 

@@ -9,6 +9,7 @@ public class MoveCountModifierItem : Item
     public async override Task PerformItemAction()
     {
         BoardManager.Instance.CurrentPlayer.SetMoveCountModifier(MoveCountModifier);
+        await BoardManager.Instance.CurrentPlayer.PlayMoveCountAnimation(MoveCountModifier);
         await Task.Delay(100);
     }
 }
