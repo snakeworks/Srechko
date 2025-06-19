@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 
 public class BoardManager : StaticInstance<BoardManager>
@@ -9,12 +10,13 @@ public class BoardManager : StaticInstance<BoardManager>
     [SerializeField] private BoardActionMenu _boardActionMenu;
     [SerializeField] private ShopMenu _shopMenu;
     [SerializeField] private BoardSpace _startingSpace;
+    [SerializeField] private GameObject _mudPrefab;
 
     public int CurrentPlayerTurnIndex { get; private set; } = -1;
     public int BoardPlayerControllerCount => _boardPlayerControllers.Count;
     public BoardPlayerController CurrentPlayer => GetBoardPlayerControllerAt(_boardPlayerIndexOrder[CurrentPlayerTurnIndex]);
     public BoardActionMenu BoardActionMenu => _boardActionMenu;
-    public ShopMenu ShopMenu => _shopMenu; 
+    public ShopMenu ShopMenu => _shopMenu;
     public BoardSpace StartingSpace => _startingSpace;
     public List<int> BoardPlayerIndexOrder => _boardPlayerIndexOrder;
     public event Action OnNextTurn;
@@ -31,7 +33,7 @@ public class BoardManager : StaticInstance<BoardManager>
         for (int i = 0; i < PlayerManager.Instance.ControllerCount; i++)
         {
             var boardPlayerObject = Instantiate(_boardPlayerControllerPrefab, transform);
-            boardPlayerObject.name = $"BoardPlayerController{i+1}";
+            boardPlayerObject.name = $"BoardPlayerController{i + 1}";
             _boardPlayerControllers.Add(boardPlayerObject.GetComponent<BoardPlayerController>());
         }
     }
@@ -98,5 +100,14 @@ public class BoardManager : StaticInstance<BoardManager>
             CurrentPlayerTurnIndex = -1;
         }
         OnNextTurn?.Invoke();
+    }
+
+    public void CreateMudObjectOnSpace(BoardSpace space)
+    {
+        var obj = Instantiate(_mudPrefab);
+        obj.transform.SetParent(space.transform);
+        obj.transform.localPosition = new(0.0f, 0.0f, -0.01f);
+        obj.transform.localScale = Vector3.zero;
+        obj.transform.DOScale(1.0f, 0.4f);
     }
 }

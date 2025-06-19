@@ -4,24 +4,36 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using System.Linq;
 
 public class ShopMenu : Menu
 {
     [SerializeField] private ShopItemSlot _shopItemSlotPrefab;
     [SerializeField] private Transform _shopItemSlotsCreationParent;
     [SerializeField] private TextMeshProUGUI _itemDescriptionText;
-    [SerializeField] private Item[] _sellingItems;
 
+    private Item[] _sellingItems;
     private readonly List<ShopItemSlot> _itemSlots = new();
 
     protected override void Init()
     {
-        foreach (var item in _sellingItems)
+    }
+
+    private void Start()
+    {
+        _sellingItems = new Item[Random.Range(3, 5)];
+        for (int i = 0; i < _sellingItems.Length; i++)
         {
+            var randomItem = ItemRegistry.Instance.GetRandom();
+            while (_sellingItems.Contains(randomItem))
+            {
+                randomItem = ItemRegistry.Instance.GetRandom();
+            }
+            _sellingItems[i] = randomItem;
             var slot = Instantiate(_shopItemSlotPrefab).GetComponent<ShopItemSlot>();
             slot.transform.SetParent(_shopItemSlotsCreationParent);
             _itemSlots.Add(slot);
-            slot.Setup(item);
+            slot.Setup(_sellingItems[i]);
         }
         _firstSelectedButton = _itemSlots[0].GetComponent<Button>();
         LastSelectedObject = _firstSelectedButton.gameObject;

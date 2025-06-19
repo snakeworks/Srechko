@@ -10604,6 +10604,55 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &1687405731
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1687405732}
+  - component: {fileID: 1687405733}
+  m_Layer: 0
+  m_Name: ItemRegistry
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1687405732
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1687405731}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1899677231}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1687405733
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1687405731}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 439eb8592ad48bda78f943b2227777c3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _items:
+  - {fileID: 11400000, guid: b41c3941588a627cf996ec6238e6b5ea, type: 2}
+  - {fileID: 11400000, guid: 74bcb6c4485998a8cb16471b81329a75, type: 2}
+  - {fileID: 11400000, guid: 6e015121c93bc40d581fb63e3ad19eac, type: 2}
+  - {fileID: 11400000, guid: 6c8f8380615def482b24ac859df1f75e, type: 2}
 --- !u!1 &1700607263
 GameObject:
   m_ObjectHideFlags: 0
@@ -11817,6 +11866,7 @@ MonoBehaviour:
   _boardActionMenu: {fileID: 450098198}
   _shopMenu: {fileID: 177363814}
   _startingSpace: {fileID: 1284993794}
+  _mudPrefab: {fileID: 8088785354729931101, guid: 29154dc0e9f7458859864e054289652c, type: 3}
 --- !u!4 &1868655954
 Transform:
   m_ObjectHideFlags: 0
@@ -11863,6 +11913,7 @@ Transform:
   m_Children:
   - {fileID: 1336619018}
   - {fileID: 1868655954}
+  - {fileID: 1687405732}
   - {fileID: 823130047}
   - {fileID: 306683686}
   - {fileID: 984533433}

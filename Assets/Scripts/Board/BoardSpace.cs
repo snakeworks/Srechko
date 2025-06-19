@@ -10,19 +10,40 @@ public abstract class BoardSpace : MonoBehaviour
     [SerializeField] private BoardSpace _nextSpaceRight;
 
     public int Id { get; private set; }
+    public bool IsMudCovered { get; private set; } = false;
 
     private readonly List<BoardPlayerController> _standingBoardPlayers = new();
-    private static Transform _parent;
+    private static readonly List<BoardSpace> _spaces = new();
+    private static bool _sorted = false;
 
     private void Awake()
     {
         Id = transform.GetSiblingIndex();
-        _parent = transform.parent;
+        _spaces.Add(this);
+    }
+
+    private void Start()
+    {
+        if (_sorted) return;
+        _sorted = true;
+        _spaces.Sort((space1, space2) => space1.Id.CompareTo(space2.Id));
     }
 
     public static BoardSpace Get(int id)
     {
-        return _parent.GetChild(id).GetComponent<BoardSpace>();
+        return _spaces[id];
+    }
+
+    public static BoardSpace GetPredecessor(int id)
+    {
+        foreach (var space in _spaces)
+        {
+            if (space.GetNextSpaces().ContainsValue(Get(id)))
+            {
+                return space;
+            }
+        }
+        return null;
     }
 
     public Dictionary<Direction, BoardSpace> GetNextSpaces()
@@ -63,6 +84,12 @@ public abstract class BoardSpace : MonoBehaviour
             float offsetZ = Mathf.Sin(angle) * radius;
             _standingBoardPlayers[i].UpdateVisualsOffset(new(offsetX, 0.0f, offsetZ));
         }
+    }
+
+    public void SetMudCovered(bool covered)
+    {
+        IsMudCovered = covered;
+        BoardManager.Instance.CreateMudObjectOnSpace(this);
     }
     
     public abstract Task OnPlayerLanded();
