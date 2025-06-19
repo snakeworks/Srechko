@@ -24,5 +24,6 @@ public class ShopBoardSpace : BoardSpace
             await Task.Delay(1);
         }
         PlayerManager.Instance.DisableInput();
+        await Task.Delay(400);
     }
 }
