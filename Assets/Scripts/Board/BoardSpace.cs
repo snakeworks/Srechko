@@ -17,13 +17,13 @@ public abstract class BoardSpace : MonoBehaviour
     private static readonly List<BoardSpace> _spaces = new();
     private static bool _sorted = false;
 
-    private void Awake()
+    protected virtual void Awake()
     {
         Id = transform.GetSiblingIndex();
         _spaces.Add(this);
     }
 
-    private void Start()
+    protected virtual void Start()
     {
         if (_sorted) return;
         _sorted = true;

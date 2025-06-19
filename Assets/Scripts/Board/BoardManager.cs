@@ -7,16 +7,18 @@ public class BoardManager : StaticInstance<BoardManager>
 {
     [SerializeField] private BoardPlayerController _boardPlayerControllerPrefab;
     [SerializeField] private Transform[] _startingPositions;
+    [SerializeField] private Canvas _canvas;
     [SerializeField] private BoardActionMenu _boardActionMenu;
-    [SerializeField] private ShopMenu _shopMenu;
+    [SerializeField] private BoardPlayerSelectionMenu _boardPlayerSelectionMenu;
     [SerializeField] private BoardSpace _startingSpace;
     [SerializeField] private GameObject _mudPrefab;
 
     public int CurrentPlayerTurnIndex { get; private set; } = -1;
     public int BoardPlayerControllerCount => _boardPlayerControllers.Count;
     public BoardPlayerController CurrentPlayer => GetBoardPlayerControllerAt(_boardPlayerIndexOrder[CurrentPlayerTurnIndex]);
+    public Canvas Canvas => _canvas;
     public BoardActionMenu BoardActionMenu => _boardActionMenu;
-    public ShopMenu ShopMenu => _shopMenu;
+    public BoardPlayerSelectionMenu BoardPlayerSelectionMenu => _boardPlayerSelectionMenu;
     public BoardSpace StartingSpace => _startingSpace;
     public List<int> BoardPlayerIndexOrder => _boardPlayerIndexOrder;
     public event Action OnNextTurn;
@@ -48,23 +50,6 @@ public class BoardManager : StaticInstance<BoardManager>
         {
             var boardPlayerController = GetBoardPlayerControllerAt(i);
             boardPlayerController.transform.position = _startingPositions[i].position;
-        }
-    }
-
-    /// <summary>
-    /// Creates the board and the players on it based on a <c>BoardSnapshot</c>.
-    /// A snapshot of the board is taken right before the scene is about to change
-    /// to a different one that is not the board scene. This method is usually called 
-    /// when the players are done with a minigame. 
-    /// </summary>
-    public void StartFromSnapshot(BoardSnapshot snapshot)
-    {
-        InitBoard();
-        _boardPlayerIndexOrder = snapshot.BoardPlayerIndexOrder;
-        for (int i = 0; i < _boardPlayerIndexOrder.Count; i++)
-        {
-            var boardPlayerController = GetBoardPlayerControllerAt(i);
-            // TODO: Set position, etc.
         }
     }
 

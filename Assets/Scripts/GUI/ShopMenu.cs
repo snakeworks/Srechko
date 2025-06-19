@@ -15,9 +15,7 @@ public class ShopMenu : Menu
     private Item[] _sellingItems;
     private readonly List<ShopItemSlot> _itemSlots = new();
 
-    protected override void Init()
-    {
-    }
+    protected override void Init() {}
 
     private void Start()
     {
