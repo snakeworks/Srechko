@@ -24,7 +24,11 @@ public class BoardGUIAnimations : StaticInstance<BoardGUIAnimations>
         rectTransform.anchoredPosition = new(rectTransform.anchoredPosition.x, -50.0f);
 
         var currentPlayer = BoardManager.Instance.CurrentPlayer;
-        _playerTurnText.SetText($"PLAYER {currentPlayer.Index+1} TURN");
+        _playerTurnText.SetText(
+            !currentPlayer.SkipNextTurn
+                ? $"PLAYER {currentPlayer.Index + 1} TURN"
+                : $"SKIPPING PLAYER {currentPlayer.Index + 1}"
+        );
 
         sequence.Insert(0.0f, rectTransform.DOAnchorPosY(0.0f, 0.15f));
         sequence.Insert(0.0f, _playerTurnCanvasGroup.DOFade(1.0f, 0.15f));

@@ -15,7 +15,14 @@ public class ChoosingBoardActionState : GameState
         BoardManager.Instance.BoardActionMenu.ItemMenu.ResetLastSelectedObject();
 
         await BoardGUIAnimations.Instance.AnimatePlayerTurn();
-        
+
+        if (BoardManager.Instance.CurrentPlayer.SkipNextTurn)
+        {
+            CurrentBoardPlayerController.SetSkipNextTurn(false);
+            ChangeState(NextTurnState);
+            return;
+        }
+
         await Task.Delay(250);
 
         PlayerManager.Instance.EnableInput();

@@ -17,6 +17,7 @@ public class BoardPlayerController : MonoBehaviour
     [SerializeField] private DirectionalPromptDefinition[] _directionalPrompts;
 
     public int StandingOnBoardSpaceId { get; private set; } = -1;
+    public bool SkipNextTurn { get; private set; } = false;
     public Transform CameraView => _cameraView;
     public int Index => transform.GetSiblingIndex();
     public int LastRolledDiceNumber { get; private set; } = -1;
@@ -201,6 +202,11 @@ public class BoardPlayerController : MonoBehaviour
     public void SetDiceCount(int count)
     {
         _diceCount = Mathf.Clamp(count, _diceCountMin, _diceCountMax);
+    }
+
+    public void SetSkipNextTurn(bool skip)
+    {
+        SkipNextTurn = skip;
     }
 
     public async Task PlayPopupAnimation(string text)
