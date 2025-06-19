@@ -4,13 +4,13 @@ using System.Threading.Tasks;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class BoardPlayerController : MonoBehaviour
 {
     [SerializeField] private SpriteRenderer _visuals;
     [SerializeField] private Transform _cameraView;
     [SerializeField] private CanvasGroup _diceCanvasGroup;
+    [SerializeField] private ParticleSystem _sleepParticles;
     [SerializeField] private TextMeshProUGUI _popupText;
     [SerializeField] private TextMeshProUGUI[] _diceTexts = new TextMeshProUGUI[_diceCountMax];
     [SerializeField] private TextMeshProUGUI _finalDiceNumberText;
@@ -29,6 +29,7 @@ public class BoardPlayerController : MonoBehaviour
     private Coroutine _generateRandomNumberCoroutine;
     private readonly Dictionary<BoardSpace.Direction, DirectionalPromptDefinition> _directionalPromptsDict = new();
     private float _defaultDirectionalPromptScale;
+    private int _skipCount = 0;
     private const int _diceCountMin = 1;
     private const int _diceCountMax = 3;
 
@@ -49,7 +50,22 @@ public class BoardPlayerController : MonoBehaviour
             def.Sprite.DOFade(0.0f, 0.0f);
         }
 
+        _sleepParticles.Stop();
+
         HideFinalDiceNumber();
+    }
+
+    public void OnTryTurn()
+    {
+        if (SkipNextTurn)
+        {
+            _skipCount++;
+            if (_skipCount >= 2)
+            {
+                _skipCount = 0;
+                SetSkipNextTurn(false);
+            }
+        }
     }
 
     public void StartDiceRoll()
@@ -70,7 +86,7 @@ public class BoardPlayerController : MonoBehaviour
         foreach (var text in _diceTexts)
         {
             text.SetText(
-                (Random.Range(BoardManager.MinDiceNumber, BoardManager.MaxDiceNumber+1) + _moveCountModifier).ToString("D2")
+                (Random.Range(BoardManager.MinDiceNumber, BoardManager.MaxDiceNumber + 1) + _moveCountModifier).ToString("D2")
             );
         }
 
@@ -83,7 +99,7 @@ public class BoardPlayerController : MonoBehaviour
                 for (int i = _currentRollingDiceIndex; i < _diceCount; i++)
                 {
                     _diceTexts[i].SetText(
-                        (Random.Range(BoardManager.MinDiceNumber, BoardManager.MaxDiceNumber+1) + _moveCountModifier).ToString("D2")
+                        (Random.Range(BoardManager.MinDiceNumber, BoardManager.MaxDiceNumber + 1) + _moveCountModifier).ToString("D2")
                     );
                 }
                 if (!AudioManager.Instance.IsPlaying(SoundName.DiceRoll))
@@ -207,6 +223,8 @@ public class BoardPlayerController : MonoBehaviour
     public void SetSkipNextTurn(bool skip)
     {
         SkipNextTurn = skip;
+        if (skip) _sleepParticles.Play();
+        else _sleepParticles.Stop();
     }
 
     public async Task PlayPopupAnimation(string text)

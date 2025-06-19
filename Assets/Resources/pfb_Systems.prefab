@@ -105,6 +105,12 @@ MonoBehaviour:
     Pitch: 1
     RandomVolume: 0
     RandomPitch: 0
+  - Name: Sleep
+    Clip: {fileID: 8300000, guid: 88c0573f920ac96d2bf336e45a7bbd04, type: 3}
+    Volume: 1
+    Pitch: 1
+    RandomVolume: 0
+    RandomPitch: 0
 --- !u!1 &4291767145384084407
 GameObject:
   m_ObjectHideFlags: 0

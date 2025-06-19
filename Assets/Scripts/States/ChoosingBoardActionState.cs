@@ -9,6 +9,8 @@ public class ChoosingBoardActionState : GameState
 {
     public override async void OnEnter()
     {
+        CurrentBoardPlayerController.OnTryTurn();
+
         await BoardCamera.Instance.TransitionToPlayer(CurrentBoardPlayerController.Index);
         
         BoardManager.Instance.BoardActionMenu.ResetLastSelectedObject();
@@ -18,7 +20,6 @@ public class ChoosingBoardActionState : GameState
 
         if (BoardManager.Instance.CurrentPlayer.SkipNextTurn)
         {
-            CurrentBoardPlayerController.SetSkipNextTurn(false);
             ChangeState(NextTurnState);
             return;
         }

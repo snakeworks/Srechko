@@ -9,12 +9,7 @@ public class TornadoWorldEvent : WorldEvent
         for (int i = 0; i < BoardManager.Instance.BoardPlayerControllerCount; i++)
         {
             var boardPlayer = BoardManager.Instance.GetBoardPlayerControllerAt(i);
-            var currentBoardSpace = BoardSpace.Get(boardPlayer.StandingOnBoardSpaceId);
-            var randomSpace =
-                currentBoardSpace.transform.parent
-                .GetChild(Random.Range(0, currentBoardSpace.transform.parent.childCount))
-                .GetComponent<BoardSpace>();
-            _ = boardPlayer.MoveToSpace(randomSpace);
+            _ = boardPlayer.MoveToSpace(BoardSpace.GetRandom());
         }
         await Task.Delay(20);
     }

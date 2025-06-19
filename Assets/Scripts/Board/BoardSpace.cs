@@ -35,6 +35,11 @@ public abstract class BoardSpace : MonoBehaviour
         return _spaces[id];
     }
 
+    public static BoardSpace GetRandom()
+    {
+        return _spaces[Random.Range(0, _spaces.Count)];
+    }
+
     public static BoardSpace GetPredecessor(int id)
     {
         foreach (var space in _spaces)

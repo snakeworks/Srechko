@@ -7,8 +7,9 @@ public class SkipTurnItem : Item
     public override async Task PerformItemAction()
     {
         var selectedPlayer = await BoardManager.Instance.BoardPlayerSelectionMenu.GetSelectedPlayer();
-        selectedPlayer.SetSkipNextTurn(true);
         await BoardCamera.Instance.TransitionToPlayer(selectedPlayer.Index);
-        await selectedPlayer.PlayPopupAnimation($"SKIPPING NEXT TURN");
+        selectedPlayer.SetSkipNextTurn(true);
+        AudioManager.Instance.Play(SoundName.Sleep);
+        await Task.Delay(1000);
     }
 }
