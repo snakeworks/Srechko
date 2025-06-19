@@ -11,9 +11,9 @@ public class NormalBoardSpace : BoardSpace
         var boardPlayer = BoardManager.Instance.CurrentPlayer;
 
         playerData.AddCoins(_coinsEarned);
-        boardPlayer.PlayCoinsAnimation(_coinsEarned);
+        await boardPlayer.PlayCoinsAnimation(_coinsEarned);
 
-        await Task.Delay(1000);
+        await Task.Delay(100);
     }
 
     protected override Task PerformPlayerPassed() => Task.CompletedTask;

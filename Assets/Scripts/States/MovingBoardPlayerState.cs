@@ -33,8 +33,10 @@ public class MovingBoardPlayerState : GameState
                 return;
             }
 
+            if (movesLeft != CurrentBoardPlayerController.LastRolledDiceNumber - 1)
+                await currentSpace.OnPlayerPassed();
+
             var nextSpaces = currentSpace.GetNextSpaces();
-            await currentSpace.OnPlayerPassed();
             if (nextSpaces.Count > 1)
             {
                 BoardCameraTransforms.BoardView.transform.position = new(

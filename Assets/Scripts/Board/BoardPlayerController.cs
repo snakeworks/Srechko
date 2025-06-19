@@ -199,7 +199,7 @@ public class BoardPlayerController : MonoBehaviour
         _diceCount = Mathf.Clamp(count, _diceCountMin, _diceCountMax);
     }
 
-    public void PlayPopupAnimation(string text)
+    public async Task PlayPopupAnimation(string text)
     {
         _popupText.SetText(text);
         _popupText.gameObject.SetActive(true);
@@ -211,22 +211,28 @@ public class BoardPlayerController : MonoBehaviour
             -230.0f
         );
 
-        _popupText.DOFade(1.0f, 0.1f);
-        rectTransform.DOAnchorPosY(0.0f, 0.1f);
-        _popupText.DOFade(0.0f, 0.1f).SetDelay(1.0f).OnComplete(() => _popupText.gameObject.SetActive(false));
+        Sequence sequence = DOTween.Sequence();
+
+        sequence.Insert(0.0f, _popupText.DOFade(1.0f, 0.1f));
+        sequence.Insert(0.0f, rectTransform.DOAnchorPosY(0.0f, 0.1f));
+        sequence.Insert(0.0f, _popupText.DOFade(0.0f, 0.1f)
+            .SetDelay(1.0f)
+            .OnComplete(() => _popupText.gameObject.SetActive(false)));
+
+        await sequence.Play().AsyncWaitForCompletion();
     }
 
-    public void PlayCoinsAnimation(int amount, bool addedCoins = true)
+    public async Task PlayCoinsAnimation(int amount, bool addedCoins = true)
     {
         if (addedCoins)
         {
-            PlayPopupAnimation($"<color=yellow>+{amount} <sprite index=0>");
             AudioManager.Instance.Play(SoundName.CoinsGain);
+            await PlayPopupAnimation($"<color=yellow>+{amount} <sprite index=0>");
         }
         else
         {
-            PlayPopupAnimation($"<color=red>-{amount} <sprite index=0>");
             AudioManager.Instance.Play(SoundName.CoinsLose);
+            await PlayPopupAnimation($"<color=red>-{amount} <sprite index=0>");
         }
     }
 

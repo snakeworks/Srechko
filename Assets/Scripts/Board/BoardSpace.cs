@@ -106,10 +106,10 @@ public abstract class BoardSpace : MonoBehaviour
         if (_isMudCovered)
         {
             BoardManager.Instance.CurrentPlayer
-                .PlayPopupAnimation($"<color=red>-{_mudMoveCountModifier}");
-            BoardManager.Instance.CurrentPlayer
                 .SetMoveCountModifier(_mudMoveCountModifier > 0 ? -_mudMoveCountModifier : _mudMoveCountModifier);
-            await Task.Delay(2000);
+            await BoardManager.Instance.CurrentPlayer
+                .PlayPopupAnimation($"<color=red>-{_mudMoveCountModifier}");
+            await Task.Delay(100);
         }
         await PerformPlayerLanded();
     }

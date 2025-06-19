@@ -10,9 +10,9 @@ public class CursedBoardSpace : BoardSpace
         var boardPlayer = BoardManager.Instance.CurrentPlayer;
 
         playerData.RemoveCoins(_coinsLost);
-        boardPlayer.PlayCoinsAnimation(_coinsLost, false);
+        await boardPlayer.PlayCoinsAnimation(_coinsLost, false);
 
-        await Task.Delay(1000);
+        await Task.Delay(100);
     }
 
     protected override Task PerformPlayerPassed() => Task.CompletedTask;
