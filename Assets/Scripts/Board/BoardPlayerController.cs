@@ -24,7 +24,7 @@ public class BoardPlayerController : MonoBehaviour
     private int _moveCountModifier = 0;
     private int _diceCount = _diceCountMin;
     private int _currentRollingDiceIndex = 0;
-    private readonly WaitForSeconds _numberGenerationDelay = new(0.02f);
+    private readonly WaitForSeconds _numberGenerationDelay = new(0.025f);
     private Coroutine _generateRandomNumberCoroutine;
     private readonly Dictionary<BoardSpace.Direction, DirectionalPromptDefinition> _directionalPromptsDict = new();
     private float _defaultDirectionalPromptScale;
