@@ -69,7 +69,7 @@ public class BoardPlayerController : MonoBehaviour
         foreach (var text in _diceTexts)
         {
             text.SetText(
-                (Random.Range(BoardManager.MinDiceNumber, BoardManager.MaxDiceNumber) + _moveCountModifier).ToString()
+                (Random.Range(BoardManager.MinDiceNumber, BoardManager.MaxDiceNumber+1) + _moveCountModifier).ToString("D2")
             );
         }
 
@@ -82,7 +82,7 @@ public class BoardPlayerController : MonoBehaviour
                 for (int i = _currentRollingDiceIndex; i < _diceCount; i++)
                 {
                     _diceTexts[i].SetText(
-                        (Random.Range(BoardManager.MinDiceNumber, BoardManager.MaxDiceNumber) + _moveCountModifier).ToString()
+                        (Random.Range(BoardManager.MinDiceNumber, BoardManager.MaxDiceNumber+1) + _moveCountModifier).ToString("D2")
                     );
                 }
                 if (!AudioManager.Instance.IsPlaying(SoundName.DiceRoll))
@@ -93,7 +93,7 @@ public class BoardPlayerController : MonoBehaviour
 
     public async Task<bool> FinishDiceRoll()
     {
-        int numberRolled = Random.Range(BoardManager.MinDiceNumber, BoardManager.MaxDiceNumber);
+        int numberRolled = Random.Range(BoardManager.MinDiceNumber, BoardManager.MaxDiceNumber+1);
         int diceNumber = numberRolled + _moveCountModifier;
         LastRolledDiceNumber += diceNumber;
         _diceTexts[_currentRollingDiceIndex].SetText(diceNumber.ToString());

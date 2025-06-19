@@ -24,7 +24,7 @@ public class BoardManager : StaticInstance<BoardManager>
     public event Action OnNextTurn;
     public event Action OnTurnOrderSet;
     public const int MinDiceNumber = 1;
-    public const int MaxDiceNumber = 10;
+    public const int MaxDiceNumber = 15;
 
     private readonly List<BoardPlayerController> _boardPlayerControllers = new();
     private List<int> _boardPlayerIndexOrder;
