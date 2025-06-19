@@ -10,7 +10,8 @@ public abstract class BoardSpace : MonoBehaviour
     [SerializeField] private BoardSpace _nextSpaceRight;
 
     public int Id { get; private set; }
-    
+
+    private readonly List<BoardPlayerController> _standingBoardPlayers = new();
     private static Transform _parent;
 
     private void Awake()
@@ -35,6 +36,35 @@ public abstract class BoardSpace : MonoBehaviour
         return spaces;
     }
 
+    public void OnPlayerEntered(BoardPlayerController boardPlayer)
+    {
+        _standingBoardPlayers.Add(boardPlayer);
+        UpdateBoardPlayerVisuals();
+    }
+
+    public void OnPlayerExited(BoardPlayerController boardPlayer)
+    {
+        _standingBoardPlayers.Remove(boardPlayer);
+        UpdateBoardPlayerVisuals();
+    }
+
+    private void UpdateBoardPlayerVisuals()
+    {
+        if (_standingBoardPlayers.Count == 1)
+        {
+            _standingBoardPlayers[0].UpdateVisualsOffset(Vector3.zero);
+            return;
+        }
+        for (int i = 0; i < _standingBoardPlayers.Count; i++)
+        {
+            float angle = i * Mathf.PI * 2 / _standingBoardPlayers.Count + Mathf.PI / 4; // Add a diagonal offset
+            float radius = 0.2f;
+            float offsetX = Mathf.Cos(angle) * radius;
+            float offsetZ = Mathf.Sin(angle) * radius;
+            _standingBoardPlayers[i].UpdateVisualsOffset(new(offsetX, 0.0f, offsetZ));
+        }
+    }
+    
     public abstract Task OnPlayerLanded();
 
     public enum Direction

@@ -139,7 +139,10 @@ public class BoardPlayerController : MonoBehaviour
 
     public async Task MoveToSpace(BoardSpace space)
     {
+        if (StandingOnBoardSpaceId >= 0) BoardSpace.Get(StandingOnBoardSpaceId).OnPlayerExited(this);
         StandingOnBoardSpaceId = space.Id;
+        space.OnPlayerEntered(this);
+
         Sequence sequence = DOTween.Sequence();
         sequence.Insert(0.0f, transform.DOMoveX(space.transform.position.x, 0.3f));
         sequence.Insert(0.0f, transform.DOMoveZ(space.transform.position.z, 0.3f));
@@ -149,6 +152,12 @@ public class BoardPlayerController : MonoBehaviour
         AudioManager.Instance.Play(SoundName.PlayerLand, delay: 0.2f);
 
         await sequence.Play().AsyncWaitForCompletion();
+    }
+
+    public void UpdateVisualsOffset(Vector3 offset)
+    {
+        _visuals.transform.DOLocalMoveX(offset.x, 0.1f);
+        _visuals.transform.DOLocalMoveZ(offset.z, 0.1f);
     }
 
     public void ShowDirectionalPrompts(BoardSpace.Direction[] directions)
