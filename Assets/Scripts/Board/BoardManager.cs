@@ -26,7 +26,7 @@ public class BoardManager : StaticInstance<BoardManager>
     public event Action OnNextRound;
     public event Action OnTurnOrderSet;
     public event Action OnGameEnd;
-    public const int MaxRoundCount = 1;
+    public const int MaxRoundCount = 15;
     public const int MinDiceNumber = 1;
     public const int MaxDiceNumber = 15;
 

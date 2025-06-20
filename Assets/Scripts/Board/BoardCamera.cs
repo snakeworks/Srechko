@@ -20,7 +20,7 @@ public class BoardCamera : StaticInstance<BoardCamera>
         _camera.transform.localEulerAngles = Vector3.zero;
     }
 
-    public async Task TransitionTo(Transform newTransform, CameraTransition transition = CameraTransition.Instant, float transitionDuration = 0.5f)
+    public async Task TransitionTo(Transform newTransform, CameraTransition transition = CameraTransition.Instant, float transitionDuration = 0.5f, Ease ease = Ease.OutQuad)
     {
         _camera.transform.SetParent(newTransform);
         switch (transition)
@@ -30,8 +30,8 @@ public class BoardCamera : StaticInstance<BoardCamera>
                 break;
             case CameraTransition.Move:
                 Sequence sequence = DOTween.Sequence();
-                sequence.Insert(0.0f, _camera.transform.DOLocalMove(Vector3.zero, transitionDuration));
-                sequence.Insert(0.0f, _camera.transform.DOLocalRotate(Vector3.zero, transitionDuration));
+                sequence.Insert(0.0f, _camera.transform.DOLocalMove(Vector3.zero, transitionDuration).SetEase(ease));
+                sequence.Insert(0.0f, _camera.transform.DOLocalRotate(Vector3.zero, transitionDuration).SetEase(ease));
                 await sequence.AsyncWaitForCompletion();
                 break;
         }

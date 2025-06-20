@@ -11,7 +11,7 @@ public class PickingPlayerOrderState : GameState
     {
         PlayerManager.Instance.DisableInput();
         
-        await BoardCamera.Instance.TransitionTo(BoardCameraTransforms.PickingOrderView, CameraTransition.Move);
+        await BoardCamera.Instance.TransitionTo(BoardCameraTransforms.PickingOrderView, CameraTransition.Move, 1.5f);
 
         PlayerManager.Instance.GiveOwnershipToAll();
         PlayerManager.Instance.EnableInput();
