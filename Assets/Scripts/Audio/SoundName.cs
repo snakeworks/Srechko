@@ -19,5 +19,7 @@ public static class SoundName
     public const string GameEnd = "GameEnd";
     public const string NextTurn = "NextTurn";
     public const string SkipTurn = "SkipTurn";
+    public const string BuyItem = "BuyItem";
+    public const string Error = "Error";
     public const string TitleTheme = "TitleTheme";
 }

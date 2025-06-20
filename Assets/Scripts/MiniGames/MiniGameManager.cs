@@ -92,8 +92,11 @@ public class MiniGameManager : StaticInstance<MiniGameManager>
                 _placeTexts[i].SetText($"#{i + 1}");
                 _scoreTexts[i].SetText(sortedScores[i].Value.ToString());
 
-                int roundedScore = Mathf.RoundToInt(sortedScores[i].Value / 10.0f) * 10;
-                int coinsEarned = ((sortedScores.Count - i) * 100) + roundedScore;
+                // Coin calculation
+                int baseScore = sortedScores[i].Value;
+                int rawCoins = Mathf.RoundToInt(Mathf.Pow(1.8f, sortedScores.Count - i) * baseScore * 0.08f);
+                int coinsEarned = Mathf.RoundToInt(rawCoins / 5.0f) * 5;
+
                 _coinsTexts[i].SetText($"+{coinsEarned} <sprite index=0>");
                 GameManager.Instance.GetBoardPlayerData(sortedScores[i].Key).AddCoins(coinsEarned);
 

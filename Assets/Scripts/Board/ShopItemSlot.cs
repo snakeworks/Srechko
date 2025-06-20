@@ -15,10 +15,12 @@ public class ShopItemSlot : MonoBehaviour
 
     private bool SoldOut => Amount <= 0;
     private Button _button;
+    private ShopMenu _shopMenu;
 
-    public void Setup(Item item)
+    public void Setup(Item item, ShopMenu menu)
     {
         _button = GetComponent<Button>();
+        _shopMenu = menu;
 
         Item = item;
         Amount = Random.Range(1, 4); // TODO: Change later
@@ -39,10 +41,18 @@ public class ShopItemSlot : MonoBehaviour
 
     private void OnButtonPressed()
     {
-        if (SoldOut) return;
+        if (SoldOut)
+        {
+            _shopMenu.PopupError("This item has been sold out!");
+            return;
+        }
 
         var playerData = GameManager.Instance.GetBoardPlayerData(BoardManager.Instance.CurrentPlayer.Index);
-        if (playerData.CoinCount < Item.Price) return;
+        if (playerData.CoinCount < Item.Price)
+        {
+            _shopMenu.PopupError("You do not have enough coins to purchase this item!");
+            return;
+        }
 
         bool itemAdded = playerData.AddItem(Item, 1);
 
@@ -51,6 +61,11 @@ public class ShopItemSlot : MonoBehaviour
             playerData.RemoveCoins(Item.Price);
             Amount--;
             UpdateSlot();
+            AudioManager.Instance.Play(SoundName.BuyItem);
+        }
+        else
+        {
+            _shopMenu.PopupError("Your inventory is full!");
         }
     }
 }

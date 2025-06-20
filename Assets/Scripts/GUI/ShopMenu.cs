@@ -11,6 +11,8 @@ public class ShopMenu : Menu
     [SerializeField] private ShopItemSlot _shopItemSlotPrefab;
     [SerializeField] private Transform _shopItemSlotsCreationParent;
     [SerializeField] private TextMeshProUGUI _itemDescriptionText;
+    [SerializeField] private CanvasGroup _errorPopupCanvasGroup;
+    [SerializeField] private TextMeshProUGUI _errorText;
 
     private Item[] _sellingItems;
     private readonly List<ShopItemSlot> _itemSlots = new();
@@ -31,10 +33,11 @@ public class ShopMenu : Menu
             var slot = Instantiate(_shopItemSlotPrefab).GetComponent<ShopItemSlot>();
             slot.transform.SetParent(_shopItemSlotsCreationParent);
             _itemSlots.Add(slot);
-            slot.Setup(_sellingItems[i]);
+            slot.Setup(_sellingItems[i], this);
         }
         _firstSelectedButton = _itemSlots[0].GetComponent<Button>();
         LastSelectedObject = _firstSelectedButton.gameObject;
+        _errorPopupCanvasGroup.alpha = 0.0f;
     }
 
     private void Update()
@@ -53,6 +56,20 @@ public class ShopMenu : Menu
                 }
             }
         }
+    }
+
+    public void PopupError(string text)
+    {
+        AudioManager.Instance.Play(SoundName.Error);
+
+        _errorText.SetText(text);
+        _errorPopupCanvasGroup.DOKill();
+
+        _errorPopupCanvasGroup.alpha = 1.0f;
+        _errorPopupCanvasGroup.transform.DOScale(1.15f, 0.0f);
+
+        _errorPopupCanvasGroup.transform.DOScale(1.0f, 0.2f);
+        _errorPopupCanvasGroup.DOFade(0.0f, 0.5f).SetDelay(1.0f);
     }
 
     public override void TweenOpen(Sequence sequence)

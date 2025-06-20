@@ -178,6 +178,20 @@ MonoBehaviour:
     Pitch: 1
     RandomVolume: 0
     RandomPitch: 0
+  - Name: BuyItem
+    Clip: {fileID: 8300000, guid: d5264b7a6a5aea72689b5ed809e4217e, type: 3}
+    Loop: 0
+    Volume: 1
+    Pitch: 1
+    RandomVolume: 0
+    RandomPitch: 0
+  - Name: Error
+    Clip: {fileID: 8300000, guid: 31edfbf5af5dbe2d4a3476410b681f45, type: 3}
+    Loop: 0
+    Volume: 1
+    Pitch: 1
+    RandomVolume: 0
+    RandomPitch: 0
   - Name: TitleTheme
     Clip: {fileID: 8300000, guid: 16c4c98e128c25fd38dc7949fdb8234a, type: 3}
     Loop: 1

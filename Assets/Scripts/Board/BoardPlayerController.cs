@@ -233,6 +233,7 @@ public class BoardPlayerController : MonoBehaviour
 
     public void SetSkipNextTurn(bool skip)
     {
+        if (skip) _turnSkipCount = 0;
         SkipNextTurn = skip;
         if (skip) _sleepParticles.Play();
         else _sleepParticles.Stop();
@@ -240,6 +241,7 @@ public class BoardPlayerController : MonoBehaviour
 
     public void SetCanUseItems(bool can)
     {
+        if (!can) _turnCanUseItemCount = 0;
         CanUseItems = can;
     }
 
