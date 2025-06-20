@@ -47,94 +47,116 @@ MonoBehaviour:
   _soundDefinitions:
   - Name: UISelect
     Clip: {fileID: 8300000, guid: 7c31f8ea9c10665c291265f048b9547e, type: 3}
+    Loop: 0
     Volume: 1
     Pitch: 1
     RandomVolume: 0
     RandomPitch: 0
   - Name: UIPositive
     Clip: {fileID: 8300000, guid: 87587e59ee3411da1bc270c21874277f, type: 3}
+    Loop: 0
     Volume: 1
     Pitch: 1
     RandomVolume: 0
     RandomPitch: 0
   - Name: UINegative
     Clip: {fileID: 8300000, guid: 08db281303a9f14c09d6ffa70704da1b, type: 3}
+    Loop: 0
     Volume: 1
     Pitch: 1
     RandomVolume: 0
     RandomPitch: 0
   - Name: PlayerLand
     Clip: {fileID: 8300000, guid: 15e04868cc76d8045b749183c768493d, type: 3}
+    Loop: 0
     Volume: 1
     Pitch: 1
     RandomVolume: 0
     RandomPitch: 0.1
   - Name: DiceRoll
     Clip: {fileID: 8300000, guid: 8573756db398141d7b7570f7a5ede6a6, type: 3}
+    Loop: 0
     Volume: 0.5
     Pitch: 1
     RandomVolume: 0
     RandomPitch: 0
   - Name: DiceRollFinished
     Clip: {fileID: 8300000, guid: 8b9cce50f609938d0b8d0cd9c1950418, type: 3}
+    Loop: 0
     Volume: 0.5
     Pitch: 1
     RandomVolume: 0
     RandomPitch: 0
   - Name: CoinsGain
     Clip: {fileID: 8300000, guid: 8ee731be9c63976be90c612308fb7eec, type: 3}
+    Loop: 0
     Volume: 1
     Pitch: 1
     RandomVolume: 0
     RandomPitch: 0
   - Name: CoinsLose
     Clip: {fileID: 8300000, guid: afffa6cae1149e366b656f78b935e624, type: 3}
+    Loop: 0
     Volume: 1
     Pitch: 1
     RandomVolume: 0
     RandomPitch: 0
   - Name: EnergyGain
     Clip: {fileID: 8300000, guid: a3eb24f4d3851059b8dedadab7d1714d, type: 3}
+    Loop: 0
     Volume: 1
     Pitch: 1
     RandomVolume: 0
     RandomPitch: 0
   - Name: EnergyLose
     Clip: {fileID: 8300000, guid: 315210b5ee11a06fe80e35aa7c5312f2, type: 3}
+    Loop: 0
     Volume: 1
     Pitch: 1
     RandomVolume: 0
     RandomPitch: 0
   - Name: Sleep
     Clip: {fileID: 8300000, guid: 88c0573f920ac96d2bf336e45a7bbd04, type: 3}
+    Loop: 0
     Volume: 1
     Pitch: 1
     RandomVolume: 0
     RandomPitch: 0
   - Name: DuctTape
     Clip: {fileID: 8300000, guid: b9f7036ac479ee817848535c52f7995a, type: 3}
+    Loop: 0
     Volume: 1
     Pitch: 1
     RandomVolume: 0
     RandomPitch: 0
   - Name: DrumRoll
     Clip: {fileID: 8300000, guid: ee1fffa6edb447d0ca77ddd4ba8ce5ef, type: 3}
+    Loop: 0
     Volume: 0.8
     Pitch: 1
     RandomVolume: 0
     RandomPitch: 0
   - Name: Fanfare
     Clip: {fileID: 8300000, guid: f062bbb6d1abe34c1a7daf2650059ea6, type: 3}
+    Loop: 0
     Volume: 1
     Pitch: 1
     RandomVolume: 0
     RandomPitch: 0
   - Name: Pop
     Clip: {fileID: 8300000, guid: d286d79f370cf5fdc85b526c1506a8c4, type: 3}
+    Loop: 0
     Volume: 1
     Pitch: 1
     RandomVolume: 0
     RandomPitch: 0.1
+  - Name: TitleTheme
+    Clip: {fileID: 8300000, guid: 16c4c98e128c25fd38dc7949fdb8234a, type: 3}
+    Loop: 1
+    Volume: 1
+    Pitch: 1
+    RandomVolume: 0
+    RandomPitch: 0
 --- !u!1 &4291767145384084407
 GameObject:
   m_ObjectHideFlags: 0

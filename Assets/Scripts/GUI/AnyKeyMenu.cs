@@ -7,6 +7,9 @@ public class AnyKeyMenu : Menu
 
     protected override void Init()
     {
+        if (!AudioManager.Instance.IsPlaying(SoundName.TitleTheme))
+            AudioManager.Instance.Play(SoundName.TitleTheme);
+
         if (PlayerManager.Instance.MainPlayerController != null)
         {
             OpenImmediate = false;

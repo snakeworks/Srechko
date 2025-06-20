@@ -41,4 +41,12 @@ public class AudioManager : Singleton<AudioManager>
             def.Stop();
         }
     }
+
+    public void FadeOut(string soundName, float duration = 0.5f)
+    {
+        if (_definitionsDict.TryGetValue(soundName, out var def))
+        {
+            def.FadeOut(duration);
+        }
+    }
 }

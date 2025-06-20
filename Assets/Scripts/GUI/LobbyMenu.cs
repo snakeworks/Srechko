@@ -43,6 +43,7 @@ public class LobbyMenu : Menu
             var result = await ModalMenu.PushYesNo("Would you like to begin the game?");
             if (result == ModalMenu.Result.Yes)
             {
+                AudioManager.Instance.FadeOut(SoundName.TitleTheme);
                 SceneLoader.Load(Scene.Board);
                 return;
             }
