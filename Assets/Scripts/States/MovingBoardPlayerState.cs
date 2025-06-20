@@ -82,6 +82,8 @@ public class MovingBoardPlayerState : GameState
                         CurrentController.MovePerformed -= OnMove;
                         PlayerManager.Instance.DisableInput();
 
+                        AudioManager.Instance.Play(SoundName.UIPositive);
+
                         await CurrentBoardPlayerController.HideDirectionalPrompts(direction);
                         await Task.Delay(200);
                         await BoardCamera.Instance.TransitionToPlayer(CurrentController.Index);
