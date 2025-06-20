@@ -1,10 +1,12 @@
 using System;
 using DG.Tweening;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class BoardActionMenu : Menu
 {
     [SerializeField] private BoardItemMenu _itemMenu;
+    [SerializeField] private Button _useItemButton;
 
     public event Action OnDiceRollPressed;
     public event Action OnViewBoardPressed;
@@ -22,7 +24,10 @@ public class BoardActionMenu : Menu
 
     public void UseItemPressed()
     {
-        _itemMenu.Push();
+        if (BoardManager.Instance.CurrentPlayer.CanUseItems)
+        {
+            _itemMenu.Push();
+        }
     }
 
     public void ViewBoardPressed()
@@ -30,13 +35,13 @@ public class BoardActionMenu : Menu
         OnViewBoardPressed?.Invoke();
     }
 
-    public override void TweenClose(Sequence sequence)
-    {
-        
-    }
-
     public override void TweenOpen(Sequence sequence)
     {
-        
+        _useItemButton.interactable = BoardManager.Instance.CurrentPlayer.CanUseItems;
+    }
+    
+    public override void TweenClose(Sequence sequence)
+    {
+
     }
 }

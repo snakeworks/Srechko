@@ -11,4 +11,5 @@ public static class SoundName
     public const string EnergyGain = "EnergyGain";
     public const string EnergyLose = "EnergyLose";
     public const string Sleep = "Sleep";
+    public const string DuctTape = "DuctTape";
 }

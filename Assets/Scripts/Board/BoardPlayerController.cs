@@ -18,6 +18,7 @@ public class BoardPlayerController : MonoBehaviour
 
     public int StandingOnBoardSpaceId { get; private set; } = -1;
     public bool SkipNextTurn { get; private set; } = false;
+    public bool CanUseItems { get; private set; } = true;
     public Transform CameraView => _cameraView;
     public int Index => transform.GetSiblingIndex();
     public int LastRolledDiceNumber { get; private set; } = -1;
@@ -29,7 +30,8 @@ public class BoardPlayerController : MonoBehaviour
     private Coroutine _generateRandomNumberCoroutine;
     private readonly Dictionary<BoardSpace.Direction, DirectionalPromptDefinition> _directionalPromptsDict = new();
     private float _defaultDirectionalPromptScale;
-    private int _skipCount = 0;
+    private int _turnSkipCount = 0;
+    private int _turnCanUseItemCount = 0;
     private const int _diceCountMin = 1;
     private const int _diceCountMax = 3;
 
@@ -59,11 +61,20 @@ public class BoardPlayerController : MonoBehaviour
     {
         if (SkipNextTurn)
         {
-            _skipCount++;
-            if (_skipCount >= 2)
+            _turnSkipCount++;
+            if (_turnSkipCount >= 2)
             {
-                _skipCount = 0;
+                _turnSkipCount = 0;
                 SetSkipNextTurn(false);
+            }
+        }
+        else if (!CanUseItems)
+        {
+            _turnCanUseItemCount++;
+            if (_turnCanUseItemCount >= 2)
+            {
+                _turnCanUseItemCount = 0;
+                SetCanUseItems(true);
             }
         }
     }
@@ -225,6 +236,11 @@ public class BoardPlayerController : MonoBehaviour
         SkipNextTurn = skip;
         if (skip) _sleepParticles.Play();
         else _sleepParticles.Stop();
+    }
+
+    public void SetCanUseItems(bool can)
+    {
+        CanUseItems = can;
     }
 
     public async Task PlayPopupAnimation(string text)
