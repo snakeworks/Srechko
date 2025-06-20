@@ -50,7 +50,7 @@ public class ShopItemSlot : MonoBehaviour
         var playerData = GameManager.Instance.GetBoardPlayerData(BoardManager.Instance.CurrentPlayer.Index);
         if (playerData.CoinCount < Item.Price)
         {
-            _shopMenu.PopupError("You do not have enough coins to purchase this item!");
+            _shopMenu.PopupError("You do not have enough coins!");
             return;
         }
 

@@ -16,7 +16,8 @@ public class BoardManager : StaticInstance<BoardManager>
     public int CurrentPlayerTurnIndex { get; private set; } = -1;
     public int CurrentRound { get; private set; } = 0;
     public int BoardPlayerControllerCount => _boardPlayerControllers.Count;
-    public BoardPlayerController CurrentPlayer => GetBoardPlayerControllerAt(_boardPlayerIndexOrder[CurrentPlayerTurnIndex]);
+    public BoardPlayerController CurrentPlayer
+        => CurrentPlayerTurnIndex < 0 ? null : GetBoardPlayerControllerAt(_boardPlayerIndexOrder[CurrentPlayerTurnIndex]);
     public Canvas Canvas => _canvas;
     public BoardActionMenu BoardActionMenu => _boardActionMenu;
     public BoardPlayerSelectionMenu BoardPlayerSelectionMenu => _boardPlayerSelectionMenu;
@@ -64,14 +65,6 @@ public class BoardManager : StaticInstance<BoardManager>
             return null;
         }
         return _boardPlayerControllers[index];
-    }
-
-    public BoardSnapshot GetBoardSnapshot()
-    {
-        return new BoardSnapshot(
-            CurrentPlayerTurnIndex,
-            _boardPlayerIndexOrder
-        );
     }
 
     public void SetTurnOrder(List<int> order)

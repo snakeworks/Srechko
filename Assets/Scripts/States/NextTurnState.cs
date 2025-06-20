@@ -5,6 +5,11 @@ public class NextTurnState : GameState
     public override async void OnEnter()
     {
         PlayerManager.Instance.DisableInput();
+
+        if (BoardManager.Instance.CurrentPlayer != null && !BoardManager.Instance.CurrentPlayer.SkipNextTurn)
+        {
+            BoardManager.Instance.CurrentPlayer.OnTurnEnd();
+        }
         BoardManager.Instance.NextTurn();
 
         await Task.Delay(500);

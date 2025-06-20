@@ -31,7 +31,6 @@ public class BoardPlayerController : MonoBehaviour
     private readonly Dictionary<BoardSpace.Direction, DirectionalPromptDefinition> _directionalPromptsDict = new();
     private float _defaultDirectionalPromptScale;
     private int _turnSkipCount = 0;
-    private int _turnCanUseItemCount = 0;
     private const int _diceCountMin = 1;
     private const int _diceCountMax = 3;
 
@@ -68,15 +67,11 @@ public class BoardPlayerController : MonoBehaviour
                 SetSkipNextTurn(false);
             }
         }
-        else if (!CanUseItems)
-        {
-            _turnCanUseItemCount++;
-            if (_turnCanUseItemCount >= 2)
-            {
-                _turnCanUseItemCount = 0;
-                SetCanUseItems(true);
-            }
-        }
+    }
+
+    public void OnTurnEnd()
+    {
+        if (!CanUseItems) SetCanUseItems(true);
     }
 
     public void StartDiceRoll()
@@ -241,7 +236,6 @@ public class BoardPlayerController : MonoBehaviour
 
     public void SetCanUseItems(bool can)
     {
-        if (!can) _turnCanUseItemCount = 0;
         CanUseItems = can;
     }
 
