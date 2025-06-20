@@ -19,6 +19,7 @@ public class PlayerManager : Singleton<PlayerManager>
     public bool HasMinimumPlayerCount => _controllers.Count > 1;
     public int ControllerCount => _controllers.Count;
     public PlayerController CurrentOwner { get; private set; }
+    public List<PlayerResult> MatchResults { get; private set; }
     public event Action<PlayerController> OnNewOwner;
     public event Action<PlayerController> OnNewMainPlayerController;
     public event Action<PlayerController> OnPlayerJoin;
@@ -172,6 +173,11 @@ public class PlayerManager : Singleton<PlayerManager>
         _playerInputManager.DisableJoining();
     }
 
+    public void SetResults(List<PlayerResult> results)
+    {
+        MatchResults = results;
+    }
+
     private void OnPlayerJoined(PlayerInput player)
     {
         Debug.Log($"Joined: {player}");
@@ -179,7 +185,7 @@ public class PlayerManager : Singleton<PlayerManager>
         player.gameObject.name = $"PlayerController{_playerInputManager.playerCount}";
 
         var controller = player.GetComponent<PlayerController>();
-        
+
         // controller.OpenPauseMenuPerformed += () => OpenPauseMenu(controller);
         controller.InteractPerformed += () => OnAnyPlayerInteractPerformed?.Invoke(controller);
 
