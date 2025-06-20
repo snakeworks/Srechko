@@ -52,6 +52,8 @@ public class MiniGameManager : StaticInstance<MiniGameManager>
 
     public async void BeginRandom()
     {
+        AudioManager.Instance.FadeOut(SoundName.BoardTheme);
+
         _current = _games[Random.Range(0, _games.Length)];
         _screenObject.SetActive(true);
         _current.gameObject.SetActive(true);

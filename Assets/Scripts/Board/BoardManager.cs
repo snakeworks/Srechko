@@ -56,6 +56,7 @@ public class BoardManager : StaticInstance<BoardManager>
             var boardPlayerController = GetBoardPlayerControllerAt(i);
             boardPlayerController.transform.position = _startingPositions[i].position;
         }
+        AudioManager.Instance.Play(SoundName.BoardTheme);
     }
 
     public BoardPlayerController GetBoardPlayerControllerAt(int index)

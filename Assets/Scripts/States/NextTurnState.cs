@@ -6,6 +6,9 @@ public class NextTurnState : GameState
     {
         PlayerManager.Instance.DisableInput();
 
+        if (!AudioManager.Instance.IsPlaying(SoundName.BoardTheme))
+            AudioManager.Instance.Play(SoundName.BoardTheme);
+
         if (BoardManager.Instance.CurrentPlayer != null && !BoardManager.Instance.CurrentPlayer.SkipNextTurn)
         {
             BoardManager.Instance.CurrentPlayer.OnTurnEnd();

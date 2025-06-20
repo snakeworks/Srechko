@@ -227,6 +227,13 @@ MonoBehaviour:
     Pitch: 1
     RandomVolume: 0
     RandomPitch: 0
+  - Name: BoardTheme
+    Clip: {fileID: 8300000, guid: 9be4d6379975afe2f9b852e5dfd78750, type: 3}
+    Loop: 1
+    Volume: 0.25
+    Pitch: 1
+    RandomVolume: 0
+    RandomPitch: 0
 --- !u!1 &4291767145384084407
 GameObject:
   m_ObjectHideFlags: 0
