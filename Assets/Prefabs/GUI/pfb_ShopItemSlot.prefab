@@ -875,6 +875,7 @@ GameObject:
   - component: {fileID: 466302607887532055}
   - component: {fileID: 6722885706011767094}
   - component: {fileID: 3300546510426924368}
+  - component: {fileID: 1806224956927013651}
   m_Layer: 5
   m_Name: pfb_ShopItemSlot
   m_TagString: Untagged
@@ -973,3 +974,18 @@ MonoBehaviour:
   _itemPriceText: {fileID: 6369448497959630054}
   _itemAmountText: {fileID: 5424034696660207653}
   _soldOutOverlay: {fileID: 8321627219149598095}
+--- !u!114 &1806224956927013651
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8888185401004325468}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3e2029f6adf37e6f3b7fcf03e51317b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _isNegative: 0
+  _muteSelect: 0
+  _muteSubmit: 1

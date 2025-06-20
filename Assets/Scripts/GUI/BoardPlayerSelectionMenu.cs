@@ -9,6 +9,9 @@ public class BoardPlayerSelectionMenu : Menu
 {
     [SerializeField] private Button _boardPlayerButtonPrefab;
     [SerializeField] private Transform _buttonCreationParent;
+    [SerializeField] private RectTransform _itemPanel;
+    [SerializeField] private Image _itemIcon;
+    [SerializeField] private TextMeshProUGUI _itemText;
 
     private event Action<int> BoardPlayerButtonPressed;
 
@@ -69,6 +72,11 @@ public class BoardPlayerSelectionMenu : Menu
 
     public override void TweenOpen(Sequence sequence)
     {
+        var item = GameManager.Instance.GetBoardPlayerData(BoardManager.Instance.CurrentPlayer.Index).SelectedItem;
+        _itemIcon.sprite = item.Icon;
+        _itemText.SetText($"Use Item: {item.Name}");
+        _itemPanel.transform.DOScale(1.15f, 0.0f);
+        _itemPanel.transform.DOScale(1.0f, 0.2f);
     }
 
     public override void TweenClose(Sequence sequence)

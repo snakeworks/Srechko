@@ -224,6 +224,7 @@ GameObject:
   - component: {fileID: 1736700922800398000}
   - component: {fileID: 6722885706011767094}
   - component: {fileID: 2679128191407790250}
+  - component: {fileID: 4832980989136825857}
   m_Layer: 5
   m_Name: pfb_BoardItemSlot
   m_TagString: Untagged
@@ -313,8 +314,8 @@ MonoBehaviour:
   m_Colors:
     m_NormalColor: {r: 0, g: 0, b: 0, a: 0.78431374}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_PressedColor: {r: 0.14509805, g: 0.26666668, b: 0.7529412, a: 0.09803922}
-    m_SelectedColor: {r: 0.14509805, g: 0.26666668, b: 0.7529412, a: 0.39215687}
+    m_PressedColor: {r: 0.7529412, g: 0.18355507, b: 0.14509803, a: 0.09803922}
+    m_SelectedColor: {r: 0.7529412, g: 0.14509803, b: 0.1501204, a: 0.39215687}
     m_DisabledColor: {r: 0.20784314, g: 0.20784314, b: 0.20784314, a: 1}
     m_ColorMultiplier: 1
     m_FadeDuration: 0
@@ -349,3 +350,18 @@ MonoBehaviour:
   _itemIcon: {fileID: 3621655213418800960}
   _itemAmountText: {fileID: 5424034696660207653}
   _emptyItemIcon: {fileID: 21300000, guid: b03809744e13311c090884cc7e439dad, type: 3}
+--- !u!114 &4832980989136825857
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8888185401004325468}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3e2029f6adf37e6f3b7fcf03e51317b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _isNegative: 0
+  _muteSelect: 0
+  _muteSubmit: 0
