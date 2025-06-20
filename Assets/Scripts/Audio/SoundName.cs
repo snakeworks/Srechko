@@ -12,4 +12,7 @@ public static class SoundName
     public const string EnergyLose = "EnergyLose";
     public const string Sleep = "Sleep";
     public const string DuctTape = "DuctTape";
+    public const string DrumRoll = "DrumRoll";
+    public const string Fanfare = "Fanfare";
+    public const string Pop = "Pop";
 }

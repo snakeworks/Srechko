@@ -117,6 +117,24 @@ MonoBehaviour:
     Pitch: 1
     RandomVolume: 0
     RandomPitch: 0
+  - Name: DrumRoll
+    Clip: {fileID: 8300000, guid: ee1fffa6edb447d0ca77ddd4ba8ce5ef, type: 3}
+    Volume: 0.8
+    Pitch: 1
+    RandomVolume: 0
+    RandomPitch: 0
+  - Name: Fanfare
+    Clip: {fileID: 8300000, guid: f062bbb6d1abe34c1a7daf2650059ea6, type: 3}
+    Volume: 1
+    Pitch: 1
+    RandomVolume: 0
+    RandomPitch: 0
+  - Name: Pop
+    Clip: {fileID: 8300000, guid: d286d79f370cf5fdc85b526c1506a8c4, type: 3}
+    Volume: 1
+    Pitch: 1
+    RandomVolume: 0
+    RandomPitch: 0.1
 --- !u!1 &4291767145384084407
 GameObject:
   m_ObjectHideFlags: 0
