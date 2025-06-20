@@ -153,7 +153,7 @@ MonoBehaviour:
   - Name: TitleTheme
     Clip: {fileID: 8300000, guid: 16c4c98e128c25fd38dc7949fdb8234a, type: 3}
     Loop: 1
-    Volume: 1
+    Volume: 0.75
     Pitch: 1
     RandomVolume: 0
     RandomPitch: 0
