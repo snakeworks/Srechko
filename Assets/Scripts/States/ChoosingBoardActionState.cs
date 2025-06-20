@@ -16,7 +16,7 @@ public class ChoosingBoardActionState : GameState
         BoardManager.Instance.BoardActionMenu.ResetLastSelectedObject();
         BoardManager.Instance.BoardActionMenu.ItemMenu.ResetLastSelectedObject();
 
-        await BoardGUIAnimations.Instance.AnimatePlayerTurn();
+        await BoardGUIAnimations.Instance.PlayPlayerTurnAnimation();
 
         if (BoardManager.Instance.CurrentPlayer.SkipNextTurn)
         {

@@ -9,14 +9,20 @@ public class NextTurnState : GameState
 
         await Task.Delay(500);
 
+        if (BoardManager.Instance.CurrentRound > BoardManager.MaxRoundCount)
+        {
+            ChangeState(EndState);
+            return;
+        }
+
         if (BoardManager.Instance.CurrentPlayerTurnIndex == -1)
-        {
-            ChangeState(MiniGameState);
-        }
-        else
-        {
-            ChangeState(ChoosingBoardActionState);
-        }
+            {
+                ChangeState(MiniGameState);
+            }
+            else
+            {
+                ChangeState(ChoosingBoardActionState);
+            }
     }
 
     public override void OnExit()

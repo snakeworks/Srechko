@@ -8,6 +8,7 @@ public abstract class GameState
     public static UseItemState UseItemState = new();
     public static MovingBoardPlayerState MovingBoardPlayerState = new();
     public static MiniGameState MiniGameState = new();
+    public static EndState EndState = new();
 
     protected PlayerController CurrentController => PlayerManager.Instance.GetPlayerController(BoardManager.Instance.CurrentPlayer.Index);
     protected BoardPlayerData CurrentPlayerData => GameManager.Instance.GetBoardPlayerData(BoardManager.Instance.CurrentPlayer.Index);

@@ -24,7 +24,6 @@ public static class SceneLoader
             }
         }
     }
-    public static bool IsActiveSceneMinigame => ActiveScene.ToString().Trim().StartsWith("Mg");
     public static event Action OnSceneLoadStart;
     public static event Action OnSceneLoadFinish;
     public static event Action OnSceneTransitionInFinish;

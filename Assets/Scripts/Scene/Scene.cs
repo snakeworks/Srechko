@@ -4,5 +4,5 @@ public enum Scene
     Title,
     Lobby,
     Board,
-    MgButtonMash
+    Results
 }

@@ -14,6 +14,7 @@ public class BoardManager : StaticInstance<BoardManager>
     [SerializeField] private GameObject _mudPrefab;
 
     public int CurrentPlayerTurnIndex { get; private set; } = -1;
+    public int CurrentRound { get; private set; } = 0;
     public int BoardPlayerControllerCount => _boardPlayerControllers.Count;
     public BoardPlayerController CurrentPlayer => GetBoardPlayerControllerAt(_boardPlayerIndexOrder[CurrentPlayerTurnIndex]);
     public Canvas Canvas => _canvas;
@@ -22,7 +23,10 @@ public class BoardManager : StaticInstance<BoardManager>
     public BoardSpace StartingSpace => _startingSpace;
     public List<int> BoardPlayerIndexOrder => _boardPlayerIndexOrder;
     public event Action OnNextTurn;
+    public event Action OnNextRound;
     public event Action OnTurnOrderSet;
+    public event Action OnGameEnd;
+    public const int MaxRoundCount = 2; 
     public const int MinDiceNumber = 1;
     public const int MaxDiceNumber = 15;
 
@@ -79,6 +83,17 @@ public class BoardManager : StaticInstance<BoardManager>
     public void NextTurn()
     {
         CurrentPlayerTurnIndex++;
+        if (CurrentPlayerTurnIndex == 0)
+        {    
+            CurrentRound++;
+            OnNextRound?.Invoke();
+            if (CurrentRound > MaxRoundCount)
+            {
+                OnGameEnd?.Invoke();
+                return;
+            }
+        }
+
         if (CurrentPlayerTurnIndex >= PlayerManager.Instance.ControllerCount)
         {
             // Setting to -1 for the beginning of a minigame

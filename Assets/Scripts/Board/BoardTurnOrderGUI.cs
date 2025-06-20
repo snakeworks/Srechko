@@ -9,6 +9,12 @@ public class BoardTurnOrderGUI : MonoBehaviour
     private void Start()
     {
         BoardManager.Instance.OnTurnOrderSet += OnTurnOrderSet;
+        BoardManager.Instance.OnGameEnd += () =>
+        {
+            _creationParent
+                .GetComponent<RectTransform>()
+                .DOAnchorPosY(-90.0f, 0.25f);
+        };
     }
 
     private void OnDestroy()

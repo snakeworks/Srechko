@@ -1,28 +1,22 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameManager : Singleton<GameManager>
+public class GameManager : StaticInstance<GameManager>
 {
     public GameState CurrentState { get; private set; }
 
     private readonly List<BoardPlayerData> _boardPlayerData = new();
 
-    protected override void Init()
-    {   
+    protected override void Awake()
+    {
+        base.Awake();
         for (int i = 0; i < PlayerManager.Instance.ControllerCount; i++)
         {
-            var child = new GameObject($"PlayerData{i+1}");
+            var child = new GameObject($"PlayerData{i + 1}");
             child.transform.SetParent(transform);
             child.transform.position = Vector3.zero;
             _boardPlayerData.Add(child.AddComponent<BoardPlayerData>());
         }
-        SceneLoader.OnSceneLoadFinish += EvaluateGameState;
-    }
-
-    protected override void OnDestroy()
-    {
-        base.OnDestroy();
-        SceneLoader.OnSceneLoadFinish -= EvaluateGameState;
     }
 
     private void Start()
@@ -49,21 +43,5 @@ public class GameManager : Singleton<GameManager>
             return null;
         }
         return _boardPlayerData[index];
-    }
-
-    private void EvaluateGameState()
-    {
-        if (SceneLoader.ActiveScene == Scene.Board)
-        {
-
-        }
-        else if (SceneLoader.IsActiveSceneMinigame)
-        {
-
-        }
-        else
-        {
-            Destroy(this);
-        }
     }
 }
