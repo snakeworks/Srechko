@@ -206,6 +206,20 @@ MonoBehaviour:
     Pitch: 1
     RandomVolume: 0
     RandomPitch: 0
+  - Name: MiniGameEnd
+    Clip: {fileID: 8300000, guid: f9d781df184126241b7d83ab0542b5ae, type: 3}
+    Loop: 0
+    Volume: 1
+    Pitch: 1
+    RandomVolume: 0
+    RandomPitch: 0
+  - Name: Impact
+    Clip: {fileID: 8300000, guid: e8ad23d0a76a3a68c8c0894be100926e, type: 3}
+    Loop: 0
+    Volume: 1
+    Pitch: 1
+    RandomVolume: 0
+    RandomPitch: 0.15
   - Name: TitleTheme
     Clip: {fileID: 8300000, guid: 16c4c98e128c25fd38dc7949fdb8234a, type: 3}
     Loop: 1

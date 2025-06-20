@@ -61,6 +61,7 @@ public class ButtonMashMiniGame : MiniGame
                 .GetChild(controller.Index)
                 .GetChild(0).localScale = new(0.85f, 0.85f, 0.85f);
             _playersParent.GetChild(controller.Index).GetChild(0).DOScale(1.0f, 0.2f);
+            AudioManager.Instance.Play(SoundName.Impact);
         }
 
         int passedTime = _timerMilliseconds;

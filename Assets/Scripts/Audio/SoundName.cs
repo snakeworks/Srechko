@@ -23,5 +23,7 @@ public static class SoundName
     public const string Error = "Error";
     public const string Static = "Static";
     public const string MiniGameStart = "MiniGameStart";
+    public const string MiniGameEnd = "MiniGameEnd";
+    public const string Impact = "Impact";
     public const string TitleTheme = "TitleTheme";
 }

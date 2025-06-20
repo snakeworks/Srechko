@@ -127,6 +127,8 @@ public class MiniGameManager : StaticInstance<MiniGameManager>
 
         _finishedPanelObject.SetActive(true);
 
+        AudioManager.Instance.Play(SoundName.MiniGameEnd);
+
         await finishedRect
             .DOAnchorPos3DY(0.0f, 0.6f)
             .SetEase(Ease.OutBounce)
