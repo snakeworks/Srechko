@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using DG.Tweening;
 
 public class ShopItemSlot : MonoBehaviour
 {
@@ -8,6 +9,7 @@ public class ShopItemSlot : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _itemNameText;
     [SerializeField] private TextMeshProUGUI _itemPriceText;
     [SerializeField] private TextMeshProUGUI _itemAmountText;
+    [SerializeField] private Transform _panelTransform;
     [SerializeField] private GameObject _soldOutOverlay;
 
     public Item Item { get; private set; }
@@ -58,6 +60,9 @@ public class ShopItemSlot : MonoBehaviour
 
         if (itemAdded)
         {
+            _panelTransform.DOKill();
+            _panelTransform.DOScale(0.8f, 0.0f);
+            _panelTransform.DOScale(1.0f, 0.2f);
             playerData.RemoveCoins(Item.Price);
             Amount--;
             UpdateSlot();

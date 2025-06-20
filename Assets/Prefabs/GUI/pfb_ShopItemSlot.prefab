@@ -723,7 +723,7 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 5682071705185904573}
   - {fileID: 8893141413778537110}
@@ -893,7 +893,7 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 8930298369323160084}
   - {fileID: 2151999032296322900}
@@ -973,6 +973,7 @@ MonoBehaviour:
   _itemNameText: {fileID: 7982780039421671065}
   _itemPriceText: {fileID: 6369448497959630054}
   _itemAmountText: {fileID: 5424034696660207653}
+  _panelTransform: {fileID: 796679296559789528}
   _soldOutOverlay: {fileID: 8321627219149598095}
 --- !u!114 &1806224956927013651
 MonoBehaviour:
