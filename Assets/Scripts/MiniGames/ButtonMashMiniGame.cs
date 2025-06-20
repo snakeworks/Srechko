@@ -10,6 +10,8 @@ public class ButtonMashMiniGame : MiniGame
     [SerializeField] private TextMeshProUGUI _timerText;
     [SerializeField] private TextMeshProUGUI _mashButtonText;
 
+    public override string Name => "Button Mash";
+
     private const int _timerMilliseconds = 10000;
 
     public override void OnCalled()
@@ -34,8 +36,18 @@ public class ButtonMashMiniGame : MiniGame
             _pressCountList.Add(0);
         }
 
-        await Task.Delay(500);
         _mashButtonText.gameObject.SetActive(true);
+
+        async void FlashMashButton(float fade)
+        {
+            if (!_mashButtonText.IsActive()) return;
+            await _mashButtonText
+                .DOFade(fade, 0.02f)
+                .AsyncWaitForCompletion();
+            FlashMashButton(fade == 1.0f ? 0.3f : 1.0f);
+        }
+
+        FlashMashButton(0.5f);
 
         PlayerManager.Instance.GiveOwnershipToAll();
         PlayerManager.Instance.EnableInput();
@@ -58,6 +70,8 @@ public class ButtonMashMiniGame : MiniGame
             passedTime -= 1000;
             _timerText.SetText($"{Mathf.RoundToInt(passedTime / 1000)}");
         }
+
+        _mashButtonText.gameObject.SetActive(false);
 
         PlayerManager.Instance.DisableInput();
         PlayerManager.Instance.OnAnyPlayerInteractPerformed -= OnInteractPressed;

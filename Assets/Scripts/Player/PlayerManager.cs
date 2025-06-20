@@ -180,8 +180,6 @@ public class PlayerManager : Singleton<PlayerManager>
 
     private void OnPlayerJoined(PlayerInput player)
     {
-        Debug.Log($"Joined: {player}");
-
         AudioManager.Instance.Play(SoundName.DiceRollFinished);
 
         player.transform.SetParent(transform);

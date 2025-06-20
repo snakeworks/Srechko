@@ -192,6 +192,20 @@ MonoBehaviour:
     Pitch: 1
     RandomVolume: 0
     RandomPitch: 0
+  - Name: Static
+    Clip: {fileID: 8300000, guid: 7466c71d7af4be20bb2e104a47f6385c, type: 3}
+    Loop: 0
+    Volume: 1
+    Pitch: 1
+    RandomVolume: 0
+    RandomPitch: 0
+  - Name: MiniGameStart
+    Clip: {fileID: 8300000, guid: eb2599cc8b7b9fe10a1e54985b2d677d, type: 3}
+    Loop: 0
+    Volume: 1
+    Pitch: 1
+    RandomVolume: 0
+    RandomPitch: 0
   - Name: TitleTheme
     Clip: {fileID: 8300000, guid: 16c4c98e128c25fd38dc7949fdb8234a, type: 3}
     Loop: 1

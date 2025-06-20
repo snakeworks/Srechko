@@ -21,5 +21,7 @@ public static class SoundName
     public const string SkipTurn = "SkipTurn";
     public const string BuyItem = "BuyItem";
     public const string Error = "Error";
+    public const string Static = "Static";
+    public const string MiniGameStart = "MiniGameStart";
     public const string TitleTheme = "TitleTheme";
 }

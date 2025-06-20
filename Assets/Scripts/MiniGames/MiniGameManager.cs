@@ -3,13 +3,18 @@ using System.Threading.Tasks;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MiniGameManager : StaticInstance<MiniGameManager>
 {
     [SerializeField] private GameObject _screenObject;
     [SerializeField] private MiniGame[] _games;
+    [SerializeField] private Image _background;
     [SerializeField] private GameObject _finishedPanelObject;
     [SerializeField] private GameObject _resultsPanelObject;
+    [SerializeField] private GameObject _introPanelObject;
+    [SerializeField] private Image _static;
+    [SerializeField] private TextMeshProUGUI _miniGameNameText;
     [SerializeField] private Transform _playerImagesPanel;
     [SerializeField] private Transform _playerScoresParent;
     [SerializeField] private Transform _coinsParent;
@@ -25,6 +30,9 @@ public class MiniGameManager : StaticInstance<MiniGameManager>
     {
         base.Awake();
         _finishedPanelObject.SetActive(false);
+        _introPanelObject.SetActive(false);
+        _background.DOFade(0.0f, 0.0f);
+        _background.gameObject.SetActive(false);
         _screenObject.transform.localScale = Vector3.zero;
         foreach (var game in _games) game.gameObject.SetActive(false);
 
@@ -49,9 +57,46 @@ public class MiniGameManager : StaticInstance<MiniGameManager>
         _current.gameObject.SetActive(true);
         _current.OnCalled();
 
+        _background.DOFade(0.0f, 0.0f);
+        _background.gameObject.SetActive(true);
+        _background.DOFade(0.75f, 0.5f);
+
+        _static.DOFade(1.0f, 0.0f);
+        _introPanelObject.SetActive(true);
+        _miniGameNameText.SetText(_current.Name.ToUpper());
+        _miniGameNameText.transform.localScale = Vector3.zero;
+
+        var introPanelRect = _introPanelObject.GetComponent<RectTransform>();
+        introPanelRect.anchoredPosition = new(introPanelRect.anchoredPosition.x, 0.0f);
+
+        AudioManager.Instance.Play(SoundName.Static);
+
         await _screenObject.transform.DOScale(1.0f, 0.6f)
             .SetEase(Ease.OutCirc)
             .AsyncWaitForCompletion();
+
+        await _static
+            .DOFade(0.0f, 0.5f)
+            .SetDelay(3.0f)
+            .OnStart(() => AudioManager.Instance.FadeOut(SoundName.Static))
+            .AsyncWaitForCompletion();
+
+        await Task.Delay(500);
+
+        _miniGameNameText.transform.DOScale(1.25f, 0.0f);
+        _miniGameNameText.transform.DOScale(1.0f, 0.25f);
+        AudioManager.Instance.Play(SoundName.MiniGameStart);
+
+        await Task.Delay(1800);
+
+        await introPanelRect
+            .DOAnchorPosY(-900.0f, 0.5f)
+            .SetDelay(2.0f)
+            .AsyncWaitForCompletion();
+
+        _introPanelObject.SetActive(false);
+
+        await Task.Delay(100);
 
         _current.OnBegin();
     }
@@ -80,6 +125,17 @@ public class MiniGameManager : StaticInstance<MiniGameManager>
             }
         }
 
+        _finishedPanelObject.SetActive(true);
+
+        await finishedRect
+            .DOAnchorPos3DY(0.0f, 0.6f)
+            .SetEase(Ease.OutBounce)
+            .AsyncWaitForCompletion();
+
+        _resultsPanelObject.SetActive(true);
+
+        await Task.Delay(1200);
+
         for (int i = 0; i < sortedScores.Count; i++)
         {
             if (i >= PlayerManager.Instance.ControllerCount)
@@ -105,17 +161,6 @@ public class MiniGameManager : StaticInstance<MiniGameManager>
             }
         }
 
-        _finishedPanelObject.SetActive(true);
-
-        await finishedRect
-            .DOAnchorPos3DY(0.0f, 0.6f)
-            .SetEase(Ease.OutBounce)
-            .AsyncWaitForCompletion();
-
-        _resultsPanelObject.SetActive(true);
-
-        await Task.Delay(1200);
-
         await finishedRect
             .DOAnchorPos3DY(-900.0f, 0.6f)
             .SetEase(Ease.OutQuad)
@@ -124,6 +169,8 @@ public class MiniGameManager : StaticInstance<MiniGameManager>
         _finishedPanelObject.SetActive(false);
 
         await Task.Delay(4000);
+
+        _background.DOFade(0.0f, 0.5f).OnComplete(() => _background.gameObject.SetActive(false));
 
         await _screenObject.transform
             .DOScale(0.0f, 0.6f)
