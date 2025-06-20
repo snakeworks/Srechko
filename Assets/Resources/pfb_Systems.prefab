@@ -220,6 +220,20 @@ MonoBehaviour:
     Pitch: 1
     RandomVolume: 0
     RandomPitch: 0.15
+  - Name: AlertSingle
+    Clip: {fileID: 8300000, guid: d247360f0a0369a9290aebe85ce602f7, type: 3}
+    Loop: 0
+    Volume: 1
+    Pitch: 1
+    RandomVolume: 0
+    RandomPitch: 0
+  - Name: Wind
+    Clip: {fileID: 8300000, guid: b6785bdf66041f427a6ff8ffa21b3e2b, type: 3}
+    Loop: 0
+    Volume: 1
+    Pitch: 1
+    RandomVolume: 0
+    RandomPitch: 0
   - Name: TitleTheme
     Clip: {fileID: 8300000, guid: 16c4c98e128c25fd38dc7949fdb8234a, type: 3}
     Loop: 1

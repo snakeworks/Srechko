@@ -15,6 +15,7 @@ public class BoardPlayerController : MonoBehaviour
     [SerializeField] private TextMeshProUGUI[] _diceTexts = new TextMeshProUGUI[_diceCountMax];
     [SerializeField] private TextMeshProUGUI _finalDiceNumberText;
     [SerializeField] private DirectionalPromptDefinition[] _directionalPrompts;
+    [SerializeField] private TextMeshProUGUI _alertPopup;
 
     public int StandingOnBoardSpaceId { get; private set; } = -1;
     public bool SkipNextTurn { get; private set; } = false;
@@ -43,6 +44,7 @@ public class BoardPlayerController : MonoBehaviour
         _diceCanvasGroup.alpha = 0.0f;
         _popupText.alpha = 0.0f;
         _popupText.gameObject.SetActive(false);
+        _alertPopup.gameObject.SetActive(false);
 
         foreach (var def in _directionalPrompts)
         {
@@ -288,6 +290,20 @@ public class BoardPlayerController : MonoBehaviour
             AudioManager.Instance.Play(SoundName.EnergyLose);
             await PlayPopupAnimation($"<color=red>-{amount} <sprite index=1>");
         }
+    }
+
+    public async Task PopupAlert()
+    {
+        _alertPopup.gameObject.SetActive(true);
+        for (int i = 0; i < 3; i++)
+        {
+            _alertPopup.DOFade(1.0f, 0.0f);
+            AudioManager.Instance.Play(SoundName.AlertSingle);
+            await Task.Delay(100);
+            _alertPopup.DOFade(0.0f, 0.0f);
+            await Task.Delay(100);
+        }
+        _alertPopup.gameObject.SetActive(false);
     }
 
     [System.Serializable]

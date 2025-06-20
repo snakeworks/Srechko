@@ -25,6 +25,8 @@ public static class SoundName
     public const string MiniGameStart = "MiniGameStart";
     public const string MiniGameEnd = "MiniGameEnd";
     public const string Impact = "Impact";
+    public const string AlertSingle = "AlertSingle";
+    public const string Wind = "Wind";
     public const string TitleTheme = "TitleTheme";
     public const string BoardTheme = "BoardTheme";
 }
