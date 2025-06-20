@@ -16,13 +16,13 @@ public class NextTurnState : GameState
         }
 
         if (BoardManager.Instance.CurrentPlayerTurnIndex == -1)
-            {
-                ChangeState(MiniGameState);
-            }
-            else
-            {
-                ChangeState(ChoosingBoardActionState);
-            }
+        {
+            ChangeState(MiniGameState);
+        }
+        else
+        {
+            ChangeState(ChoosingBoardActionState);
+        }
     }
 
     public override void OnExit()

@@ -150,6 +150,34 @@ MonoBehaviour:
     Pitch: 1
     RandomVolume: 0
     RandomPitch: 0.1
+  - Name: GameStart
+    Clip: {fileID: 8300000, guid: 55dd31ced85fb1558b2af8f441d1f203, type: 3}
+    Loop: 0
+    Volume: 1
+    Pitch: 1
+    RandomVolume: 0
+    RandomPitch: 0
+  - Name: GameEnd
+    Clip: {fileID: 8300000, guid: efd5f4f5ed47712058bf45db439c699c, type: 3}
+    Loop: 0
+    Volume: 1
+    Pitch: 1
+    RandomVolume: 0
+    RandomPitch: 0
+  - Name: NextTurn
+    Clip: {fileID: 8300000, guid: 65efa68947581593e9d3f49daabd405f, type: 3}
+    Loop: 0
+    Volume: 1
+    Pitch: 1
+    RandomVolume: 0
+    RandomPitch: 0
+  - Name: SkipTurn
+    Clip: {fileID: 8300000, guid: 5432c1350c5ec6274ba5a0ba4a12aeb2, type: 3}
+    Loop: 0
+    Volume: 1
+    Pitch: 1
+    RandomVolume: 0
+    RandomPitch: 0
   - Name: TitleTheme
     Clip: {fileID: 8300000, guid: 16c4c98e128c25fd38dc7949fdb8234a, type: 3}
     Loop: 1

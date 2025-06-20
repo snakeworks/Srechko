@@ -15,5 +15,9 @@ public static class SoundName
     public const string DrumRoll = "DrumRoll";
     public const string Fanfare = "Fanfare";
     public const string Pop = "Pop";
+    public const string GameStart = "GameStart";
+    public const string GameEnd = "GameEnd";
+    public const string NextTurn = "NextTurn";
+    public const string SkipTurn = "SkipTurn";
     public const string TitleTheme = "TitleTheme";
 }

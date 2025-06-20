@@ -24,6 +24,7 @@ public class EndState : GameState
         PlayerManager.Instance.SetResults(results);
 
         await BoardCamera.Instance.TransitionTo(BoardCameraTransforms.FieldOverview);
+        AudioManager.Instance.Play(SoundName.GameEnd);
         await BoardGUIAnimations.Instance.PlayPopupAnimation("GAME FINISHED!");
         await Task.Delay(800);
         

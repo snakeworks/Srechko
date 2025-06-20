@@ -63,6 +63,8 @@ public class BoardGUIAnimations : StaticInstance<BoardGUIAnimations>
     public async Task PlayPlayerTurnAnimation()
     {
         var currentPlayer = BoardManager.Instance.CurrentPlayer;
+        if (currentPlayer.SkipNextTurn) AudioManager.Instance.Play(SoundName.SkipTurn);
+        else AudioManager.Instance.Play(SoundName.NextTurn);
         await PlayPopupAnimation(!currentPlayer.SkipNextTurn
                 ? $"PLAYER {currentPlayer.Index + 1} TURN"
                 : $"SKIPPING PLAYER {currentPlayer.Index + 1}");

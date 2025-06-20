@@ -20,6 +20,7 @@ public class StartingState : GameState
         }
 
         await Task.Delay(600);
+        AudioManager.Instance.Play(SoundName.GameStart);
         await BoardGUIAnimations.Instance.PlayPopupAnimation("GAME START!");
         await Task.Delay(600);
 
