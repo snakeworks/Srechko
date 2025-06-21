@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using System.Data;
-using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
 
 public class MathMiniGame : MiniGame
 {
@@ -13,6 +13,10 @@ public class MathMiniGame : MiniGame
     [SerializeField] private Image _bPrompt;
     [SerializeField] private Image _xPrompt;
     [SerializeField] private Image _yPrompt;
+    [SerializeField] private CanvasGroup _choicesPanel;
+    [SerializeField] private Sprite _correctSprite;
+    [SerializeField] private Sprite _wrongSprite;
+    [SerializeField] private Image[] _playerCorrectnessImages;
 
     public override string Name => "Mathematicar";
 
@@ -21,6 +25,30 @@ public class MathMiniGame : MiniGame
 
     public override void OnCalled()
     {
+        _timerSlider.gameObject.SetActive(false);
+        _choicesPanel.DOFade(0.0f, 0.0f);
+
+        _equationText.SetText(string.Empty);
+
+        for (int i = 0; i < 4; i++) GetPromptText(i).SetText(string.Empty);
+        for (int i = 0; i < _playerCorrectnessImages.Length; i++) _playerCorrectnessImages[i].gameObject.SetActive(false);
+    }
+
+    private Image GetPrompt(int index)
+    {
+        return index switch
+        {
+            0 => _aPrompt,
+            1 => _bPrompt,
+            2 => _xPrompt,
+            3 => _yPrompt,
+            _ => null,
+        };
+    }
+
+    private TextMeshProUGUI GetPromptText(int index)
+    {
+        return GetPrompt(index).transform.GetChild(0).GetComponent<TextMeshProUGUI>();
     }
 
     public override async void OnBegin()
@@ -43,6 +71,12 @@ public class MathMiniGame : MiniGame
             return true;
         }
 
+        await Awaitable.WaitForSecondsAsync(0.5f);
+        await _choicesPanel.DOFade(1.0f, 0.25f).AsyncWaitForCompletion();
+        await Awaitable.WaitForSecondsAsync(0.5f);
+
+        _timerSlider.gameObject.SetActive(true);
+
         PlayerManager.Instance.EnableInput();
         PlayerManager.Instance.GiveOwnershipToAll();
 
@@ -63,24 +97,43 @@ public class MathMiniGame : MiniGame
             playerAnswered[controller.Index] = true;
             AudioManager.Instance.Play(SoundName.Pop);
 
+            var prompt = GetPrompt(index);
+            prompt.transform.DOKill();
+            prompt.transform.DOScale(1.2f, 0.0f);
+            prompt.transform.DOScale(1.0f, 0.2f);
+
             if (index == currentSolutionIndex)
             {
                 scores[controller.Index] += 10;
+                _playerCorrectnessImages[controller.Index].sprite = _correctSprite;
             }
+            else
+            {
+                _playerCorrectnessImages[controller.Index].sprite = _wrongSprite;
+            }
+        }
+
+        void HighlightAnswerText(int index)
+        {
+            var tmp = GetPromptText(index);
+            tmp.transform.DOScale(1.2f, 0.0f);
+            tmp.transform.DOScale(1.0f, 0.2f);
+            tmp.SetText($"<color=green>{tmp.text}");
         }
 
         for (int i = 0; i < _maxQuestionCount; i++)
         {
-            for (int j = 0; j < playerAnswered.Count; j++) playerAnswered[j] = false;
+            for (int j = 0; j < playerAnswered.Count; j++)
+            {
+                playerAnswered[j] = false;
+                _playerCorrectnessImages[j].gameObject.SetActive(false);
+            }
 
             var (equation, answers, solutionIndex) = GenerateQuestion();
             currentSolutionIndex = solutionIndex;
 
             _equationText.SetText(equation);
-            _aPrompt.transform.GetChild(0).GetComponent<TextMeshProUGUI>().SetText(answers[0].ToString());
-            _bPrompt.transform.GetChild(0).GetComponent<TextMeshProUGUI>().SetText(answers[1].ToString());
-            _xPrompt.transform.GetChild(0).GetComponent<TextMeshProUGUI>().SetText(answers[2].ToString());
-            _yPrompt.transform.GetChild(0).GetComponent<TextMeshProUGUI>().SetText(answers[3].ToString());
+            for (int j = 0; j < 4; j++) GetPromptText(j).SetText(answers[j].ToString());
 
             _timerSlider.maxValue = _questionTimer;
             _timerSlider.value = _questionTimer;
@@ -94,6 +147,18 @@ public class MathMiniGame : MiniGame
                     break;
                 }
             }
+
+            for (int j = 0; j < playerAnswered.Count; j++)
+            {
+                playerAnswered[j] = true;
+                _playerCorrectnessImages[j].gameObject.SetActive(true);
+            }
+
+            AudioManager.Instance.Play(SoundName.GameStart);
+
+            HighlightAnswerText(solutionIndex);
+
+            await Awaitable.WaitForSecondsAsync(1.5f);
         }
 
         PlayerManager.Instance.DisableInput();
