@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: itm_CoinHook
   m_EditorClassIdentifier: 
   Name: Coin Hook
-  Description: Steals 5 coins from a player of the user's choosing.
-  Price: 1
+  Description: Steals 10 coins from a player of the user's choosing.
+  Price: 5
   Icon: {fileID: 21300000, guid: 4611cea9d29a74e1dafa503882c4d33e, type: 3}
-  CoinStealCount: 5
+  RollDiceAfterUse: 0
+  CoinStealCount: 10

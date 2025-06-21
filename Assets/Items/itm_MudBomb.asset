@@ -15,5 +15,7 @@ MonoBehaviour:
   Name: Mud Bomb
   Description: Creates a pool of mud behind the player that, when stepped on, decrease
     the amount of moves by -5.
-  Price: 1
+  Price: 5
   Icon: {fileID: 21300000, guid: fdb4e2cb076441fe3b1b96cfb82b1768, type: 3}
+  RollDiceAfterUse: 0
+  MoveCountModifier: 5

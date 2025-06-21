@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: itm_CoinMagnet
   m_EditorClassIdentifier: 
   Name: Coin Magnet
-  Description: Steals 15 coins from a player of the user's choosing.
-  Price: 1
+  Description: Steals 20 coins from a player of the user's choosing.
+  Price: 15
   Icon: {fileID: 21300000, guid: 80e35104758bff63e93cfcb26632c6c6, type: 3}
-  CoinStealCount: 15
+  RollDiceAfterUse: 0
+  CoinStealCount: 20

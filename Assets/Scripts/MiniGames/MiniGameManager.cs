@@ -160,7 +160,7 @@ public class MiniGameManager : StaticInstance<MiniGameManager>
 
                 // Coin calculation
                 int baseScore = sortedScores[i].Value;
-                int rawCoins = Mathf.RoundToInt(Mathf.Pow(1.8f, sortedScores.Count - i) * baseScore * 0.08f);
+                int rawCoins = Mathf.RoundToInt(Mathf.Pow(1.5f, sortedScores.Count - i) * baseScore * 0.08f);
                 int coinsEarned = Mathf.RoundToInt(rawCoins / 5.0f) * 5;
 
                 _coinsTexts[i].SetText($"+{coinsEarned} <sprite index=0>");

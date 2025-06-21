@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: Triple Dice
   Description: Gives the player 3 dice to roll.
-  Price: 900
+  Price: 15
   Icon: {fileID: 21300000, guid: 04ae58fa62caa018f85071476f886a60, type: 3}
   RollDiceAfterUse: 1
   DiceCountModifier: 3

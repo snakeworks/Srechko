@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: B.I.E. Juice
   Description: Gives the player +10 moves.
-  Price: 1
+  Price: 15
   Icon: {fileID: 21300000, guid: 833f8510f5cf86fa89aa439fbf0f625f, type: 3}
   RollDiceAfterUse: 1
   MoveCountModifier: 10

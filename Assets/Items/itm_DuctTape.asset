@@ -14,5 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: Duct Tape
   Description: A player of the user's choosing cannot use items on their next turn.
-  Price: 1
+  Price: 20
   Icon: {fileID: 21300000, guid: dff8e4bacc51a5fe7a25710f835f71dc, type: 3}
+  RollDiceAfterUse: 0
