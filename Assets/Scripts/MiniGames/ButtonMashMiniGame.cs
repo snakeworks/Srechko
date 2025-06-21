@@ -38,6 +38,8 @@ public class ButtonMashMiniGame : MiniGame
 
         _mashButtonText.gameObject.SetActive(true);
 
+        AudioManager.Instance.Play(SoundName.ButtonMashTheme);
+
         async void FlashMashButton(float fade)
         {
             if (!_mashButtonText.IsActive()) return;
@@ -76,6 +78,8 @@ public class ButtonMashMiniGame : MiniGame
 
         PlayerManager.Instance.DisableInput();
         PlayerManager.Instance.OnAnyPlayerInteractPerformed -= OnInteractPressed;
+
+        AudioManager.Instance.Stop(SoundName.ButtonMashTheme);
 
         End(new Dictionary<int, int>
         {

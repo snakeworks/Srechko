@@ -76,6 +76,8 @@ public class ResultsScreen : MonoBehaviour
         _playerWinsText.DOFade(1.0f, 0.5f);
         _promptText.DOFade(1.0f, 0.5f);
 
+        AudioManager.Instance.Play(SoundName.ResultsTheme, 2.0f);
+
         PlayerManager.Instance.GiveOwnershipTo(PlayerManager.Instance.MainPlayerController);
         PlayerManager.Instance.EnableInput();
 

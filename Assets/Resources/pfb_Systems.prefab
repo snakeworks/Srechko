@@ -248,6 +248,27 @@ MonoBehaviour:
     Pitch: 1
     RandomVolume: 0
     RandomPitch: 0
+  - Name: ButtonMashTheme
+    Clip: {fileID: 8300000, guid: e68e03ef64ea738818ce9b4d794bd70c, type: 3}
+    Loop: 1
+    Volume: 0.75
+    Pitch: 1
+    RandomVolume: 0
+    RandomPitch: 0
+  - Name: MathTheme
+    Clip: {fileID: 8300000, guid: e674779b89b870c8db3a1c79e14653ab, type: 3}
+    Loop: 1
+    Volume: 0.75
+    Pitch: 1
+    RandomVolume: 0
+    RandomPitch: 0
+  - Name: ResultsTheme
+    Clip: {fileID: 8300000, guid: 93d33d664d9b27319821b4726965cffe, type: 3}
+    Loop: 0
+    Volume: 0.75
+    Pitch: 1
+    RandomVolume: 0
+    RandomPitch: 0
 --- !u!1 &4291767145384084407
 GameObject:
   m_ObjectHideFlags: 0
@@ -1007,6 +1028,14 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6038179898548927905, guid: d54d23227a7646d82a53f3a5009bbf39, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: fd29f1a513c12c257b505264ecf64641, type: 2}
+    - target: {fileID: 6038179898548927905, guid: d54d23227a7646d82a53f3a5009bbf39, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 3635485621264199195, guid: fd29f1a513c12c257b505264ecf64641, type: 2}
     - target: {fileID: 7300895455886035221, guid: d54d23227a7646d82a53f3a5009bbf39, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0

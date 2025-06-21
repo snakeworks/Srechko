@@ -75,6 +75,8 @@ public class MathMiniGame : MiniGame
         await _choicesPanel.DOFade(1.0f, 0.25f).AsyncWaitForCompletion();
         await Awaitable.WaitForSecondsAsync(0.5f);
 
+        AudioManager.Instance.Play(SoundName.MathTheme);
+
         _timerSlider.gameObject.SetActive(true);
 
         PlayerManager.Instance.EnableInput();
@@ -167,6 +169,8 @@ public class MathMiniGame : MiniGame
         PlayerManager.Instance.OnAnyPlayerPromptEastPerformed -= OnInputEast;
         PlayerManager.Instance.OnAnyPlayerPromptWestPerformed -= OnInputWest;
         PlayerManager.Instance.OnAnyPlayerPromptNorthPerformed -= OnInputNorth;
+
+        AudioManager.Instance.Stop(SoundName.MathTheme);
 
         End(new Dictionary<int, int>
         {

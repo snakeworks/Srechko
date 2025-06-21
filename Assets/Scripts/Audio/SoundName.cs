@@ -29,4 +29,7 @@ public static class SoundName
     public const string Wind = "Wind";
     public const string TitleTheme = "TitleTheme";
     public const string BoardTheme = "BoardTheme";
+    public const string ButtonMashTheme = "ButtonMashTheme";
+    public const string MathTheme = "MathTheme";
+    public const string ResultsTheme = "ResultsTheme";
 }
