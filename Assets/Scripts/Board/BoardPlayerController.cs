@@ -118,7 +118,8 @@ public class BoardPlayerController : MonoBehaviour
 
     public async Task<bool> FinishDiceRoll()
     {
-        int numberRolled = Random.Range(BoardManager.MinDiceNumber, BoardManager.MaxDiceNumber+1);
+        //int numberRolled = Random.Range(BoardManager.MinDiceNumber, BoardManager.MaxDiceNumber+1);
+        int numberRolled = 12;
         int diceNumber = numberRolled + _moveCountModifier;
         LastRolledDiceNumber += diceNumber;
         _diceTexts[_currentRollingDiceIndex].SetText(diceNumber.ToString());
