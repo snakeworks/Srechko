@@ -13,6 +13,11 @@ public class ResultsScreen : MonoBehaviour
 
     private void Awake()
     {
+        if (AudioManager.Instance.IsPlaying(SoundName.BoardTheme))
+        {
+            AudioManager.Instance.Stop(SoundName.BoardTheme);
+        }
+
         var results = PlayerManager.Instance.MatchResults;
 
         _playerWinsText.SetText($"PLAYER {results[0].Index + 1} WINS!");
