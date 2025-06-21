@@ -27,6 +27,7 @@ public static class SoundName
     public const string Impact = "Impact";
     public const string AlertSingle = "AlertSingle";
     public const string Wind = "Wind";
+    public const string MudBomb = "MudBomb";
     public const string TitleTheme = "TitleTheme";
     public const string BoardTheme = "BoardTheme";
     public const string ButtonMashTheme = "ButtonMashTheme";

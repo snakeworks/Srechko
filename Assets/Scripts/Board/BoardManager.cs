@@ -102,6 +102,10 @@ public class BoardManager : StaticInstance<BoardManager>
         obj.transform.SetParent(space.transform);
         obj.transform.localPosition = new(0.0f, 0.0f, -0.01f);
         obj.transform.localScale = Vector3.zero;
-        obj.transform.DOScale(1.0f, 0.4f);
+        obj.transform.DOScale(1.0f, 0.25f);
+
+        var sr = obj.transform.GetChild(0).GetComponent<SpriteRenderer>();
+        sr.transform.DOLocalMoveZ(-1.2f, 1.2f).SetEase(Ease.Linear);
+        sr.DOFade(0.0f, 0.2f).SetDelay(1.0f);
     }
 }

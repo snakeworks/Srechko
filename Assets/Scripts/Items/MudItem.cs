@@ -10,6 +10,7 @@ public class MudItem : Item
     {
         BoardSpace space = BoardSpace.GetPredecessor(BoardManager.Instance.CurrentPlayer.StandingOnBoardSpaceId);
         space.SetMudCovered(true, MoveCountModifier);
+        AudioManager.Instance.Play(SoundName.MudBomb);
         await Task.Delay(800);
     }
 }
