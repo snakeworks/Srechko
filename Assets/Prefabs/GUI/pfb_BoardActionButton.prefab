@@ -182,7 +182,7 @@ MonoBehaviour:
     m_HighlightedColor: {r: 1, g: 1, b: 1, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_SelectedColor: {r: 0.21568625, g: 0.5845583, b: 0.972549, a: 1}
-    m_DisabledColor: {r: 1, g: 1, b: 1, a: 0.19607843}
+    m_DisabledColor: {r: 1, g: 1, b: 1, a: 1}
     m_ColorMultiplier: 1
     m_FadeDuration: 0
   m_SpriteState:
@@ -255,6 +255,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _isNegative: 0
+  _muteSelect: 0
+  _muteSubmit: 0
 --- !u!1 &8894326435033667260
 GameObject:
   m_ObjectHideFlags: 0

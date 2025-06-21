@@ -23,6 +23,7 @@ public class BoardItemMenu : Menu
             slot.OnSlotPressed += OnItemSlotPressed;
         }
         _errorPopupCanvasGroup.alpha = 0.0f;
+        GetComponent<RectTransform>().DOAnchorPosX(-408, 0.0f);
     }
 
     private void Update()
@@ -77,6 +78,12 @@ public class BoardItemMenu : Menu
             _itemSlots[count].UpdateSlot(CurrentPlayerData, entry.Key, entry.Value);
             count++;
         }
+
+        sequence.Append(
+            GetComponent<RectTransform>()
+            .DOAnchorPosX(358, 0.12f)
+            .SetEase(Ease.OutQuad)
+        );
     }
     
     public override void TweenClose(Sequence sequence)
@@ -85,5 +92,11 @@ public class BoardItemMenu : Menu
         {
             slot.UpdateSlot(null, null, 0);
         }
+
+        sequence.Append(
+            GetComponent<RectTransform>()
+            .DOAnchorPosX(-408, 0.12f)
+            .SetEase(Ease.OutQuad)
+        );
     }
 }
