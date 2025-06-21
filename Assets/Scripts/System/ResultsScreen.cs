@@ -86,6 +86,7 @@ public class ResultsScreen : MonoBehaviour
         static void OnInteract()
         {
             PlayerManager.Instance.MainPlayerController.InteractPerformed -= OnInteract;
+            AudioManager.Instance.FadeOut(SoundName.ResultsTheme);
             SceneLoader.Load(Scene.Title, showLoadingScreen: false);
         }
     }
