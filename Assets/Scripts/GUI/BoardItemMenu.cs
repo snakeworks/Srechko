@@ -9,6 +9,8 @@ public class BoardItemMenu : Menu
     [SerializeField] private BoardItemSlot[] _itemSlots;
     [SerializeField] private TextMeshProUGUI _itemNameText;
     [SerializeField] private TextMeshProUGUI _itemDescriptionText;
+    [SerializeField] private CanvasGroup _errorPopupCanvasGroup;
+    [SerializeField] private TextMeshProUGUI _errorText;
 
     public event Action OnItemPressed;
 
@@ -20,6 +22,7 @@ public class BoardItemMenu : Menu
         {
             slot.OnSlotPressed += OnItemSlotPressed;
         }
+        _errorPopupCanvasGroup.alpha = 0.0f;
     }
 
     private void Update()
@@ -42,9 +45,28 @@ public class BoardItemMenu : Menu
         }   
     }
 
-    private void OnItemSlotPressed()
+    private void OnItemSlotPressed(string message)
     {
+        if (!string.IsNullOrEmpty(message))
+        {
+            PopupError(message);
+            return;
+        }
         OnItemPressed?.Invoke();
+    }
+
+    public void PopupError(string text)
+    {
+        AudioManager.Instance.Play(SoundName.Error);
+
+        _errorText.SetText(text);
+        _errorPopupCanvasGroup.DOKill();
+
+        _errorPopupCanvasGroup.alpha = 1.0f;
+        _errorPopupCanvasGroup.transform.DOScale(1.15f, 0.0f);
+
+        _errorPopupCanvasGroup.transform.DOScale(1.0f, 0.2f);
+        _errorPopupCanvasGroup.DOFade(0.0f, 0.5f).SetDelay(1.0f);
     }
 
     public override void TweenOpen(Sequence sequence)

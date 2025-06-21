@@ -10,4 +10,5 @@ public abstract class Item : ScriptableObject
     public bool RollDiceAfterUse = false;
 
     public abstract Task PerformItemAction();
+    public virtual bool CanUse() { return true; }
 }

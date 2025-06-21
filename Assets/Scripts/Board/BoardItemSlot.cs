@@ -9,7 +9,7 @@ public class BoardItemSlot : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _itemAmountText;
     [SerializeField] private Sprite _emptyItemIcon;
 
-    public event Action OnSlotPressed; 
+    public event Action<string> OnSlotPressed; 
     public Item Item { get; private set; }
 
     private Button _button;
@@ -42,9 +42,15 @@ public class BoardItemSlot : MonoBehaviour
     {
         if (Item == null)
         {
+            OnSlotPressed?.Invoke("No item in slot!");
+            return;
+        }
+        if (!Item.CanUse())
+        {
+            OnSlotPressed?.Invoke("Cannot use item!");
             return;
         }
         _playerData.SelectItem(Item);
-        OnSlotPressed?.Invoke();
+        OnSlotPressed?.Invoke(string.Empty);
     }
 }

@@ -28,7 +28,9 @@ public class ShopItemSlot : MonoBehaviour
         Amount = Random.Range(1, 4); // TODO: Change later
         _itemNameText.SetText(Item.Name);
         _itemIcon.sprite = Item.Icon;
-        _itemPriceText.SetText($"{Item.Price} <sprite index=0>");
+        _itemPriceText.SetText(
+            Item.Price <= 0 ? "FREE" : $"{Item.Price} <sprite index=0>"
+        );
 
         UpdateSlot();
 
@@ -50,7 +52,7 @@ public class ShopItemSlot : MonoBehaviour
         }
 
         var playerData = GameManager.Instance.GetBoardPlayerData(BoardManager.Instance.CurrentPlayer.Index);
-        if (playerData.CoinCount < Item.Price)
+        if (Item.Price > 0 && playerData.CoinCount < Item.Price)
         {
             _shopMenu.PopupError("You do not have enough coins!");
             return;
@@ -63,7 +65,12 @@ public class ShopItemSlot : MonoBehaviour
             _panelTransform.DOKill();
             _panelTransform.DOScale(0.8f, 0.0f);
             _panelTransform.DOScale(1.0f, 0.2f);
-            playerData.RemoveCoins(Item.Price);
+
+            if (Item.Price > 0)
+            {
+                playerData.RemoveCoins(Item.Price);
+            }
+
             Amount--;
             UpdateSlot();
             AudioManager.Instance.Play(SoundName.BuyItem);

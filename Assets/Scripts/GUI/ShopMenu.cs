@@ -21,7 +21,7 @@ public class ShopMenu : Menu
 
     private void Start()
     {
-        _sellingItems = new Item[Random.Range(3, 5)];
+        _sellingItems = new Item[4];
         for (int i = 0; i < _sellingItems.Length; i++)
         {
             var randomItem = ItemRegistry.Instance.GetRandom();
