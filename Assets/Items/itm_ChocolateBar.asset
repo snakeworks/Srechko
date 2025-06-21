@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: itm_ChocolateBar
   m_EditorClassIdentifier: 
   Name: Chocolate Bar
-  Description: Gives the player +5 moves next turn.
+  Description: Gives the player +5 moves.
   Price: 100
   Icon: {fileID: 21300000, guid: 226228726373cb5b3af677383b4232cf, type: 3}
+  RollDiceAfterUse: 1
   MoveCountModifier: 5

@@ -25,6 +25,7 @@ public class MiniGameManager : StaticInstance<MiniGameManager>
     private readonly TextMeshProUGUI[] _scoreTexts = new TextMeshProUGUI[4]; 
     private readonly TextMeshProUGUI[] _coinsTexts = new TextMeshProUGUI[4]; 
     private MiniGame _current;
+    private MiniGame _previous;
 
     protected override void Awake()
     {
@@ -54,10 +55,15 @@ public class MiniGameManager : StaticInstance<MiniGameManager>
     {
         AudioManager.Instance.FadeOut(SoundName.BoardTheme);
 
-        _current = _games[Random.Range(0, _games.Length)];
+        _current = _previous;
+        while (_current == _previous)
+            _current = _games[Random.Range(0, _games.Length)];
+
         _screenObject.SetActive(true);
         _current.gameObject.SetActive(true);
         _current.OnCalled();
+
+        _previous = _current;
 
         _background.DOFade(0.0f, 0.0f);
         _background.gameObject.SetActive(true);

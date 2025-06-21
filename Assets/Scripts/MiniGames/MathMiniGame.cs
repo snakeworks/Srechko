@@ -128,6 +128,7 @@ public class MathMiniGame : MiniGame
             for (int j = 0; j < playerAnswered.Count; j++)
             {
                 playerAnswered[j] = false;
+                _playerCorrectnessImages[j].sprite = _wrongSprite;
                 _playerCorrectnessImages[j].gameObject.SetActive(false);
             }
 

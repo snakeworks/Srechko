@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: itm_DoubleDice
   m_EditorClassIdentifier: 
   Name: Double Dice
-  Description: Gives the player 2 dice to roll on the next turn.
+  Description: Gives the player 2 dice to roll.
   Price: 400
   Icon: {fileID: 21300000, guid: b284b23b462d238b9999621cbb896064, type: 3}
+  RollDiceAfterUse: 1
   DiceCountModifier: 2

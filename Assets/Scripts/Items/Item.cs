@@ -7,6 +7,7 @@ public abstract class Item : ScriptableObject
     [TextArea] public string Description;
     public int Price;
     public Sprite Icon;
+    public bool RollDiceAfterUse = false;
 
     public abstract Task PerformItemAction();
 }
