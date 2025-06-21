@@ -16,6 +16,7 @@ public class BoardPlayerController : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _finalDiceNumberText;
     [SerializeField] private DirectionalPromptDefinition[] _directionalPrompts;
     [SerializeField] private TextMeshProUGUI _alertPopup;
+    [SerializeField] private SpriteRenderer[] _tapes;
 
     public int StandingOnBoardSpaceId { get; private set; } = -1;
     public bool SkipNextTurn { get; private set; } = false;
@@ -52,6 +53,8 @@ public class BoardPlayerController : MonoBehaviour
             _directionalPromptsDict.Add(def.Direction, def);
             def.Sprite.DOFade(0.0f, 0.0f);
         }
+
+        foreach (var tape in _tapes) tape.gameObject.SetActive(false);
 
         _sleepParticles.Stop();
 
@@ -118,8 +121,7 @@ public class BoardPlayerController : MonoBehaviour
 
     public async Task<bool> FinishDiceRoll()
     {
-        //int numberRolled = Random.Range(BoardManager.MinDiceNumber, BoardManager.MaxDiceNumber+1);
-        int numberRolled = 12;
+        int numberRolled = Random.Range(BoardManager.MinDiceNumber, BoardManager.MaxDiceNumber+1);
         int diceNumber = numberRolled + _moveCountModifier;
         LastRolledDiceNumber += diceNumber;
         _diceTexts[_currentRollingDiceIndex].SetText(diceNumber.ToString());
@@ -305,6 +307,30 @@ public class BoardPlayerController : MonoBehaviour
             await Task.Delay(100);
         }
         _alertPopup.gameObject.SetActive(false);
+    }
+
+    public async Task PlayTapeAnimation()
+    {
+        foreach (var tape in _tapes) tape.gameObject.SetActive(false);
+
+        foreach (var tape in _tapes)
+        {
+            float scaleX = tape.transform.localScale.x;
+            tape.transform.localScale = new(0.0f, tape.transform.localScale.y);
+            tape.gameObject.SetActive(true);
+            await tape.transform.DOScaleX(scaleX, 0.5f).AsyncWaitForCompletion();
+        }
+
+        await Task.Delay(400);
+
+        foreach (var tape in _tapes)
+        {
+            tape.DOFade(0.0f, 0.25f);
+        }
+
+        await Task.Delay(250);
+
+        foreach (var tape in _tapes) tape.gameObject.SetActive(false);
     }
 
     [System.Serializable]

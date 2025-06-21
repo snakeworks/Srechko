@@ -10,6 +10,7 @@ public class BlockerItem : Item
         await BoardCamera.Instance.TransitionToPlayer(selectedPlayer.Index);
         selectedPlayer.SetCanUseItems(false);
         AudioManager.Instance.Play(SoundName.DuctTape);
+        await selectedPlayer.PlayTapeAnimation();
         await Task.Delay(1000);
     }
 }
