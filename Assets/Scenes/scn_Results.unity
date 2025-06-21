@@ -922,8 +922,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: <sprite index=0> Return to main menu
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: fd29f1a513c12c257b505264ecf64641, type: 2}
+  m_sharedMaterial: {fileID: 3635485621264199195, guid: fd29f1a513c12c257b505264ecf64641, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1232,8 +1232,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: PLAYER 1 WINS!
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 5a16db7021a9dd87a81f4a3d4a9d7eaa, type: 2}
-  m_sharedMaterial: {fileID: 4284610629979112743, guid: 5a16db7021a9dd87a81f4a3d4a9d7eaa, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: e2c5b19c7f75924978a7930bd593c4f4, type: 2}
+  m_sharedMaterial: {fileID: 3635485621264199195, guid: e2c5b19c7f75924978a7930bd593c4f4, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1263,7 +1263,7 @@ MonoBehaviour:
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 0
+  m_fontStyle: 1
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
