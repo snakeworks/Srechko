@@ -13,7 +13,10 @@ MonoBehaviour:
   m_Name: itm_SharkToy
   m_EditorClassIdentifier: 
   Name: Shark Toy
-  Description: Clears the player's debt.
-  Price: 0
-  Icon: {fileID: 21300000, guid: 74a909701d372351883eb303f1ab5458, type: 3}
+  InventoryMaxCount: 1
+  ShopMinCount: 99
+  ShopMaxCount: 99
   RollDiceAfterUse: 0
+  Price: 0
+  Description: Clears the player's debt.
+  Icon: {fileID: 21300000, guid: 74a909701d372351883eb303f1ab5458, type: 3}

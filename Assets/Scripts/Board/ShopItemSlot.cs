@@ -25,7 +25,7 @@ public class ShopItemSlot : MonoBehaviour
         _shopMenu = menu;
 
         Item = item;
-        Amount = Random.Range(1, 4); // TODO: Change later
+        Amount = Random.Range(Item.ShopMinCount, Item.ShopMaxCount+1);
         _itemNameText.SetText(Item.Name);
         _itemIcon.sprite = Item.Icon;
         _itemPriceText.SetText(
@@ -58,7 +58,7 @@ public class ShopItemSlot : MonoBehaviour
             return;
         }
 
-        bool itemAdded = playerData.AddItem(Item, 1);
+        bool itemAdded = playerData.AddItem(Item);
 
         if (itemAdded)
         {
