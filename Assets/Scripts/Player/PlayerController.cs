@@ -22,6 +22,10 @@ public class PlayerController : MonoBehaviour
         }
     }
     public event Action InteractPerformed;
+    public event Action PromptSouthPerformed;
+    public event Action PromptEastPerformed;
+    public event Action PromptWestPerformed;
+    public event Action PromptNorthPerformed;
     public event Action OpenPauseMenuPerformed;
     public event Action CancelPerformed;
     public event Action<Vector2> MovePerformed;
@@ -77,6 +81,10 @@ public class PlayerController : MonoBehaviour
 
     public void InputMove(InputAction.CallbackContext context) => MovePerformed?.Invoke(context.ReadValue<Vector2>());
     public void InputInteract(InputAction.CallbackContext context) => TryPerform(context, InteractPerformed);
+    public void InputPromptSouth(InputAction.CallbackContext context) => TryPerform(context, PromptSouthPerformed);
+    public void InputPromptEast(InputAction.CallbackContext context) => TryPerform(context, PromptEastPerformed);
+    public void InputPromptWest(InputAction.CallbackContext context) => TryPerform(context, PromptWestPerformed);
+    public void InputPromptNorth(InputAction.CallbackContext context) => TryPerform(context, PromptNorthPerformed);
     public void InputOpenPauseMenu(InputAction.CallbackContext context) => TryPerform(context, OpenPauseMenuPerformed);
     public void InputCancel(InputAction.CallbackContext context) => TryPerform(context, CancelPerformed);
 }

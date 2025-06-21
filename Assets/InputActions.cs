@@ -126,6 +126,42 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""PromptSouth"",
+                    ""type"": ""Button"",
+                    ""id"": ""231e01c9-4264-4398-89cd-4172612ff207"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""PromptEast"",
+                    ""type"": ""Button"",
+                    ""id"": ""c2dee38e-5db4-4484-bed1-e9ca25e0481f"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""PromptWest"",
+                    ""type"": ""Button"",
+                    ""id"": ""6724dbe4-da58-4b8c-89db-305c3742e6d8"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""PromptNorth"",
+                    ""type"": ""Button"",
+                    ""id"": ""3faa3e53-b02d-4729-8c65-0777fa0dde3d"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -390,6 +426,94 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Cancel"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a9195f57-b653-49bc-abaf-163d5d29d473"",
+                    ""path"": ""<Gamepad>/buttonSouth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""PromptSouth"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""48b42b0e-1b2c-42d6-8066-e5b75abc4e9f"",
+                    ""path"": ""<Keyboard>/s"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""PromptSouth"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""92300602-3939-4a97-817b-049a1444d77a"",
+                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""PromptEast"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""395bc056-d62d-487c-9d5f-8d811280881c"",
+                    ""path"": ""<Keyboard>/d"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""PromptEast"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""be8bc639-24b9-421f-9ba0-02cfb639c92c"",
+                    ""path"": ""<Gamepad>/buttonWest"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""PromptWest"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""063d078d-0c7b-4825-8195-89617c5d1c41"",
+                    ""path"": ""<Keyboard>/a"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""PromptWest"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d4de1e41-04b5-45b1-abdd-6f77551ab559"",
+                    ""path"": ""<Gamepad>/buttonNorth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""PromptNorth"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""59022b09-059b-4aaa-a1f3-6892d4af7dd2"",
+                    ""path"": ""<Keyboard>/w"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""PromptNorth"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -981,6 +1105,10 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
         m_Player_OpenPauseMenu = m_Player.FindAction("OpenPauseMenu", throwIfNotFound: true);
         m_Player_Interact = m_Player.FindAction("Interact", throwIfNotFound: true);
         m_Player_Cancel = m_Player.FindAction("Cancel", throwIfNotFound: true);
+        m_Player_PromptSouth = m_Player.FindAction("PromptSouth", throwIfNotFound: true);
+        m_Player_PromptEast = m_Player.FindAction("PromptEast", throwIfNotFound: true);
+        m_Player_PromptWest = m_Player.FindAction("PromptWest", throwIfNotFound: true);
+        m_Player_PromptNorth = m_Player.FindAction("PromptNorth", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1078,6 +1206,10 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_OpenPauseMenu;
     private readonly InputAction m_Player_Interact;
     private readonly InputAction m_Player_Cancel;
+    private readonly InputAction m_Player_PromptSouth;
+    private readonly InputAction m_Player_PromptEast;
+    private readonly InputAction m_Player_PromptWest;
+    private readonly InputAction m_Player_PromptNorth;
     /// <summary>
     /// Provides access to input actions defined in input action map "Player".
     /// </summary>
@@ -1105,6 +1237,22 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "Player/Cancel".
         /// </summary>
         public InputAction @Cancel => m_Wrapper.m_Player_Cancel;
+        /// <summary>
+        /// Provides access to the underlying input action "Player/PromptSouth".
+        /// </summary>
+        public InputAction @PromptSouth => m_Wrapper.m_Player_PromptSouth;
+        /// <summary>
+        /// Provides access to the underlying input action "Player/PromptEast".
+        /// </summary>
+        public InputAction @PromptEast => m_Wrapper.m_Player_PromptEast;
+        /// <summary>
+        /// Provides access to the underlying input action "Player/PromptWest".
+        /// </summary>
+        public InputAction @PromptWest => m_Wrapper.m_Player_PromptWest;
+        /// <summary>
+        /// Provides access to the underlying input action "Player/PromptNorth".
+        /// </summary>
+        public InputAction @PromptNorth => m_Wrapper.m_Player_PromptNorth;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -1143,6 +1291,18 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
             @Cancel.started += instance.OnCancel;
             @Cancel.performed += instance.OnCancel;
             @Cancel.canceled += instance.OnCancel;
+            @PromptSouth.started += instance.OnPromptSouth;
+            @PromptSouth.performed += instance.OnPromptSouth;
+            @PromptSouth.canceled += instance.OnPromptSouth;
+            @PromptEast.started += instance.OnPromptEast;
+            @PromptEast.performed += instance.OnPromptEast;
+            @PromptEast.canceled += instance.OnPromptEast;
+            @PromptWest.started += instance.OnPromptWest;
+            @PromptWest.performed += instance.OnPromptWest;
+            @PromptWest.canceled += instance.OnPromptWest;
+            @PromptNorth.started += instance.OnPromptNorth;
+            @PromptNorth.performed += instance.OnPromptNorth;
+            @PromptNorth.canceled += instance.OnPromptNorth;
         }
 
         /// <summary>
@@ -1166,6 +1326,18 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
             @Cancel.started -= instance.OnCancel;
             @Cancel.performed -= instance.OnCancel;
             @Cancel.canceled -= instance.OnCancel;
+            @PromptSouth.started -= instance.OnPromptSouth;
+            @PromptSouth.performed -= instance.OnPromptSouth;
+            @PromptSouth.canceled -= instance.OnPromptSouth;
+            @PromptEast.started -= instance.OnPromptEast;
+            @PromptEast.performed -= instance.OnPromptEast;
+            @PromptEast.canceled -= instance.OnPromptEast;
+            @PromptWest.started -= instance.OnPromptWest;
+            @PromptWest.performed -= instance.OnPromptWest;
+            @PromptWest.canceled -= instance.OnPromptWest;
+            @PromptNorth.started -= instance.OnPromptNorth;
+            @PromptNorth.performed -= instance.OnPromptNorth;
+            @PromptNorth.canceled -= instance.OnPromptNorth;
         }
 
         /// <summary>
@@ -1494,6 +1666,34 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnCancel(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "PromptSouth" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnPromptSouth(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "PromptEast" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnPromptEast(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "PromptWest" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnPromptWest(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "PromptNorth" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnPromptNorth(InputAction.CallbackContext context);
     }
     /// <summary>
     /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "UI" which allows adding and removing callbacks.

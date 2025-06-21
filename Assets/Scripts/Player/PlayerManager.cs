@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
@@ -25,6 +24,10 @@ public class PlayerManager : Singleton<PlayerManager>
     public event Action<PlayerController> OnPlayerJoin;
     public event Action<PlayerController> OnPlayerLeave;
     public event Action<PlayerController> OnAnyPlayerInteractPerformed;
+    public event Action<PlayerController> OnAnyPlayerPromptSouthPerformed;
+    public event Action<PlayerController> OnAnyPlayerPromptEastPerformed;
+    public event Action<PlayerController> OnAnyPlayerPromptWestPerformed;
+    public event Action<PlayerController> OnAnyPlayerPromptNorthPerformed;
     
     private PlayerInputManager _playerInputManager;
     private readonly List<PlayerController> _controllers = new();
@@ -189,6 +192,10 @@ public class PlayerManager : Singleton<PlayerManager>
 
         // controller.OpenPauseMenuPerformed += () => OpenPauseMenu(controller);
         controller.InteractPerformed += () => OnAnyPlayerInteractPerformed?.Invoke(controller);
+        controller.PromptSouthPerformed += () => OnAnyPlayerPromptSouthPerformed?.Invoke(controller);
+        controller.PromptEastPerformed += () => OnAnyPlayerPromptEastPerformed?.Invoke(controller);
+        controller.PromptWestPerformed += () => OnAnyPlayerPromptWestPerformed?.Invoke(controller);
+        controller.PromptNorthPerformed += () => OnAnyPlayerPromptNorthPerformed?.Invoke(controller);
 
         _controllers.Add(controller);
 
