@@ -98,7 +98,7 @@ public class BoardPlayerController : MonoBehaviour
         foreach (var text in _diceTexts)
         {
             text.SetText(
-                (Random.Range(BoardManager.MinDiceNumber, BoardManager.MaxDiceNumber + 1) + _moveCountModifier).ToString("D2")
+                (Random.Range(BoardManager.MinDiceNumber, BoardManager.MaxDiceNumber + 1) + Mathf.Abs(_moveCountModifier)).ToString("D2")
             );
         }
 
@@ -111,7 +111,7 @@ public class BoardPlayerController : MonoBehaviour
                 for (int i = _currentRollingDiceIndex; i < _diceCount; i++)
                 {
                     _diceTexts[i].SetText(
-                        (Random.Range(BoardManager.MinDiceNumber, BoardManager.MaxDiceNumber + 1) + _moveCountModifier).ToString("D2")
+                        (Random.Range(BoardManager.MinDiceNumber, BoardManager.MaxDiceNumber + 1) + Mathf.Abs(_moveCountModifier)).ToString("D2")
                     );
                 }
                 if (!AudioManager.Instance.IsPlaying(SoundName.DiceRoll))

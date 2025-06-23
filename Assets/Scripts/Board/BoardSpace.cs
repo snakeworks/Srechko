@@ -10,8 +10,9 @@ public abstract class BoardSpace : MonoBehaviour
     [SerializeField] private BoardSpace _nextSpaceRight;
 
     public int Id { get; private set; }
+    public bool IsMudCovered { get; private set; } = false;
+    public static int Count => _spaces.Count;
 
-    private bool _isMudCovered = false;
     private int _mudMoveCountModifier = 0;
     private readonly List<BoardPlayerController> _standingBoardPlayers = new();
     private static readonly List<BoardSpace> _spaces = new();
@@ -94,7 +95,7 @@ public abstract class BoardSpace : MonoBehaviour
 
     public void SetMudCovered(bool covered, int moveCountModifier)
     {
-        _isMudCovered = covered;
+        IsMudCovered = covered;
         if (covered)
         {
             _mudMoveCountModifier = moveCountModifier;
@@ -111,7 +112,7 @@ public abstract class BoardSpace : MonoBehaviour
 
     public async Task OnPlayerLanded()
     {
-        if (_isMudCovered)
+        if (IsMudCovered)
         {
             BoardManager.Instance.CurrentPlayer
                 .SetMoveCountModifier(_mudMoveCountModifier > 0 ? -_mudMoveCountModifier : _mudMoveCountModifier);
