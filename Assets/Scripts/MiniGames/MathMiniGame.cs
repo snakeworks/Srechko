@@ -20,7 +20,9 @@ public class MathMiniGame : MiniGame
 
     public override string Name => "Mathematicar";
 
-    private const int _maxQuestionCount = 10;
+    private const int _coinsPerQuestion = 15;
+    private const int _earlyCoins = 5;
+    private const int _maxQuestionCount = 7;
     private const float _questionTimer = 10;
 
     public override void OnCalled()
@@ -71,6 +73,15 @@ public class MathMiniGame : MiniGame
             return true;
         }
 
+        bool HasNobodyAnswered()
+        {
+            foreach (var answer in playerAnswered)
+            {
+                if (answer) return false;
+            }
+            return true;
+        }
+
         await Awaitable.WaitForSecondsAsync(0.5f);
         await _choicesPanel.DOFade(1.0f, 0.25f).AsyncWaitForCompletion();
         await Awaitable.WaitForSecondsAsync(0.5f);
@@ -106,7 +117,8 @@ public class MathMiniGame : MiniGame
 
             if (index == currentSolutionIndex)
             {
-                scores[controller.Index] += 10;
+                scores[controller.Index] += _coinsPerQuestion;
+                if (HasNobodyAnswered()) scores[controller.Index] += _earlyCoins;
                 _playerCorrectnessImages[controller.Index].sprite = _correctSprite;
             }
             else

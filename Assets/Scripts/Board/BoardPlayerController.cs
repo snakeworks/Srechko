@@ -19,6 +19,7 @@ public class BoardPlayerController : MonoBehaviour
     [SerializeField] private SpriteRenderer[] _tapes;
 
     public int StandingOnBoardSpaceId { get; private set; } = -1;
+    public int PreviousStandingOnBoardSpaceId { get; private set; } = -1;
     public bool SkipNextTurn { get; private set; } = false;
     public bool CanUseItems { get; private set; } = true;
     public Transform CameraView => _cameraView;
@@ -170,6 +171,7 @@ public class BoardPlayerController : MonoBehaviour
 
     public async Task MoveToSpace(BoardSpace space)
     {
+        PreviousStandingOnBoardSpaceId = StandingOnBoardSpaceId;
         if (StandingOnBoardSpaceId >= 0) BoardSpace.Get(StandingOnBoardSpaceId).OnPlayerExited(this);
         StandingOnBoardSpaceId = space.Id;
         space.OnPlayerEntered(this);
