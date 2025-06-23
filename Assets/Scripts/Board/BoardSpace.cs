@@ -95,8 +95,11 @@ public abstract class BoardSpace : MonoBehaviour
     public void SetMudCovered(bool covered, int moveCountModifier)
     {
         _isMudCovered = covered;
-        _mudMoveCountModifier = moveCountModifier;
-        BoardManager.Instance.CreateMudObjectOnSpace(this);
+        if (covered)
+        {
+            _mudMoveCountModifier = moveCountModifier;
+            BoardManager.Instance.CreateMudObjectOnSpace(this);
+        }
     }
 
     public async Task OnPlayerPassed()

@@ -4,6 +4,7 @@ using UnityEngine;
 public class ShopBoardSpace : BoardSpace
 {
     [SerializeField] private ShopMenu _menuPrefab;
+    [SerializeField] private GameObject _restockSign;
 
     private ShopMenu _shopMenu;
 
@@ -11,6 +12,7 @@ public class ShopBoardSpace : BoardSpace
     {
         base.Start();
         _shopMenu = Instantiate(_menuPrefab, BoardManager.Instance.Canvas.transform).GetComponent<ShopMenu>();
+        _shopMenu.Setup(_restockSign);
     }
 
     protected override Task PerformPlayerLanded() => Task.CompletedTask;

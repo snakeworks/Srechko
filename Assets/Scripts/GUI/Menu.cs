@@ -9,6 +9,7 @@ public abstract class Menu : MonoBehaviour
     public bool CanPop = true;
     public bool PauseGameOnOpen = false;
     public bool RememberLastSelected = true;
+    public bool DisableOnStartup = true;
     public bool IsCurrent => !MenuNavigator.IsStackEmpty && MenuNavigator.CurrentMenu == this;
     public bool IsOnStack => MenuNavigator.IsMenuOnStack(this);
     public bool IsTweening { get; set; } = false;
@@ -33,7 +34,7 @@ public abstract class Menu : MonoBehaviour
         }
         else
         {
-            gameObject.SetActive(false);
+            if (DisableOnStartup) gameObject.SetActive(false);
         }
     }
 
