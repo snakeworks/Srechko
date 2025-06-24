@@ -28,9 +28,11 @@ public static class SoundName
     public const string AlertSingle = "AlertSingle";
     public const string Wind = "Wind";
     public const string MudBomb = "MudBomb";
+    public const string Whistle = "Whistle";
     public const string TitleTheme = "TitleTheme";
     public const string BoardTheme = "BoardTheme";
     public const string ButtonMashTheme = "ButtonMashTheme";
     public const string MathTheme = "MathTheme";
+    public const string QuickDrawTheme = "QuickDrawTheme";
     public const string ResultsTheme = "ResultsTheme";
 }

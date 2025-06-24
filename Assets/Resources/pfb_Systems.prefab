@@ -241,6 +241,13 @@ MonoBehaviour:
     Pitch: 1
     RandomVolume: 0
     RandomPitch: 0
+  - Name: Whistle
+    Clip: {fileID: 8300000, guid: 8c037dae00f90c04fba56397c11b4cff, type: 3}
+    Loop: 0
+    Volume: 1
+    Pitch: 1
+    RandomVolume: 0
+    RandomPitch: 0
   - Name: TitleTheme
     Clip: {fileID: 8300000, guid: 16c4c98e128c25fd38dc7949fdb8234a, type: 3}
     Loop: 1
@@ -264,6 +271,13 @@ MonoBehaviour:
     RandomPitch: 0
   - Name: MathTheme
     Clip: {fileID: 8300000, guid: e674779b89b870c8db3a1c79e14653ab, type: 3}
+    Loop: 1
+    Volume: 0.75
+    Pitch: 1
+    RandomVolume: 0
+    RandomPitch: 0
+  - Name: QuickDrawTheme
+    Clip: {fileID: 8300000, guid: a0637ab8853c88c13921ab17f0f4f1f2, type: 3}
     Loop: 1
     Volume: 0.75
     Pitch: 1
