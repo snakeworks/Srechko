@@ -3,16 +3,20 @@ using System.Threading.Tasks;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ButtonMashMiniGame : MiniGame
 {
     [SerializeField] private Transform _playersParent;
     [SerializeField] private TextMeshProUGUI _timerText;
-    [SerializeField] private TextMeshProUGUI _mashButtonText;
+    [SerializeField] private CanvasGroup _mashButtonCanvasGroup;
+    [SerializeField] private Image _promptImage;
+    [SerializeField] private Sprite[] _promptSprites;
 
     public override string Name => "Button Mash";
 
     private const int _timerMilliseconds = 10000;
+    private int _currentButtonIndex = 0;
 
     public override void OnCalled()
     {
@@ -25,7 +29,7 @@ public class ButtonMashMiniGame : MiniGame
             else
                 _playersParent.GetChild(i).gameObject.SetActive(false);
         }
-        _mashButtonText.gameObject.SetActive(false);
+        _mashButtonCanvasGroup.gameObject.SetActive(false);
     }
 
     public override async void OnBegin()
@@ -36,14 +40,14 @@ public class ButtonMashMiniGame : MiniGame
             _pressCountList.Add(0);
         }
 
-        _mashButtonText.gameObject.SetActive(true);
+        _mashButtonCanvasGroup.gameObject.SetActive(true);
 
         AudioManager.Instance.Play(SoundName.ButtonMashTheme);
 
         async void FlashMashButton(float fade)
         {
-            if (!_mashButtonText.IsActive()) return;
-            await _mashButtonText
+            if (!_mashButtonCanvasGroup.gameObject.activeInHierarchy) return;
+            await _mashButtonCanvasGroup
                 .DOFade(fade, 0.02f)
                 .AsyncWaitForCompletion();
             FlashMashButton(fade == 1.0f ? 0.3f : 1.0f);
@@ -53,10 +57,20 @@ public class ButtonMashMiniGame : MiniGame
 
         PlayerManager.Instance.GiveOwnershipToAll();
         PlayerManager.Instance.EnableInput();
-        PlayerManager.Instance.OnAnyPlayerInteractPerformed += OnInteractPressed;
 
-        void OnInteractPressed(PlayerController controller)
+        PlayerManager.Instance.OnAnyPlayerPromptSouthPerformed += OnInputSouth;
+        PlayerManager.Instance.OnAnyPlayerPromptEastPerformed += OnInputEast;
+        PlayerManager.Instance.OnAnyPlayerPromptWestPerformed += OnInputWest;
+        PlayerManager.Instance.OnAnyPlayerPromptNorthPerformed += OnInputNorth;
+
+        void OnInputSouth(PlayerController controller) => OnPressed(controller, 0);
+        void OnInputEast(PlayerController controller) => OnPressed(controller, 1);
+        void OnInputWest(PlayerController controller) => OnPressed(controller, 2);
+        void OnInputNorth(PlayerController controller) => OnPressed(controller, 3);
+
+        void OnPressed(PlayerController controller, int index)
         {
+            if (index != _currentButtonIndex) return;
             _pressCountList[controller.Index]++;
             _playersParent.GetChild(controller.Index).GetChild(0).DOKill();
             _playersParent
@@ -67,17 +81,28 @@ public class ButtonMashMiniGame : MiniGame
         }
 
         int passedTime = _timerMilliseconds;
+        int nextPromptTime = 0;
         while (passedTime > 0)
         {
             await Task.Delay(1000);
             passedTime -= 1000;
+            nextPromptTime += 1000;
+            if (nextPromptTime > 2000)
+            {
+                nextPromptTime = 0;
+                RandomizeButton();
+            }
             _timerText.SetText($"{Mathf.RoundToInt(passedTime / 1000)}");
         }
 
-        _mashButtonText.gameObject.SetActive(false);
+        _mashButtonCanvasGroup.gameObject.SetActive(false);
 
         PlayerManager.Instance.DisableInput();
-        PlayerManager.Instance.OnAnyPlayerInteractPerformed -= OnInteractPressed;
+
+        PlayerManager.Instance.OnAnyPlayerPromptSouthPerformed -= OnInputSouth;
+        PlayerManager.Instance.OnAnyPlayerPromptEastPerformed -= OnInputEast;
+        PlayerManager.Instance.OnAnyPlayerPromptWestPerformed -= OnInputWest;
+        PlayerManager.Instance.OnAnyPlayerPromptNorthPerformed -= OnInputNorth;
 
         AudioManager.Instance.Stop(SoundName.ButtonMashTheme);
 
@@ -88,5 +113,13 @@ public class ButtonMashMiniGame : MiniGame
             {2, _pressCountList.InRange(2) ? _pressCountList[2] : 0},
             {3, _pressCountList.InRange(3) ? _pressCountList[3] : 0},
         });
+    }
+
+    private void RandomizeButton()
+    {
+        int newIndex = Random.Range(0, 4);
+        while (newIndex == _currentButtonIndex) newIndex = Random.Range(0, 4);
+        _currentButtonIndex = newIndex;
+        _promptImage.sprite = _promptSprites[_currentButtonIndex];
     }
 }
