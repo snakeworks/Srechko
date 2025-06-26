@@ -29,6 +29,7 @@ public class PlayerController : MonoBehaviour
     public event Action OpenPauseMenuPerformed;
     public event Action CancelPerformed;
     public event Action<Vector2> MovePerformed;
+    public event Action OpenDevMenuPerformed;
 
     // Doing this convoluted ass work around because of some stupid ass Unity reason.
     // For future reference: Always make calls to PlayerInput and not _playerInput.
@@ -87,4 +88,5 @@ public class PlayerController : MonoBehaviour
     public void InputPromptNorth(InputAction.CallbackContext context) => TryPerform(context, PromptNorthPerformed);
     public void InputOpenPauseMenu(InputAction.CallbackContext context) => TryPerform(context, OpenPauseMenuPerformed);
     public void InputCancel(InputAction.CallbackContext context) => TryPerform(context, CancelPerformed);
+    public void InputOpenDevMenu(InputAction.CallbackContext context) => TryPerform(context, OpenDevMenuPerformed);
 }

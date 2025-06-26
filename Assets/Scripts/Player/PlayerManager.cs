@@ -11,6 +11,7 @@ using UnityEngine.InputSystem.UI;
 public class PlayerManager : Singleton<PlayerManager>
 {
     [SerializeField] private Menu _pauseMenu;
+    [SerializeField] private DeveloperMenu _devMenu;
     [SerializeField] private PlayerProfile[] _playerProfiles;
 
     public bool IsInputEnabled { get; private set; } = true;
@@ -196,6 +197,7 @@ public class PlayerManager : Singleton<PlayerManager>
         controller.PromptEastPerformed += () => OnAnyPlayerPromptEastPerformed?.Invoke(controller);
         controller.PromptWestPerformed += () => OnAnyPlayerPromptWestPerformed?.Invoke(controller);
         controller.PromptNorthPerformed += () => OnAnyPlayerPromptNorthPerformed?.Invoke(controller);
+        controller.OpenDevMenuPerformed += TryOpenDevMenu;
 
         _controllers.Add(controller);
 
@@ -251,11 +253,34 @@ public class PlayerManager : Singleton<PlayerManager>
         MenuNavigator.Push(_pauseMenu);
     }
 
+    private static int _devMenuOpenCount = 0;
+    private static DateTime _lastDevMenuAttempt = DateTime.Now;
+
+    private void TryOpenDevMenu()
+    {
+        if (_devMenu.IsOnStack) return;
+
+        var time = DateTime.Now.Subtract(_lastDevMenuAttempt);
+        _lastDevMenuAttempt = DateTime.Now;
+        if (time > TimeSpan.FromSeconds(0.25f))
+        {
+            _devMenuOpenCount = 1;
+            return;
+        }
+        _devMenuOpenCount++;
+
+        if (_devMenuOpenCount >= 5)
+        {
+            _devMenu.TryPush();
+            _devMenuOpenCount = 0;
+        }
+    }
+
     private void UpdateControllerNames()
     {
         for (int i = 0; i < _controllers.Count; i++)
         {
-            _controllers[i].name = $"PlayerController{i+1}";
+            _controllers[i].name = $"PlayerController{i + 1}";
         }
     }
 }

@@ -162,6 +162,15 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""OpenDevMenu"",
+                    ""type"": ""Button"",
+                    ""id"": ""86c000ff-589a-4e1d-a1a8-27df48b3c35e"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -514,6 +523,28 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""PromptNorth"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d4798f92-2b71-4982-abe5-d88d7122b0a1"",
+                    ""path"": ""<Gamepad>/start"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""OpenDevMenu"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""1a3d4d4a-0101-4de0-acdb-1d76ee5da5fa"",
+                    ""path"": ""<Keyboard>/m"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""OpenDevMenu"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -1109,6 +1140,7 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
         m_Player_PromptEast = m_Player.FindAction("PromptEast", throwIfNotFound: true);
         m_Player_PromptWest = m_Player.FindAction("PromptWest", throwIfNotFound: true);
         m_Player_PromptNorth = m_Player.FindAction("PromptNorth", throwIfNotFound: true);
+        m_Player_OpenDevMenu = m_Player.FindAction("OpenDevMenu", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1210,6 +1242,7 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_PromptEast;
     private readonly InputAction m_Player_PromptWest;
     private readonly InputAction m_Player_PromptNorth;
+    private readonly InputAction m_Player_OpenDevMenu;
     /// <summary>
     /// Provides access to input actions defined in input action map "Player".
     /// </summary>
@@ -1253,6 +1286,10 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "Player/PromptNorth".
         /// </summary>
         public InputAction @PromptNorth => m_Wrapper.m_Player_PromptNorth;
+        /// <summary>
+        /// Provides access to the underlying input action "Player/OpenDevMenu".
+        /// </summary>
+        public InputAction @OpenDevMenu => m_Wrapper.m_Player_OpenDevMenu;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -1303,6 +1340,9 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
             @PromptNorth.started += instance.OnPromptNorth;
             @PromptNorth.performed += instance.OnPromptNorth;
             @PromptNorth.canceled += instance.OnPromptNorth;
+            @OpenDevMenu.started += instance.OnOpenDevMenu;
+            @OpenDevMenu.performed += instance.OnOpenDevMenu;
+            @OpenDevMenu.canceled += instance.OnOpenDevMenu;
         }
 
         /// <summary>
@@ -1338,6 +1378,9 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
             @PromptNorth.started -= instance.OnPromptNorth;
             @PromptNorth.performed -= instance.OnPromptNorth;
             @PromptNorth.canceled -= instance.OnPromptNorth;
+            @OpenDevMenu.started -= instance.OnOpenDevMenu;
+            @OpenDevMenu.performed -= instance.OnOpenDevMenu;
+            @OpenDevMenu.canceled -= instance.OnOpenDevMenu;
         }
 
         /// <summary>
@@ -1694,6 +1737,13 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnPromptNorth(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "OpenDevMenu" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnOpenDevMenu(InputAction.CallbackContext context);
     }
     /// <summary>
     /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "UI" which allows adding and removing callbacks.

@@ -1699,6 +1699,7 @@ MonoBehaviour:
   CanPop: 0
   PauseGameOnOpen: 0
   RememberLastSelected: 1
+  DisableOnStartup: 1
 --- !u!225 &1456331586
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -2271,6 +2272,7 @@ MonoBehaviour:
   CanPop: 0
   PauseGameOnOpen: 0
   RememberLastSelected: 1
+  DisableOnStartup: 1
   _mainMenu: {fileID: 1456331585}
 --- !u!225 &1970260806
 CanvasGroup:
