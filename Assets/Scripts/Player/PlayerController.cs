@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -8,16 +9,24 @@ using UnityEngine.InputSystem;
 public class PlayerController : MonoBehaviour
 {
     public int Index => transform.GetSiblingIndex();
+    public int Id => Index + 1;
     public bool IsInputEnabled => PlayerInput.inputIsActive;
     public InputActionAsset ActionsAsset => PlayerInput.actions;
     public InputDevice Device
     {
         get
         {
-            if (_device == null)
+            if (PlayerManager.Instance.IsSingleDeviceMode)
             {
-                _device = PlayerInput.devices[0];
+                foreach (var d in InputSystem.devices)
+                {
+                    if (d is Keyboard)
+                    {
+                        return d;
+                    }
+                }
             }
+            _device ??= PlayerInput.devices[0];
             return _device;
         }
     }
@@ -46,6 +55,49 @@ public class PlayerController : MonoBehaviour
     }
     private PlayerInput _playerInput;
     private InputDevice _device;
+
+    private void Awake()
+    {
+        if (!PlayerManager.Instance.IsSingleDeviceMode)
+        {
+            return;
+        }
+
+        int sdPlayerId = Index + 1;
+        string actionMapName = $"SDPlayer{sdPlayerId}";
+        var actionMap = PlayerInput.actions.actionMaps.First((s) => s.name == actionMapName);
+
+        foreach (var action in actionMap.actions)
+        {
+            switch (action.name)
+            {
+                case "Move":
+                    action.performed += InputMove;
+                    break;
+                case "Interact":
+                    action.performed += InputInteract;
+                    break;
+                case "PromptSouth":
+                    action.performed += InputPromptSouth;
+                    break;
+                case "PromptWest":
+                    action.performed += InputPromptWest;
+                    break;
+                case "PromptEast":
+                    action.performed += InputPromptEast;
+                    break;
+                case "PromptNorth":
+                    action.performed += InputPromptNorth;
+                    break;
+                case "Cancel":
+                    action.performed += InputCancel;
+                    break;
+                case "OpenDevMenu":
+                    action.performed += InputOpenDevMenu;
+                    break;
+            }
+        }
+    }
 
     private void TryPerform(InputAction.CallbackContext context, Action action)
     {

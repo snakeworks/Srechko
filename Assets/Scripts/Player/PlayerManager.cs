@@ -14,6 +14,7 @@ public class PlayerManager : Singleton<PlayerManager>
     [SerializeField] private DeveloperMenu _devMenu;
     [SerializeField] private PlayerProfile[] _playerProfiles;
 
+    public bool IsSingleDeviceMode { get; private set; } = true;
     public bool IsInputEnabled { get; private set; } = true;
     public PlayerController MainPlayerController => GetPlayerController(0);
     public bool HasMinimumPlayerCount => _controllers.Count > 1;

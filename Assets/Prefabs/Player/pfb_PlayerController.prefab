@@ -58,7 +58,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
-  m_NotificationBehavior: 2
+  m_NotificationBehavior: 3
   m_UIInputModule: {fileID: 0}
   m_DeviceLostEvent:
     m_PersistentCalls:
@@ -254,6 +254,118 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 86c000ff-589a-4e1d-a1a8-27df48b3c35e
     m_ActionName: 'Player/OpenDevMenu[/XInputControllerWindows/start,/Keyboard/escape]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 86148ae0-b85e-414d-a276-f16beaaaa9e1
+    m_ActionName: 'SDPlayer1/Move[/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 2ffd03ae-01fb-41ba-abfe-a45da2c9c61d
+    m_ActionName: 'SDPlayer1/Interact[/Keyboard/shift]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: df4af89f-18cf-43af-8813-57584f3f7f08
+    m_ActionName: 'SDPlayer1/Cancel[/Keyboard/escape]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 0bca09f1-50d7-4c88-8e11-981fc3d1bad5
+    m_ActionName: 'SDPlayer1/PromptSouth[/Keyboard/s]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: cf43a1b2-6442-4b20-9c2e-97fb4612e784
+    m_ActionName: 'SDPlayer1/PromptWest[/Keyboard/a]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 2c863278-dd74-4d7c-b011-c49aa653b14f
+    m_ActionName: 'SDPlayer1/PromptEast[/Keyboard/d]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: fa61110e-b387-4fc6-9e65-38a4e944f296
+    m_ActionName: 'SDPlayer1/PromptNorth[/Keyboard/w]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 83cc6ffe-655c-4a89-ade3-5cda875cc8a0
+    m_ActionName: 'SDPlayer2/Move[/Keyboard/upArrow,/Keyboard/downArrow,/Keyboard/leftArrow,/Keyboard/rightArrow]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: b4b917ef-8927-45f9-85d1-8ccf9ed271d7
+    m_ActionName: 'SDPlayer2/Interact[/Keyboard/enter]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 1b4ef46f-26b3-478c-a514-5e181e3ba7dc
+    m_ActionName: 'SDPlayer2/Cancel[/Keyboard/escape]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: c0f226b8-a496-48de-8e22-60ba0fbff2e6
+    m_ActionName: 'SDPlayer2/PromptSouth[/Keyboard/downArrow]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: d12acce5-9858-4bfb-b236-6431ef88643c
+    m_ActionName: 'SDPlayer2/PromptWest[/Keyboard/leftArrow]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 44025d71-68ee-45d8-a20e-e6cbcbbf1912
+    m_ActionName: 'SDPlayer2/PromptEast[/Keyboard/rightArrow]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 16d87089-fed1-4485-b963-139094a9338b
+    m_ActionName: 'SDPlayer2/PromptNorth[/Keyboard/upArrow]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 8e7f3e91-534d-4322-b208-eedb471316bc
+    m_ActionName: 'SDPlayer3/Move[/Keyboard/u,/Keyboard/j,/Keyboard/h,/Keyboard/k]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 4ae6f659-27bb-4313-8aeb-8d8b3c29381e
+    m_ActionName: 'SDPlayer3/Interact[/Keyboard/space]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: f62a0d87-01b0-4680-888d-26aba45ad24d
+    m_ActionName: 'SDPlayer3/Cancel[/Keyboard/escape]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: b8014ff7-339f-4a68-9863-fa8ec007d949
+    m_ActionName: 'SDPlayer3/PromptSouth[/Keyboard/j]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 3916e8e8-c4c6-4940-8fe3-4eb04da82691
+    m_ActionName: 'SDPlayer3/PromptWest[/Keyboard/h]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: a70d953b-b6c4-45b9-b9b2-bac3d518c07c
+    m_ActionName: 'SDPlayer3/PromptEast[/Keyboard/k]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: c4438068-f780-46e9-9712-698cf376dbf3
+    m_ActionName: 'SDPlayer3/PromptNorth[/Keyboard/u]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: e9922e05-7adc-4a23-a845-400271fd0804
+    m_ActionName: 'SDPlayer4/Move[/Keyboard/numpad8,/Keyboard/numpad2,/Keyboard/numpad4,/Keyboard/numpad6]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 2921d03a-a4fa-42a8-b34e-914eef1c0a2e
+    m_ActionName: 'SDPlayer4/Interact[/Keyboard/numpadEnter]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: f2e10556-83e4-40a9-85b9-ce8c1cf505c5
+    m_ActionName: 'SDPlayer4/Cancel[/Keyboard/escape]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 9d84d48b-3e61-4636-8e7e-dd2ecce08eae
+    m_ActionName: 'SDPlayer4/PromptSouth[/Keyboard/numpad2]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 3ed70923-c3e7-4ce3-aed5-a943edc2f664
+    m_ActionName: 'SDPlayer4/PromptWest[/Keyboard/numpad4]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: a6c18736-ed60-402b-bf26-9e74e8c90a8a
+    m_ActionName: 'SDPlayer4/PromptEast[/Keyboard/numpad6]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 73e23552-1bd9-4ad4-bde0-ddd339e1a0ce
+    m_ActionName: 'SDPlayer4/PromptNorth[/Keyboard/numpad8]'
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
