@@ -21,6 +21,7 @@ public class PlayerManager : Singleton<PlayerManager>
     public int ControllerCount => _controllers.Count;
     public PlayerController CurrentOwner { get; private set; }
     public List<PlayerResult> MatchResults { get; private set; }
+    public InputActionAsset EventSystemActionsAsset => _eventSystemDefaultActionsAsset;
     public event Action<PlayerController> OnNewOwner;
     public event Action<PlayerController> OnNewMainPlayerController;
     public event Action<PlayerController> OnPlayerJoin;
@@ -35,18 +36,34 @@ public class PlayerManager : Singleton<PlayerManager>
     private readonly List<PlayerController> _controllers = new();
     private InputActionAsset _eventSystemDefaultActionsAsset;
     private InputSystemUIInputModule _uiInputModule;
+    private InputActionMap _uiMap;
+    private bool _isJoiningEnabled = true;
+
+    // Non-keyboard groups in the UI map that should stay live regardless of SD owner.
+    private const string SharedUiGroups = "Keyboard&Mouse;Gamepad;Joystick;Touch;XR";
 
     protected override void Init()
     {
         _playerInputManager = GetComponent<PlayerInputManager>();
 
-        _playerInputManager.onPlayerJoined += OnPlayerJoined;
-        _playerInputManager.onPlayerLeft += OnPlayerLeft;
-
         // Gotta GetComponent the UI input module because this script initializes
         // faster than the EventSystem, even in the start method. Bit stupid, but works.
         _uiInputModule = EventSystem.current.GetComponent<InputSystemUIInputModule>();
         _eventSystemDefaultActionsAsset = _uiInputModule.actionsAsset;
+        _uiMap = _eventSystemDefaultActionsAsset.FindActionMap("UI");
+
+        // Single-device join: each SDPlayerN map's Interact action triggers JoinPlayer(N - 1).
+        // Subscribed on the EventSystem's global action asset so it fires regardless of ownership.
+        foreach (var map in _eventSystemDefaultActionsAsset.actionMaps)
+        {
+            if (!map.name.StartsWith("SDPlayer")) continue;
+
+            var interact = map.FindAction("Interact");
+            if (interact == null) continue;
+
+            int playerIndex = int.Parse(map.name[^1].ToString()) - 1;
+            interact.performed += _ => JoinPlayer(playerIndex);
+        }
     }
 
     /// <summary>
@@ -98,7 +115,23 @@ public class PlayerManager : Singleton<PlayerManager>
         {
             controller.EnableInput();
         }
-        _uiInputModule.actionsAsset = controller.ActionsAsset;
+        if (IsSingleDeviceMode)
+        {
+            // Mask the shared UI map so only the owner's keyboard bindings
+            // (tagged "SDPlayerN") fire Navigate/Submit. Non-keyboard groups
+            // stay on so mouse/gamepad UI still works.
+            if (_uiMap != null)
+            {
+                _uiMap.bindingMask = new InputBinding
+                {
+                    groups = $"SDPlayer{controller.Id};{SharedUiGroups}"
+                };
+            }
+        }
+        else
+        {
+            _uiInputModule.actionsAsset = controller.ActionsAsset;
+        }
         OnNewOwner?.Invoke(CurrentOwner);
     }
 
@@ -119,7 +152,17 @@ public class PlayerManager : Singleton<PlayerManager>
                 controller.EnableInput();
             }
         }
-        _uiInputModule.actionsAsset = _eventSystemDefaultActionsAsset;
+        if (IsSingleDeviceMode)
+        {
+            if (_uiMap != null)
+            {
+                _uiMap.bindingMask = null;
+            }
+        }
+        else
+        {
+            _uiInputModule.actionsAsset = _eventSystemDefaultActionsAsset;
+        }
         OnNewOwner?.Invoke(null);
     }
 
@@ -167,6 +210,7 @@ public class PlayerManager : Singleton<PlayerManager>
     /// </summary>
     public void EnableJoining()
     {
+        _isJoiningEnabled = true;
         _playerInputManager.EnableJoining();
     }
 
@@ -175,6 +219,7 @@ public class PlayerManager : Singleton<PlayerManager>
     /// </summary>
     public void DisableJoining()
     {
+        _isJoiningEnabled = false;
         _playerInputManager.DisableJoining();
     }
 
@@ -183,16 +228,44 @@ public class PlayerManager : Singleton<PlayerManager>
         MatchResults = results;
     }
 
-    private void OnPlayerJoined(PlayerInput player)
+    private void JoinPlayer(int playerIndex)
     {
+        if (!_isJoiningEnabled) return;
+        if (_controllers.Count >= _playerInputManager.maxPlayerCount) return;
+
+        // Players must join in slot order (Player 1 before Player 2, etc.).
+        if (playerIndex != _controllers.Count) return;
+
+        PlayerController controller;
+
+        if (IsSingleDeviceMode)
+        {
+            // Bypass PlayerInputManager.JoinPlayer — all SD players share the same
+            // keyboard, so per-player device pairing would fail. Instantiate the
+            // prefab inactive, disable its PlayerInput (we route through the
+            // EventSystem's global action asset instead), then activate it.
+            var prefab = _playerInputManager.playerPrefab;
+            bool wasPrefabActive = prefab.activeSelf;
+            prefab.SetActive(false);
+            var go = Instantiate(prefab, transform);
+            prefab.SetActive(wasPrefabActive);
+
+            var pi = go.GetComponent<PlayerInput>();
+            if (pi != null) pi.enabled = false;
+
+            go.SetActive(true);
+            controller = go.GetComponent<PlayerController>();
+        }
+        else
+        {
+            PlayerInput player = _playerInputManager.JoinPlayer(playerIndex);
+            if (player == null) return;
+            player.transform.SetParent(transform);
+            controller = player.GetComponent<PlayerController>();
+        }
+
         AudioManager.Instance.Play(SoundName.DiceRollFinished);
 
-        player.transform.SetParent(transform);
-        player.gameObject.name = $"PlayerController{_playerInputManager.playerCount}";
-
-        var controller = player.GetComponent<PlayerController>();
-
-        // controller.OpenPauseMenuPerformed += () => OpenPauseMenu(controller);
         controller.InteractPerformed += () => OnAnyPlayerInteractPerformed?.Invoke(controller);
         controller.PromptSouthPerformed += () => OnAnyPlayerPromptSouthPerformed?.Invoke(controller);
         controller.PromptEastPerformed += () => OnAnyPlayerPromptEastPerformed?.Invoke(controller);
@@ -201,11 +274,6 @@ public class PlayerManager : Singleton<PlayerManager>
         controller.OpenDevMenuPerformed += TryOpenDevMenu;
 
         _controllers.Add(controller);
-
-        if (CurrentOwner != null)
-        {
-            controller.DisableInput();
-        }
 
         if (_controllers.Count == 1)
         {
@@ -216,10 +284,13 @@ public class PlayerManager : Singleton<PlayerManager>
         OnPlayerJoin?.Invoke(controller);
     }
 
-    private void OnPlayerLeft(PlayerInput player)
+    // Removes a joined controller and reassigns ownership to Player 1 if the leaver was owner.
+    // Not currently reachable in single-device mode — no key is bound to trigger it.
+    public void LeavePlayer(int index)
     {
-        Debug.Log($"Left: {player}");
-        var controller = player.GetComponent<PlayerController>();
+        var controller = GetPlayerController(index);
+        if (controller == null) return;
+
         _controllers.Remove(controller);
 
         if (_controllers.Count > 0)
@@ -232,6 +303,8 @@ public class PlayerManager : Singleton<PlayerManager>
         }
         UpdateControllerNames();
         OnPlayerLeave?.Invoke(controller);
+
+        Destroy(controller.gameObject);
     }
 
     private void OpenPauseMenu(PlayerController controller)
@@ -244,7 +317,7 @@ public class PlayerManager : Singleton<PlayerManager>
         GiveOwnershipTo(controller);
 
         MenuNavigator.OnEmptyStack += OnEmptyStack;
-        
+
         void OnEmptyStack()
         {
             MenuNavigator.OnEmptyStack -= OnEmptyStack;

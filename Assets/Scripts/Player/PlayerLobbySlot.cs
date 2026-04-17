@@ -54,9 +54,15 @@ public class PlayerLobbySlot : MonoBehaviour
             _playerIcon.color = profile.Color;
             _playerNumberBackground.color = profile.Color;
 
-            string deviceText = $"Device Id: {PlayerManager.Instance.GetPlayerController(SlotIndex).Device.deviceId}\n";
-            deviceText += $"{PlayerManager.Instance.GetPlayerController(SlotIndex).Device.description}\n";
-            _deviceText.SetText(deviceText);
+            if (PlayerManager.Instance.IsSingleDeviceMode)
+            {
+                _deviceText.SetText($"Keyboard (SDPlayer{SlotIndex + 1})");
+            }
+            else
+            {
+                var controller = PlayerManager.Instance.GetPlayerController(SlotIndex);
+                _deviceText.SetText($"Device Id: {controller.Device.deviceId}\n{controller.Device.description}\n");
+            }
 
             _joinedPlayerOverlay.SetActive(true);
             _emptyPlayerOverlay.SetActive(false);
