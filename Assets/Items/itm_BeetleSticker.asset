@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5228dfa0c2e8c6a59bd1341993ef86a5, type: 3}
+  m_Name: itm_BeetleSticker
+  m_EditorClassIdentifier: 
+  Name: Beetle Sticker
+  InventoryMaxCount: 1
+  ShopMinCount: 1
+  ShopMaxCount: 1
+  RollDiceAfterUse: 1
+  Price: 1
+  Description: Sticker of a beetle.
+  Icon: {fileID: 21300000, guid: eab1674a5373961499c4e2a52961d14d, type: 3}
