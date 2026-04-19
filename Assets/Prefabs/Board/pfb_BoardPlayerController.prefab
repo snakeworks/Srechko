@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2321555448794280887}
   - component: {fileID: 5014779642431238462}
+  - component: {fileID: 7386695917526953004}
   m_Layer: 0
   m_Name: PromptDirectionLeft
   m_TagString: Untagged
@@ -87,6 +88,20 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &7386695917526953004
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 226774642840619949}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b92066b66103189796cb734868ccb49, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _joystickSprite: {fileID: 21300000, guid: 95460a0ef01754c9dbf18bd16adde708, type: 3}
+  _sdSprite: {fileID: 21300000, guid: 91e3e61ca33500055a258299f950485f, type: 3}
 --- !u!1 &498654580115638073
 GameObject:
   m_ObjectHideFlags: 0
@@ -431,6 +446,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8825696094573242180}
   - component: {fileID: 4016860045494114343}
+  - component: {fileID: 3721823778834518405}
   m_Layer: 0
   m_Name: PromptDirectionDown
   m_TagString: Untagged
@@ -508,6 +524,20 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &3721823778834518405
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5328674435525892548}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b92066b66103189796cb734868ccb49, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _joystickSprite: {fileID: 21300000, guid: f392fc552d00f948bb9d5bf263a2a0cc, type: 3}
+  _sdSprite: {fileID: 21300000, guid: 84ec391348aabacc5b246fb7b1c502e6, type: 3}
 --- !u!1 &5357673491249639177
 GameObject:
   m_ObjectHideFlags: 0
@@ -5614,6 +5644,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8493748773642407783}
   - component: {fileID: 5170989779805507884}
+  - component: {fileID: 5642334773576798670}
   m_Layer: 0
   m_Name: PromptDirectionUp
   m_TagString: Untagged
@@ -5691,6 +5722,20 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &5642334773576798670
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6229082462618916645}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b92066b66103189796cb734868ccb49, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _joystickSprite: {fileID: 21300000, guid: 735f183ed96304e119ca74bf69be3034, type: 3}
+  _sdSprite: {fileID: 21300000, guid: 108ac5f0727cf2315ad9ef2c3ab9a0c2, type: 3}
 --- !u!1 &6713730407951931207
 GameObject:
   m_ObjectHideFlags: 0
@@ -6178,6 +6223,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1656909911581816233}
   - component: {fileID: 6598164075809093107}
+  - component: {fileID: 8339566134059738237}
   m_Layer: 0
   m_Name: PromptDirectionRight
   m_TagString: Untagged
@@ -6255,6 +6301,20 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &8339566134059738237
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8305502180593343278}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b92066b66103189796cb734868ccb49, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _joystickSprite: {fileID: 21300000, guid: c53ef13693b2564dfb38df90b8cf81f7, type: 3}
+  _sdSprite: {fileID: 21300000, guid: 0c37aa54cc161671fb0a30ccd9cee791, type: 3}
 --- !u!1001 &1066203300537974657
 PrefabInstance:
   m_ObjectHideFlags: 0

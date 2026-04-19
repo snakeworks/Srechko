@@ -55,6 +55,11 @@ public class MathMiniGame : MiniGame
 
     public override async void OnBegin()
     {
+        _aPrompt.GetComponent<ButtonPromptImage>().UpdateSprite();
+        _bPrompt.GetComponent<ButtonPromptImage>().UpdateSprite();
+        _xPrompt.GetComponent<ButtonPromptImage>().UpdateSprite();
+        _yPrompt.GetComponent<ButtonPromptImage>().UpdateSprite();
+
         List<int> scores = new();
         List<bool> playerAnswered = new();
         for (int i = 0; i < PlayerManager.Instance.ControllerCount; i++)

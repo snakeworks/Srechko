@@ -201,6 +201,7 @@ public class BoardPlayerController : MonoBehaviour
             _directionalPromptsDict[dir].Sprite.DOFade(0.0f, 0.0f);
             _directionalPromptsDict[dir].Sprite.transform.DOScale(_defaultDirectionalPromptScale, 0.0f);
 
+            _directionalPromptsDict[dir].Sprite.GetComponent<ButtonPromptImage>().UpdateSprite();
             _directionalPromptsDict[dir].Sprite.DOFade(1.0f, 0.1f);
         }
     }

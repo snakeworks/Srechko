@@ -8,7 +8,7 @@ public class ResultsScreen : MonoBehaviour
     [SerializeField] private Image[] _playerImages;
     [SerializeField] private string[] _placeHexColors;
     [SerializeField] private TextMeshProUGUI _playerWinsText;
-    [SerializeField] private TextMeshProUGUI _promptText;
+    [SerializeField] private CanvasGroup _promptMainMenu;
     [SerializeField] private RectTransform _layoutGroup;
 
     private void Awake()
@@ -22,7 +22,7 @@ public class ResultsScreen : MonoBehaviour
 
         _playerWinsText.SetText($"PLAYER {results[0].Index + 1} WINS!");
         _playerWinsText.alpha = 0.0f;
-        _promptText.alpha = 0.0f;
+        _promptMainMenu.alpha = 0.0f;
 
         Sequence sequence = DOTween.Sequence();
 
@@ -74,7 +74,7 @@ public class ResultsScreen : MonoBehaviour
     private void OnTweenFinished()
     {
         _playerWinsText.DOFade(1.0f, 0.5f);
-        _promptText.DOFade(1.0f, 0.5f);
+        _promptMainMenu.DOFade(1.0f, 0.5f);
 
         AudioManager.Instance.Play(SoundName.ResultsTheme, 2.0f);
 

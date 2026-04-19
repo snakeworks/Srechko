@@ -10,6 +10,8 @@ public class PlayerLobbySlot : MonoBehaviour
     [SerializeField] private Image _playerNumberBackground;
     [SerializeField] private TextMeshProUGUI _playerNumberText;
     [SerializeField] private TextMeshProUGUI _deviceText;
+    [SerializeField] private Image _sdControlsImage;
+    [SerializeField] private Sprite[] _sdControlsSprites;
 
     public int SlotIndex => transform.GetSiblingIndex();
     
@@ -56,7 +58,8 @@ public class PlayerLobbySlot : MonoBehaviour
 
             if (PlayerManager.Instance.IsSingleDeviceMode)
             {
-                _deviceText.SetText($"Keyboard (SDPlayer{SlotIndex + 1})");
+                _sdControlsImage.sprite = _sdControlsSprites[SlotIndex];
+                _deviceText.SetText("");
             }
             else
             {

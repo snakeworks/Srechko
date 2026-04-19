@@ -1769,7 +1769,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "v1.1-test  -  Created by: Filip Smol\u010Dec, Gabriel Miki\u0107, Reo
+  m_text: "v1.0.0-SD  /  Created by: Filip Smol\u010Dec, Gabriel Miki\u0107, Reo
     Tur\u010Dinovi\u0107"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 2e498d1c8094910479dc3e1b768306a4, type: 2}

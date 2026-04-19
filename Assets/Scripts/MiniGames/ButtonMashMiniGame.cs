@@ -12,11 +12,12 @@ public class ButtonMashMiniGame : MiniGame
     [SerializeField] private CanvasGroup _mashButtonCanvasGroup;
     [SerializeField] private Image _promptImage;
     [SerializeField] private Sprite[] _promptSprites;
+    [SerializeField] private Sprite[] _sdPromptSprites;
 
     public override string Name => "Button Mash";
 
     private const int _timerMilliseconds = 10000;
-    private int _currentButtonIndex = 0;
+    private int _currentButtonIndex = -1;
 
     public override void OnCalled()
     {
@@ -82,6 +83,7 @@ public class ButtonMashMiniGame : MiniGame
 
         int passedTime = _timerMilliseconds;
         int nextPromptTime = 0;
+        RandomizeButton();
         while (passedTime > 0)
         {
             await Task.Delay(1000);
@@ -120,6 +122,6 @@ public class ButtonMashMiniGame : MiniGame
         int newIndex = Random.Range(0, 4);
         while (newIndex == _currentButtonIndex) newIndex = Random.Range(0, 4);
         _currentButtonIndex = newIndex;
-        _promptImage.sprite = _promptSprites[_currentButtonIndex];
+        _promptImage.sprite = PlayerManager.Instance.IsSingleDeviceMode ? _sdPromptSprites[_currentButtonIndex] : _promptSprites[_currentButtonIndex];
     }
 }
