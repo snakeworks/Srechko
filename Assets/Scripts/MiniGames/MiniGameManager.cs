@@ -58,7 +58,6 @@ public class MiniGameManager : StaticInstance<MiniGameManager>
         _current = _previous;
         while (_current == _previous)
             _current = _games[Random.Range(0, _games.Length)];
-        _current = _games[1];
 
         _screenObject.SetActive(true);
         _current.gameObject.SetActive(true);
