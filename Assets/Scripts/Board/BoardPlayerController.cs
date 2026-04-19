@@ -17,6 +17,7 @@ public class BoardPlayerController : MonoBehaviour
     [SerializeField] private DirectionalPromptDefinition[] _directionalPrompts;
     [SerializeField] private TextMeshProUGUI _alertPopup;
     [SerializeField] private SpriteRenderer[] _tapes;
+    [SerializeField] private SpriteRenderer _stickerSprite;
 
     public int StandingOnBoardSpaceId { get; private set; } = -1;
     public int PreviousStandingOnBoardSpaceId { get; private set; } = -1;
@@ -47,6 +48,7 @@ public class BoardPlayerController : MonoBehaviour
         _popupText.alpha = 0.0f;
         _popupText.gameObject.SetActive(false);
         _alertPopup.gameObject.SetActive(false);
+        _stickerSprite.transform.localScale = Vector3.zero;
 
         foreach (var def in _directionalPrompts)
         {
@@ -334,6 +336,15 @@ public class BoardPlayerController : MonoBehaviour
         await Task.Delay(250);
 
         foreach (var tape in _tapes) tape.gameObject.SetActive(false);
+    }
+
+    public async Task PlayStickerAnimation(Sprite stickerSprite)
+    {
+        AudioManager.Instance.Play(SoundName.StickerPeel);
+        _stickerSprite.transform.DOScale(0.0f, 0.0f);
+        _stickerSprite.sprite = stickerSprite;
+        _stickerSprite.transform.DOScale(0.4f, 0.25f);
+        await Task.Delay(500);
     }
 
     [System.Serializable]

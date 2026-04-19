@@ -35,4 +35,5 @@ public static class SoundName
     public const string MathTheme = "MathTheme";
     public const string QuickDrawTheme = "QuickDrawTheme";
     public const string ResultsTheme = "ResultsTheme";
+    public const string StickerPeel = "StickerPeel";
 }
